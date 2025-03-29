@@ -40,7 +40,7 @@
                 <td>Santiago</td>
                 <td>Beauchef 850, terraza</td>
                 <td>Escuela de Boxeo</td>
-                <td><img src="img/boxeo.jpg" alt="Escuela de Boxeo" width="100"></td>
+                <td><img src="img/boxeo.jpeg" alt="Escuela de Boxeo" width="200"></td>
             </tr>
             <tr>
                 <td>2025-03-29 19:00</td>
@@ -48,14 +48,134 @@
                 <td>Ñuñoa</td>
                 <td>Plaza</td>
                 <td>Cómo deshidratar fruta</td>
-                <td><img src="img/deshidratacion.jpg" alt="Deshidratación" width="100"></td>
+                <td><img src="img/deshidratacion.jpg" alt="Deshidratación" width="200"></td>
             </tr>
-            <!-- Agrega más filas según sea necesario -->
+            <tr>
+                <td>2022-03-30 18:00</td>
+                <td>-</td>
+                <td>Santiago</td>
+                <td>Parque O´higgins</td>
+                <td>música urbana</td>
+                <td><img src="img/Musica.jpg" alt="Yoga" width="200"></td>
+            <\tr>
+            <tr>
+                <td>2025-03-30 10:00</td>
+                <td>2025-03-30 12:00</td>
+                <td>Las Condes</td>
+                <td>Parque Araucano</td>
+                <td>Yoga</td>
+                <td><img src="img/yoga.jpg" alt="Yoga" width="200"></td>
             </tbody>
+            <tr>
+                <td>2025-03-30 11:00</td>
+                <td>2025-03-30 13:00</td>
+                <td>Santiago</td>
+                <td>Beauchef 850, canchas</td>
+                <td>Junta Grupo Beauchef Furs</td>
+                <td><img src="img/furs.jpg" alt="Furs" width="200"></td>
         </table>
     </section>
 
-    <!-- Secciones adicionales: Agregar actividad y Estadísticas -->
+    <!-- Secciones adicionales -->
+
+    <section id="informar-actividad">
+        <h2>Informar una Nueva Actividad</h2>
+        <form id="form-actividad">
+            <!-- Información del lugar -->
+            <fieldset>
+                <legend>Información del Lugar</legend>
+                <label for="region">Región:</label>
+                <select id="region" name="region" required>
+                    <option value="">Seleccione una región</option>
+                    <option value="metropolitana">Metropolitana</option>
+                    <option value="valparaiso">Valparaíso</option>
+                    <option value="bio-bio">Biobío</option>
+                    <!-- Agrega más regiones según sea necesario -->
+                </select>
+
+                <label for="comuna">Comuna:</label>
+                <select id="comuna" name="comuna" required>
+                    <option value="">Seleccione una comuna</option>
+                    <!-- Las comunas se llenarán dinámicamente según la región seleccionada -->
+                </select>
+
+                <label for="sector">Sector:</label>
+                <input type="text" id="sector" name="sector" maxlength="100" placeholder="Ej: Plaza, Parque, etc.">
+            </fieldset>
+
+            <!-- Datos del organizador -->
+            <fieldset>
+                <legend>Datos del Organizador</legend>
+                <label for="nombre-organizador">Nombre:</label>
+                <input type="text" id="nombre-organizador" name="nombre-organizador" maxlength="200" required>
+
+                <label for="email-organizador">Email:</label>
+                <input type="email" id="email-organizador" name="email-organizador" maxlength="100" required>
+
+                <label for="telefono-organizador">Número de celular:</label>
+                <input type="tel" id="telefono-organizador" name="telefono-organizador" pattern="\+[0-9]{3}\.[0-9]{8}" placeholder="+569.12345678">
+
+                <label for="contactar-por">Contactar por:</label>
+                <select id="contactar-por" name="contactar-por">
+                    <option value="">Seleccione una opción</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="x">X (Twitter)</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="otra">Otra</option>
+                </select>
+
+                <!-- Input dinámico para ID o URL de contacto -->
+                <div id="contacto-extra"></div>
+            </fieldset>
+
+            <!-- Información de la actividad -->
+            <fieldset>
+                <legend>Información de la Actividad</legend>
+                <label for="inicio-actividad">Día y Hora de Inicio:</label>
+                <input type="datetime-local" id="inicio-actividad" name="inicio-actividad" required>
+
+                <label for="termino-actividad">Día y Hora de Término:</label>
+                <input type="datetime-local" id="termino-actividad" name="termino-actividad">
+
+                <label for="descripcion-actividad">Descripción:</label>
+                <textarea id="descripcion-actividad" name="descripcion-actividad" rows="10" cols="50"></textarea>
+
+                <label for="tema-actividad">Tema:</label>
+                <select id="tema-actividad" name="tema-actividad" required>
+                    <option value="">Seleccione un tema</option>
+                    <option value="musica">Música</option>
+                    <option value="deporte">Deporte</option>
+                    <option value="ciencias">Ciencias</option>
+                    <!-- Agrega más temas según sea necesario -->
+                    <option value="otro">Otro</option>
+                </select>
+
+                <!-- Input dinámico para tema "Otro" -->
+                <div id="tema-extra"></div>
+
+                <!-- Fotos -->
+                <label for="foto-actividad">Foto de la Actividad:</label>
+                <input type="file" id="foto-actividad" name="foto-actividad[]" accept=".jpg,.png,.jpeg,.gif" required multiple>
+
+            </fieldset>
+
+            <!-- Botón para agregar actividad -->
+            <button type="submit">Agregar esta Actividad</button>
+
+        </form>
+
+        <!-- Mensaje de confirmación (se mostrará dinámicamente) -->
+        <div id="mensaje-confirmacion"></div>
+
+        <!-- Botón para volver a la portada -->
+        <!-- Este botón se mostrará después de confirmar la actividad -->
+        <!-- Ejemplo dinámico:
+        <button onclick='volverPortada()'>Volver a la Portada</button>
+        -->
+    </section>
+
 </main>
 
 <footer>
