@@ -4,12 +4,10 @@
 
 # Análisis del HTML de Gestión de Actividades Recreativas
 
-El código HTML que estás viendo es la estructura de una página web para gestionar actividades recreativas. Te explicaré sus principales componentes:
-
 ## Estructura general
 
 - El documento está en español (`<html lang="es">`)
-- Tiene las secciones habituales: cabecera (`<head>`), cuerpo (`<body>`), encabezado (`<header>`), contenido principal (`<main>`) y pie de página (`<footer>`)
+- Secciones: cabecera (`<head>`), cuerpo (`<body>`), encabezado (`<header>`), contenido principal (`<main>`) y pie de página (`<footer>`)
 - Enlaza a una hoja de estilos CSS (`css/styles.css`) y a un archivo JavaScript (`css/js/script.js`)
 
 ## Secciones principales
@@ -43,4 +41,4 @@ El código HTML que estás viendo es la estructura de una página web para gesti
 - **Maquetación organizada** usando secciones y fieldsets para agrupar información relacionada
 - **Navegación simple** entre las diferentes partes de la aplicación
 
-Hay algunos errores estructurales que deberían corregirse, como la etiqueta `<\tr>` mal cerrada y algunas rutas de archivos que podrían causar problemas (el script JavaScript está en una ubicación inusual: `css/js/script.js`).
+algunas rutas de archivos que podrían causar problemas (el script JavaScript está en una ubicación inusual: `css/js/script.js`).
