@@ -1,12 +1,12 @@
 body {
-    font-family: "Times New Roman", sans-serif;
+    font-family: "Arial", sans-serif;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #ffffff;
-    color: #0d1f71;
+    background-color: #7791ac;
+    color: #040404;
     padding: 10px 0;
     text-align: center;
 
@@ -23,7 +23,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #df0c0c;
+    color: #6c2121;
     text-decoration: none;
 }
 
@@ -37,7 +37,7 @@ table {
 }
 
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid #000000;
 }
 
 th, td {
