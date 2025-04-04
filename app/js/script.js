@@ -34,6 +34,68 @@ minlength="3" maxlength="15" required>
     }
 });
 
+// ===== CARGAR REGIONES Y COMUNAS =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Cargar las regiones en el desplegable
+    const regionSelect = document.getElementById('region');
+    
+    if (regionSelect) {
+        // Verificar que exista la variable region_comuna
+        if (typeof region_comuna !== 'undefined') {
+            // Limpiar el select
+            regionSelect.innerHTML = '<option value="">Seleccione una región</option>';
+            
+            // Agregar cada región como una opción
+            region_comuna.regiones.forEach(region => {
+                const option = document.createElement('option');
+                option.value = region.numero;
+                option.textContent = region.nombre;
+                regionSelect.appendChild(option);
+            });
+            
+            // Configurar el evento para cargar comunas al seleccionar región
+            regionSelect.addEventListener('change', cargarComunas);
+        } else {
+            console.error('El objeto region_comuna no está disponible');
+        }
+    }
+});
+
+// Función para cargar las comunas según la región seleccionada
+function cargarComunas() {
+    const regionId = document.getElementById('region').value;
+    const comunaSelect = document.getElementById('comuna');
+    
+    // Limpiar el select de comunas
+    comunaSelect.innerHTML = '';
+    
+    // Si no hay región seleccionada, mostrar mensaje por defecto
+    if (!regionId) {
+        comunaSelect.innerHTML = '<option value="">Seleccione primero una región</option>';
+        return;
+    }
+    
+    // Buscar la región seleccionada
+    const regionSeleccionada = region_comuna.regiones.find(r => r.numero == regionId);
+    
+    // Si no se encuentra la región, mostrar mensaje de error
+    if (!regionSeleccionada) {
+        comunaSelect.innerHTML = '<option value="">Error al cargar comunas</option>';
+        return;
+    }
+    
+    // Agregar opción por defecto
+    comunaSelect.innerHTML = '<option value="">Seleccione una comuna</option>';
+    
+    // Agregar cada comuna de la región como una opción
+    regionSeleccionada.comunas.forEach(comuna => {
+        const option = document.createElement('option');
+        option.value = comuna.id;
+        option.textContent = comuna.nombre;
+        comunaSelect.appendChild(option);
+    });
+}
+
 // 4. Manejar fotos (máximo 5)
 let photoCount = 1;
 document.getElementById('agregar-foto').addEventListener('click', function() {

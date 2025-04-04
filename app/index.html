@@ -88,16 +88,13 @@
                 <label for="region">Región:</label>
                 <select id="region" name="region" required>
                     <option value="">Seleccione una región</option>
-                    <option value="metropolitana">Metropolitana</option>
-                    <option value="valparaiso">Valparaíso</option>
-                    <option value="bio-bio">Biobío</option>
-                    <!-- Agrega más regiones según sea necesario -->
+                    <!-- Las regiones se cargarán dinámicamente desde region_comuna.js -->
                 </select>
 
                 <label for="comuna">Comuna:</label>
                 <select id="comuna" name="comuna" required>
-                    <option value="">Seleccione una comuna</option>
-                    <!-- Las comunas se llenarán dinámicamente según la región seleccionada -->
+                    <option value="">Seleccione primero una región</option>
+                    <!-- Las comunas se cargarán dinámicamente según la región seleccionada -->
                 </select>
 
                 <label for="sector">Sector:</label>
@@ -157,8 +154,10 @@
                 <div id="tema-extra"></div>
 
                 <!-- Fotos -->
-                <label for="foto-actividad">Foto de la Actividad:</label>
-                <input type="file" id="foto-actividad" name="foto-actividad[]" accept=".jpg,.png,.jpeg,.gif" required multiple>
+                <div id="contenedor-fotos">
+                    <input type="file" name="foto-actividad[]" accept=".jpg,.png,.jpeg,.gif">
+                </div>
+                <button type="button" id="agregar-foto">Agregar otra foto</button>
 
             </fieldset>
 
@@ -281,5 +280,9 @@
         <a href="#portada" class="boton-volver">Volver a la Portada</a>
     </section>
 </main>
+
+<!-- Incluye el archivo de regiones y comunas -->
+<script src="region_comuna.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>
