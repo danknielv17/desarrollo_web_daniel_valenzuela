@@ -98,13 +98,57 @@ const actividadesEjemplo = [
         tema: 'Escuela de Boxeo',
         fotos: ['boxeo1.jpg', 'boxeo2.jpg'],
         organizador: 'Juan Pérez'
+    },
+    {
+        id: 2,
+        inicio: '2025-03-29 19:00',
+        termino: '2025-03-29 20:00',
+        comuna: 'Ñuñoa',
+        sector: 'Plaza',
+        tema: 'Cómo deshidratar fruta',
+        fotos: ['deshidratacion.jpg', 'deshidratacion2.jpg', 'deshidratacion3.jpg'],
+        organizador: 'María Gómez'
+    },
+    {
+        id: 3,
+        inicio: '2025-03-30 18:00',
+        termino: null,
+        comuna: 'Santiago',
+        sector: 'Parque O\'higgins',
+        tema: 'Música Urbana',
+        fotos: ['musica.jpg'],
+        organizador: 'Pedro López'
+    },
+    {
+        id: 4,
+        inicio: '2025-04-01 15:00',
+        termino: '2025-04-01 17:00',
+        comuna: 'Las Condes',
+        sector: 'Gimnasio',
+        tema: 'Clase de Yoga',
+        fotos: ['yoga.jpg', 'yoga2.jpg'],
+        organizador: 'Carlos Rodríguez'
+    },
+    {
+        id: 5,
+        inicio: '2025-03-30 11:00',
+        termino: '2025-03-30 13:00',
+        comuna: 'Santiago',
+        sector: 'Beauchef 850, canchas',
+        tema: 'Reunión G.O.',
+        fotos: ['furs.jpg'],
+        organizador: 'Grupo Beauchef Furs'
     }
-    // Agregar más actividades según ejemplo
 ];
 
 function mostrarDetalleActividad(id) {
     const actividad = actividadesEjemplo.find(a => a.id === id);
     const detalle = document.getElementById('detalle-actividad');
+    
+    if (!actividad) {
+        console.error(`No se encontró actividad con id ${id}`);
+        return;
+    }
 
     detalle.innerHTML = `
         <h3>Detalle de la Actividad</h3>
@@ -113,9 +157,11 @@ function mostrarDetalleActividad(id) {
         <p><strong>Comuna:</strong> ${actividad.comuna}</p>
         <p><strong>Sector:</strong> ${actividad.sector}</p>
         <p><strong>Tema:</strong> ${actividad.tema}</p>
+        <p><strong>Organizador:</strong> ${actividad.organizador}</p>
         <div class="galeria">
             ${actividad.fotos.map(foto => `
                 <img src="img/${foto}" alt="Foto actividad" 
+                     width="320" height="240"
                      onclick="ampliarFoto('img/${foto}')">
             `).join('')}
         </div>
@@ -189,7 +235,7 @@ function ampliarFoto(url) {
     overlay.className = 'overlay-foto';
     overlay.innerHTML = `
         <div class="foto-ampliada">
-            <img src="${url}" alt="Foto ampliada">
+            <img src="${url}" alt="Foto ampliada" width="800" height="600">
             <button onclick="this.parentElement.parentElement.remove()">Cerrar</button>
         </div>
     `;
@@ -227,3 +273,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
