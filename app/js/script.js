@@ -51,6 +51,79 @@ document.getElementById('agregar-foto').addEventListener('click', function() {
     }
 });
 
+// ===== NAVEGACIÓN ENTRE SECCIONES =====
+function mostrarSeccion(seccionId) {
+    // Ocultar todas las secciones
+    const secciones = document.querySelectorAll('main > section');
+    secciones.forEach(seccion => {
+        seccion.style.display = 'none';
+    });
+    
+    // Mostrar la sección seleccionada
+    const seccionMostrar = document.getElementById(seccionId);
+    if (seccionMostrar) {
+        seccionMostrar.style.display = 'block';
+    }
+    
+    // Actualizar clase activa en la navegación
+    const enlaces = document.querySelectorAll('.nav-link');
+    enlaces.forEach(enlace => {
+        if (enlace.getAttribute('data-target') === seccionId) {
+            enlace.classList.add('active');
+        } else {
+            enlace.classList.remove('active');
+        }
+    });
+}
+
+// Manejar los clics en los enlaces de navegación
+document.addEventListener('DOMContentLoaded', function() {
+    // Configurar enlaces de navegación
+    const enlaces = document.querySelectorAll('.nav-link');
+    enlaces.forEach(enlace => {
+        enlace.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            mostrarSeccion(targetId);
+            history.pushState(null, null, `#${targetId}`);
+        });
+    });
+    
+    // Verificar si hay un hash en la URL al cargar
+    if (window.location.hash) {
+        const targetId = window.location.hash.substring(1); // Eliminar el # del inicio
+        mostrarSeccion(targetId);
+    } else {
+        // Mostrar la portada por defecto
+        mostrarSeccion('portada');
+    }
+
+    // Precargar fecha/hora en formulario
+    const ahora = new Date();
+    document.getElementById('inicio-actividad').value =
+        ahora.toISOString().slice(0, 16);
+
+    const termino = new Date(ahora.getTime() + 3*60*60*1000);
+    document.getElementById('termino-actividad').value =
+        termino.toISOString().slice(0, 16);
+        
+    // Asegurar que la portada se muestre inicialmente
+    if (!window.location.hash) {
+        document.getElementById('portada').style.display = 'block';
+    }
+});
+
+// ===== FUNCIONES DE NAVEGACIÓN =====
+function volverAPortada() {
+    mostrarSeccion('portada');
+    history.pushState(null, null, '#portada');
+}
+
+function volverAlListado() {
+    document.getElementById('detalle-actividad').style.display = 'none';
+    document.getElementById('tabla-actividades').style.display = 'table';
+}
+
 // ===== MANEJO DEL FORMULARIO =====
 document.getElementById('form-actividad').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -105,6 +178,9 @@ const actividadesEjemplo = [
 function mostrarDetalleActividad(id) {
     const actividad = actividadesEjemplo.find(a => a.id === id);
     const detalle = document.getElementById('detalle-actividad');
+    
+    // Ocultar la tabla de actividades
+    document.getElementById('tabla-actividades').style.display = 'none';
 
     detalle.innerHTML = `
 <h3>Detalle de la Actividad</h3>
@@ -125,15 +201,6 @@ onclick="ampliarFoto('img/${foto}')">
     detalle.style.display = 'block';
 }
 
-// ===== FUNCIONES DE NAVEGACIÓN =====
-function volverAPortada() {
-    window.location.href = '#portada';
-}
-
-function volverAlListado() {
-    document.getElementById('detalle-actividad').style.display = 'none';
-}
-
 function ampliarFoto(url) {
     const overlay = document.createElement('div');
     overlay.className = 'overlay-foto';
@@ -146,14 +213,3 @@ function ampliarFoto(url) {
     document.body.appendChild(overlay);
 }
 
-// ===== INICIALIZACIÓN =====
-document.addEventListener('DOMContentLoaded', function() {
-// Precargar fecha/hora en formulario
-    const ahora = new Date();
-    document.getElementById('inicio-actividad').value =
-        ahora.toISOString().slice(0, 16);
-
-    const termino = new Date(ahora.getTime() + 3*60*60*1000);
-    document.getElementById('termino-actividad').value =
-        termino.toISOString().slice(0, 16);
-});
