@@ -6,71 +6,93 @@ function validarTelefono(telefono) {
     return regex.test(telefono);
 }
 
-// 2. Manejar selección de "contactar por"
-document.getElementById('contactar-por').addEventListener('change', function() {
-    const contactoExtra = document.getElementById('contacto-extra');
-    if (this.value === 'otra') {
-        contactoExtra.innerHTML = `
-            <label for="otro-contacto">Especifique contacto:</label>
-            <input type="text" id="otro-contacto" name="otro-contacto" 
-                   minlength="4" maxlength="50" required>
-        `;
-    } else {
-        contactoExtra.innerHTML = '';
-    }
-});
+// ===== MANEJO DE FORMULARIO =====
 
-// 3. Manejar selección de tema "otro"
-document.getElementById('tema-actividad').addEventListener('change', function() {
-    const temaExtra = document.getElementById('tema-extra');
-    if (this.value === 'otro') {
-        temaExtra.innerHTML = `
-            <label for="otro-tema">Especifique tema:</label>
-            <input type="text" id="otro-tema" name="otro-tema" 
-                   minlength="3" maxlength="15" required>
-        `;
-    } else {
-        temaExtra.innerHTML = '';
+// Manejar selección de "contactar por"
+function inicializarContactarPor() {
+    const contactarPor = document.getElementById('contactar-por');
+    if (contactarPor) {
+        contactarPor.addEventListener('change', function() {
+            const contactoExtra = document.getElementById('contacto-extra');
+            if (this.value === 'otra') {
+                contactoExtra.innerHTML = `
+                    <label for="otro-contacto">Especifique contacto:</label>
+                    <input type="text" id="otro-contacto" name="otro-contacto"
+                           minlength="4" maxlength="50" required>
+                `;
+            } else {
+                contactoExtra.innerHTML = '';
+            }
+        });
     }
-});
+}
 
-// 4. Manejar fotos (máximo 5)
-let photoCount = 1;
-document.getElementById('agregar-foto').addEventListener('click', function() {
-    if (photoCount < 5) {
-        const contenedorFotos = document.getElementById('contenedor-fotos');
-        const nuevoInput = document.createElement('input');
-        nuevoInput.type = 'file';
-        nuevoInput.name = 'foto-actividad[]';
-        nuevoInput.accept = '.jpg,.png,.jpeg,.gif';
-        contenedorFotos.appendChild(nuevoInput);
-        photoCount++;
+// Manejar selección de tema "otro"
+function inicializarTemaActividad() {
+    const temaActividad = document.getElementById('tema-actividad');
+    if (temaActividad) {
+        temaActividad.addEventListener('change', function() {
+            const temaExtra = document.getElementById('tema-extra');
+            if (this.value === 'otro') {
+                temaExtra.innerHTML = `
+                    <label for="otro-tema">Especifique tema:</label>
+                    <input type="text" id="otro-tema" name="otro-tema"
+                           minlength="3" maxlength="15" required>
+                `;
+            } else {
+                temaExtra.innerHTML = '';
+            }
+        });
     }
-    if (photoCount === 5) {
-        this.disabled = true;
+}
+
+// Manejar fotos (máximo 5)
+function inicializarManejoDeFotos() {
+    const btnAgregarFoto = document.getElementById('agregar-foto');
+    if (btnAgregarFoto) {
+        let photoCount = 1;
+        btnAgregarFoto.addEventListener('click', function() {
+            if (photoCount < 5) {
+                const contenedorFotos = document.getElementById('contenedor-fotos');
+                const nuevoInput = document.createElement('input');
+                nuevoInput.type = 'file';
+                nuevoInput.name = 'foto-actividad[]';
+                nuevoInput.accept = '.jpg,.png,.jpeg,.gif';
+                contenedorFotos.appendChild(nuevoInput);
+                photoCount++;
+            }
+            if (photoCount === 5) {
+                this.disabled = true;
+            }
+        });
     }
-});
+}
 
-// ===== MANEJO DEL FORMULARIO =====
-document.getElementById('form-actividad').addEventListener('submit', function(e) {
-    e.preventDefault();
+// Manejo del envío del formulario
+function inicializarFormulario() {
+    const formActividad = document.getElementById('form-actividad');
+    if (formActividad) {
+        formActividad.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-    // Validar campos
-    const telefono = document.getElementById('telefono-organizador').value;
-    if (telefono && !validarTelefono(telefono)) {
-        alert('Formato de teléfono inválido. Use +NNN.NNNNNNNN');
-        return;
+            // Validar campos
+            const telefono = document.getElementById('telefono-organizador').value;
+            if (telefono && !validarTelefono(telefono)) {
+                alert('Formato de teléfono inválido. Use +NNN.NNNNNNNN');
+                return;
+            }
+
+            // Mostrar confirmación
+            document.getElementById('mensaje-confirmacion').innerHTML = `
+                <div class="confirmacion">
+                    <p>¿Está seguro que desea agregar esta actividad?</p>
+                    <button onclick="confirmarEnvio(true)">Sí, estoy seguro</button>
+                    <button onclick="confirmarEnvio(false)">No, quiero volver</button>
+                </div>
+            `;
+        });
     }
-
-    // Mostrar confirmación
-    document.getElementById('mensaje-confirmacion').innerHTML = `
-        <div class="confirmacion">
-            <p>¿Está seguro que desea agregar esta actividad?</p>
-            <button onclick="confirmarEnvio(true)">Sí, estoy seguro</button>
-            <button onclick="confirmarEnvio(false)">No, quiero volver</button>
-        </div>
-    `;
-});
+}
 
 function confirmarEnvio(confirmado) {
     const mensaje = document.getElementById('mensaje-confirmacion');
@@ -144,7 +166,7 @@ const actividadesEjemplo = [
 function mostrarDetalleActividad(id) {
     const actividad = actividadesEjemplo.find(a => a.id === id);
     const detalle = document.getElementById('detalle-actividad');
-    
+
     if (!actividad) {
         console.error(`No se encontró actividad con id ${id}`);
         return;
@@ -160,7 +182,7 @@ function mostrarDetalleActividad(id) {
         <p><strong>Organizador:</strong> ${actividad.organizador}</p>
         <div class="galeria">
             ${actividad.fotos.map(foto => `
-                <img src="img/${foto}" alt="Foto actividad" 
+                <img src="img/${foto}" alt="Foto actividad"
                      width="320" height="240"
                      onclick="ampliarFoto('img/${foto}')">
             `).join('')}
@@ -171,55 +193,50 @@ function mostrarDetalleActividad(id) {
     detalle.style.display = 'block';
 }
 
-// ===== LLENAR SELECTORES DE REGIÓN Y COMUNA =====
+// ===== MANEJO DE REGIONES Y COMUNAS =====
 
 // Función para llenar el selector de regiones
 function llenarRegiones() {
     const regionSelect = document.getElementById('region');
-    region_comuna.regiones.forEach(region => {
-        const opcion = document.createElement('option');
-        opcion.value = region.numero;
-        opcion.textContent = region.nombre;
-        regionSelect.appendChild(opcion);
-    });
+    if (regionSelect && region_comuna && region_comuna.regiones) {
+        region_comuna.regiones.forEach(region => {
+            const opcion = document.createElement('option');
+            opcion.value = region.numero;
+            opcion.textContent = region.nombre;
+            regionSelect.appendChild(opcion);
+        });
+    }
 }
 
 // Función para llenar el selector de comunas según la región seleccionada
 function llenarComunas(regionNumero) {
     const comunaSelect = document.getElementById('comuna');
+    if (!comunaSelect) return;
+
     comunaSelect.innerHTML = '<option value="">Seleccione una comuna</option>'; // Limpiar opciones previas
 
-    const regionSeleccionada = region_comuna.regiones.find(region => region.numero == regionNumero);
-    if (regionSeleccionada) {
-        regionSeleccionada.comunas.forEach(comuna => {
-            const opcion = document.createElement('option');
-            opcion.value = comuna.id;
-            opcion.textContent = comuna.nombre;
-            comunaSelect.appendChild(opcion);
-        });
+    if (region_comuna && region_comuna.regiones) {
+        const regionSeleccionada = region_comuna.regiones.find(region => region.numero == regionNumero);
+        if (regionSeleccionada) {
+            regionSeleccionada.comunas.forEach(comuna => {
+                const opcion = document.createElement('option');
+                opcion.value = comuna.id;
+                opcion.textContent = comuna.nombre;
+                comunaSelect.appendChild(opcion);
+            });
+        }
     }
 }
 
-// Evento para actualizar las comunas cuando se selecciona una región
-document.getElementById('region').addEventListener('change', function() {
-    llenarComunas(this.value);
-});
-
-// ===== INICIALIZACIÓN =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Precargar regiones al cargar la página
-    llenarRegiones();
-
-    // Precargar fecha/hora en formulario
-    const ahora = new Date();
-    document.getElementById('inicio-actividad').value =
-        ahora.toISOString().slice(0, 16);
-
-    const termino = new Date(ahora.getTime() + 3 * 60 * 60 * 1000);
-    document.getElementById('termino-actividad').value =
-        termino.toISOString().slice(0, 16);
-});
-
+// Inicializar selector de regiones
+function inicializarSelectorRegion() {
+    const regionSelect = document.getElementById('region');
+    if (regionSelect) {
+        regionSelect.addEventListener('change', function() {
+            llenarComunas(this.value);
+        });
+    }
+}
 
 // ===== FUNCIONES DE NAVEGACIÓN =====
 function volverAPortada() {
@@ -227,7 +244,10 @@ function volverAPortada() {
 }
 
 function volverAlListado() {
-    document.getElementById('detalle-actividad').style.display = 'none';
+    const detalle = document.getElementById('detalle-actividad');
+    if (detalle) {
+        detalle.style.display = 'none';
+    }
 }
 
 function ampliarFoto(url) {
@@ -257,8 +277,14 @@ document.addEventListener('DOMContentLoaded', function() {
         terminoActividad.value = termino.toISOString().slice(0, 16);
     }
 
+    // Inicializar formulario
+    inicializarContactarPor();
+    inicializarTemaActividad();
+    inicializarManejoDeFotos();
+    inicializarFormulario();
+
     // Cargar regiones y comunas
-    cargarRegiones();
+    llenarRegiones();
     inicializarSelectorRegion();
 
     // Inicializar botón "Agregar Actividad"
@@ -273,4 +299,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
