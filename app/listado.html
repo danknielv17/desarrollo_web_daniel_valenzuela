@@ -7,7 +7,7 @@
 </head>
 <body>
 <header>
-  <div class ="logo">
+  <div class="logo">
     <img src="img/dcc-logo.png" alt="Logo DCC" width="350">
   </div>
   <h1>Listado de Actividades</h1>
@@ -21,6 +21,7 @@
 </header>
 
 <main>
+  <!-- Tabla de actividades -->
   <table id="tabla-actividades">
     <thead>
     <tr>
@@ -34,7 +35,7 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Filas de ejemplo -->
+    <!-- Filas de actividades -->
     <tr onclick="mostrarDetalleActividad(1)">
       <td>2025-03-28 12:00</td>
       <td>2025-03-28 14:00</td>
@@ -53,7 +54,6 @@
       <td>María Gómez</td>
       <td>3</td>
     </tr>
-    <!-- Agrega más filas según sea necesario -->
     <tr onclick="mostrarDetalleActividad(3)">
       <td>2025-03-30 18:00</td>
       <td>-</td>
@@ -84,14 +84,16 @@
     </tbody>
   </table>
 
-  <!-- Sección para mostrar el detalle de la actividad -->
+  <!-- Sección para mostrar detalles -->
   <div id="detalle-actividad" style="display: none;">
     <h3>Detalle de la Actividad</h3>
     <div id="contenido-detalle">
       <!-- Aquí se mostrará la información detallada de la actividad -->
     </div>
-    <button onclick="volverAlListado()">Volver al Listado</button>
-    <button onclick="volverAPortada()">Volver a la Portada</button>
+    <div class="botones-navegacion">
+      <button onclick="volverAlListado()">Volver al Listado</button>
+      <button onclick="volverAPortada()">Volver a la Portada</button>
+    </div>
   </div>
 </main>
 
