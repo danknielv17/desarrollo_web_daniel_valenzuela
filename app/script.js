@@ -117,7 +117,7 @@ const actividadesEjemplo = [
         comuna: 'Santiago',
         sector: 'Beauchef 850, terraza',
         tema: 'Escuela de Boxeo',
-        fotos: ['boxeo1.jpg', 'boxeo2.jpg'],
+        fotos: ['boxeo1.jpg', 'boxeo2.jpeg'],
         organizador: 'Juan Pérez'
     },
     {
@@ -127,7 +127,7 @@ const actividadesEjemplo = [
         comuna: 'Ñuñoa',
         sector: 'Plaza',
         tema: 'Cómo deshidratar fruta',
-        fotos: ['deshidratacion.jpg', 'deshidratacion2.jpg', 'deshidratacion3.jpg'],
+        fotos: ['deshidratacion1.jpg', 'deshidratacion2.jpg', 'deshidratacion3.jpg'],
         organizador: 'María Gómez'
     },
     {
@@ -137,7 +137,7 @@ const actividadesEjemplo = [
         comuna: 'Santiago',
         sector: 'Parque O\'higgins',
         tema: 'Música Urbana',
-        fotos: ['musica.jpg'],
+        fotos: ['musica1.jpg', "musica2.jpg"],
         organizador: 'Pedro López'
     },
     {
