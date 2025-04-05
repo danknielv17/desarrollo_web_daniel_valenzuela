@@ -1,8 +1,8 @@
 # desarrollo_web_daniel_valenzuela
 
-## Tarea 1
+## CC5002 - Tarea 1
 
-# Análisis del HTML de Gestión de Actividades Recreativas
+# HTML de Gestión de Actividades Recreativas
 
 ## Estructura general
 
