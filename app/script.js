@@ -62,7 +62,6 @@ function inicializarManejoDeFotos() {
                 photoCount++;
             }
             if (photoCount === 5) {
-                this.disabled = true;
             }
         });
     }
@@ -240,7 +239,7 @@ function inicializarSelectorRegion() {
 
 // ===== FUNCIONES DE NAVEGACIÓN =====
 function volverAPortada() {
-    window.location.href = '#portada';
+    window.location.href = 'index.html';
 }
 
 function volverAlListado() {

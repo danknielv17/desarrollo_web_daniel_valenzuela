@@ -5,12 +5,25 @@ body {
 }
 
 header {
+    position: relative;
+
     background-color: #7791ac;
     color: #040404;
     padding: 10px 0;
     text-align: center;
 
     border-bottom: 2px solid #000000;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#logo {
+    width: 60px;
+    height: auto;
 }
 
 nav ul {
