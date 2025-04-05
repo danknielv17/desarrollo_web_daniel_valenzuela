@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de Actividades</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class ="logo">
+    <img src="img/dcc-logo.png" alt="Logo DCC" width="350">
+  </div>
+  <h1>Listado de Actividades</h1>
+  <nav>
+    <ul>
+      <li><a href="index.html">Portada</a></li>
+      <li><a href="agregar.html">Agregar Actividad</a></li>
+      <li><a href="estadisticas.html">Estadísticas</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <table id="tabla-actividades">
+    <thead>
+    <tr>
+      <th>Inicio</th>
+      <th>Término</th>
+      <th>Comuna</th>
+      <th>Sector</th>
+      <th>Tema</th>
+      <th>Nombre Organizador</th>
+      <th>Total Fotos</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Filas de ejemplo -->
+    <tr onclick="mostrarDetalleActividad(1)">
+      <td>2025-03-28 12:00</td>
+      <td>2025-03-28 14:00</td>
+      <td>Santiago</td>
+      <td>Beauchef 850, terraza</td>
+      <td>Escuela de Boxeo</td>
+      <td>Juan Pérez</td>
+      <td>2</td>
+    </tr>
+    <tr onclick="mostrarDetalleActividad(2)">
+      <td>2025-03-29 19:00</td>
+      <td>2025-03-29 20:00</td>
+      <td>Ñuñoa</td>
+      <td>Plaza</td>
+      <td>Cómo deshidratar fruta</td>
+      <td>María Gómez</td>
+      <td>3</td>
+    </tr>
+    <!-- Agrega más filas según sea necesario -->
+    <tr onclick="mostrarDetalleActividad(3)">
+      <td>2025-03-30 18:00</td>
+      <td>-</td>
+      <td>Santiago</td>
+      <td>Parque O'higgins</td>
+      <td>Música Urbana</td>
+      <td>Pedro López</td>
+      <td>1</td>
+    </tr>
+    <tr onclick="mostrarDetalleActividad(4)">
+      <td>2025-04-01 15:00</td>
+      <td>2025-04-01 17:00</td>
+      <td>Las Condes</td>
+      <td>Gimnasio</td>
+      <td>Clase de Yoga</td>
+      <td>Carlos Rodríguez</td>
+      <td>2</td>
+    </tr>
+    <tr onclick="mostrarDetalleActividad(5)">
+      <td>2025-03-30 11:00</td>
+      <td>2025-03-30 13:00</td>
+      <td>Santiago</td>
+      <td>Beauchef 850, canchas</td>
+      <td>Reunión G.O.</td>
+      <td>Grupo Beauchef Furs</td>
+      <td>1</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Sección para mostrar el detalle de la actividad -->
+  <div id="detalle-actividad" style="display: none;">
+    <h3>Detalle de la Actividad</h3>
+    <div id="contenido-detalle">
+      <!-- Aquí se mostrará la información detallada de la actividad -->
+    </div>
+    <button onclick="volverAlListado()">Volver al Listado</button>
+    <button onclick="volverAPortada()">Volver a la Portada</button>
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Actividad</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class ="logo">
+        <img src="img/dcc-logo.png" alt="Logo DCC" width="350">
+    </div>
+    <h1>Agregar Nueva Actividad</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Portada</a></li>
+            <li><a href="listado.html">Ver Listado de Actividades</a></li>
+            <li><a href="estadisticas.html">Estadísticas</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <!-- Se copió el contenido del formulario del index original -->
+    <section id="agregar-actividad">
+        <h2>Informar una Nueva Actividad</h2>
+        <form id="form-actividad">
+            <!-- Información del lugar -->
+            <fieldset>
+                <legend>Información del Lugar</legend>
+                <label for="region">Región:</label>
+                <select id="region" name="region" required>
+                    <option value="">Seleccione una región</option>
+                    <!-- Las regiones se cargarán dinámicamente desde region_comuna.js -->
+                </select>
+
+                <label for="comuna">Comuna:</label>
+                <select id="comuna" name="comuna" required>
+                    <option value="">Seleccione primero una región</option>
+                    <!-- Las comunas se cargarán dinámicamente según la región seleccionada -->
+                </select>
+
+                <label for="sector">Sector:</label>
+                <input type="text" id="sector" name="sector" maxlength="100" placeholder="Ej: Plaza, Parque, etc.">
+            </fieldset>
+
+            <!-- Datos del organizador -->
+            <fieldset>
+                <legend>Datos del Organizador</legend>
+                <label for="nombre-organizador">Nombre:</label>
+                <input type="text" id="nombre-organizador" name="nombre-organizador" maxlength="200" required>
+
+                <label for="email-organizador">Email:</label>
+                <input type="email" id="email-organizador" name="email-organizador" maxlength="100" required>
+
+                <label for="telefono-organizador">Número de celular:</label>
+                <input type="tel" id="telefono-organizador" name="telefono-organizador" pattern="\+[0-9]{3}\.[0-9]{8}" placeholder="+569.12345678">
+
+                <label for="contactar-por">Contactar por:</label>
+                <select id="contactar-por" name="contactar-por">
+                    <option value="">Seleccione una opción</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="x">X (Twitter)</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="otra">Otra</option>
+                </select>
+                <!-- Input dinámico para ID o URL de contacto -->
+                <div id="contacto-extra"></div>
+            </fieldset>
+
+            <!-- Información de la actividad -->
+            <fieldset>
+                <legend>Información de la Actividad</legend>
+                <label for="inicio-actividad">Día y Hora de Inicio:</label>
+                <input type="datetime-local" id="inicio-actividad" name="inicio-actividad" required>
+
+                <label for="termino-actividad">Día y Hora de Término:</label>
+                <input type="datetime-local" id="termino-actividad" name="termino-actividad">
+
+                <label for="descripcion-actividad">Descripción:</label>
+                <textarea id="descripcion-actividad" name="descripcion-actividad" rows="10" cols="50"></textarea>
+
+                <label for="tema-actividad">Tema:</label>
+                <select id="tema-actividad" name="tema-actividad" required>
+                    <option value="">Seleccione un tema</option>
+                    <option value="musica">Música</option>
+                    <option value="deporte">Deporte</option>
+                    <option value="ciencias">Ciencias</option>
+                    <!-- Agrega más temas según sea necesario -->
+                    <option value="otro">Otro</option>
+                </select>
+                <!-- Input dinámico para tema "Otro" -->
+                <div id="tema-extra"></div>
+                <!-- Fotos -->
+                <div id="contenedor-fotos">
+                    <input type="file" name="foto-actividad[]" accept=".jpg,.png,.jpeg,.gif">
+                </div>
+                <button type="button" id="agregar-foto">Agregar otra foto</button>
+            </fieldset>
+
+            <!-- Botón para agregar actividad -->
+            <button type="submit">Agregar esta Actividad</button>
+        </form>
+
+        <!-- Mensaje de confirmación (se mostrará dinámicamente) -->
+        <div id="mensaje-confirmacion"></div>
+
+        <!-- Botón para volver a la portada -->
+        <!-- Este botón se mostrará después de confirmar la actividad -->
+        <!-- Ejemplo dinámico:
+        <button onclick='volverPortada()'>Volver a la Portada</button>
+        -->
+    </section>
+</main>
+
+<script src="region_comuna.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
