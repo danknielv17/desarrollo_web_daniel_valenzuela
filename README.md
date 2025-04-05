@@ -12,16 +12,17 @@
 
 ## Secciones principales
 
-1. **Encabezado (`<header>`):**
+1. **Portada:**
    - Título principal "Bienvenido a la Gestión de Actividades Recreativas"
    - Menú de navegación con enlaces a las diferentes secciones
 
-2. **Últimas actividades agregadas:**
+   - **Listado con las últimas actividades agregadas:**
    - Muestra una tabla con actividades recientes
    - Incluye datos como fecha/hora, ubicación, tema y fotos
    - Hay algunos errores en la estructura de la tabla (por ejemplo, etiqueta `<\tr>` mal cerrada)
 
-3. **Formulario para informar nuevas actividades:**
+2. **Agregar nueva actividad:**
+   - Formulario para agregar una nueva actividad
    - Dividido en fieldsets para organizar la información:
      - Información del lugar (región, comuna, sector)
      - Datos del organizador (nombre, email, teléfono, método de contacto)
@@ -29,7 +30,7 @@
    - Incluye validaciones básicas con atributos HTML (required, pattern, etc.)
    - Tiene elementos dinámicos que probablemente se gestionan con JavaScript
 
-4. **Listado de actividades:**
+3. **Listado de actividades:**
    - Tabla con actividades existentes
    - Cada fila es clickeable para ver detalles (`onclick="mostrarDetalleActividad(id)"`)
    - Incluye una sección oculta para mostrar detalles específicos de cada actividad
@@ -40,5 +41,3 @@
 - **Interactividad**: Elementos que cambian dinámicamente basados en selecciones del usuario
 - **Maquetación organizada** usando secciones y fieldsets para agrupar información relacionada
 - **Navegación simple** entre las diferentes partes de la aplicación
-
-algunas rutas de archivos que podrían causar problemas (el script JavaScript está en una ubicación inusual: `css/js/script.js`).
