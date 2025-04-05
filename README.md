@@ -6,7 +6,6 @@
 
 ## Estructura general
 
-- El documento está en español (`<html lang="es">`)
 - Secciones: cabecera (`<head>`), cuerpo (`<body>`), encabezado (`<header>`), contenido principal (`<main>`) y pie de página (`<footer>`)
 - Enlaza a una hoja de estilos CSS (`css/styles.css`) y a un archivo JavaScript (`css/js/script.js`)
 
