@@ -35,6 +35,15 @@
    - Cada fila es clickeable para ver detalles (`onclick="mostrarDetalleActividad(id)"`)
    - Incluye una sección oculta para mostrar detalles específicos de cada actividad
 
+4. **Estadísticas:**
+   - Gráficos que muestran estadísticas de actividades 
+   - El primer gráfico de líneas informa la cantidad de actividades por día. En el eje X muestra los días 
+     y en el eje Y muestra la cantidad de actividades. 
+   - El segundo gráfico es un gráfico de torta que muestra el total de actividades por tipo. 
+   - El tercer gráfico es uno de barras que muestra tres barras por cada punto del eje X. 
+     El eje X son los meses y para cada mes muestra una barra con la cantidad de actividades que se inician en la mañana, 
+     la cantidad de actividades que se inician al mediodía y la cantidad de actividades de la tarde. El eje Y indica la cantidad.
+
 ## Características destacables
 
 - **Formulario completo** con múltiples tipos de campos: selects, inputs de texto, fechas, archivos, etc.
