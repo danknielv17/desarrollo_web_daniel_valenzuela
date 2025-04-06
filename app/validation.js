@@ -30,9 +30,8 @@ function validarCantidadFotos(inputFiles, maxFotos = 5) {
     return inputFiles.length <= maxFotos;
 }
 
-<!-- Exportamos las funciones para usarlas en script.js
-const validacion = {
-    validarTelefono,
-    validarFechas,
-    validarSector
-}; -->
+// Disponible las funciones globalmente
+window.validarTelefono = validarTelefono;
+window.validarRangoFechas = validarRangoFechas;
+window.validarLongitud = validarLongitud;
+window.validarCantidadFotos = validarCantidadFotos;
