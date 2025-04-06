@@ -66,14 +66,49 @@ function inicializarFormulario() {
         formActividad.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Validar campos
+            // 1. Validar teléfono
             const telefono = document.getElementById('telefono-organizador').value;
             if (telefono && !validarTelefono(telefono)) {
                 alert('Formato de teléfono inválido. Use +NNN.NNNNNNNN');
                 return;
             }
 
-            // Mostrar confirmación
+            // 2. Validar fechas
+            const inicio = document.getElementById('inicio-actividad').value;
+            const termino = document.getElementById('termino-actividad').value;
+            if (!validarRangoFechas(inicio, termino)) {
+                alert('La fecha/hora de inicio debe ser anterior a la de término.');
+                return;
+            }
+
+            // 3. Validar longitud de "otro contacto" si aplica
+            const otroContacto = document.getElementById('otro-contacto');
+            if (otroContacto) {
+                const valor = otroContacto.value.trim();
+                if (!validarLongitud(valor, 4, 50)) {
+                    alert('El contacto adicional debe tener entre 4 y 50 caracteres.');
+                    return;
+                }
+            }
+
+            // 4. Validar longitud de "otro tema" si aplica
+            const otroTema = document.getElementById('otro-tema');
+            if (otroTema) {
+                const valor = otroTema.value.trim();
+                if (!validarLongitud(valor, 3, 15)) {
+                    alert('El tema adicional debe tener entre 3 y 15 caracteres.');
+                    return;
+                }
+            }
+
+            // 5. Validar cantidad de fotos
+            const fotos = document.querySelectorAll('input[type="file"][name="foto-actividad[]"]');
+            if (!validarCantidadFotos(fotos)) {
+                alert('Solo puedes subir hasta 5 fotos.');
+                return;
+            }
+
+            // Confirmación
             document.getElementById('mensaje-confirmacion').innerHTML = `
                 <div class="confirmacion">
                     <p>¿Está seguro que desea agregar esta actividad?</p>
@@ -84,6 +119,7 @@ function inicializarFormulario() {
         });
     }
 }
+
 
 function confirmarEnvio(confirmado) {
     const mensaje = document.getElementById('mensaje-confirmacion');
