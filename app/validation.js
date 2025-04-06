@@ -35,6 +35,16 @@ function validarSector(sector) {
     return sector && sector.trim().length >= 5;
 }
 
+// Validar longitud de texto
+function validarLongitud(texto, min, max) {
+    return texto.length >= min && texto.length <= max;
+}
+
+// Validar que la cantidad de fotos no supere el máximo
+function validarCantidadFotos(inputFiles, maxFotos = 5) {
+    return inputFiles.length <= maxFotos;
+}
+
 // Exportamos las funciones para usarlas en script.js
 const validacion = {
     validarTelefono,
