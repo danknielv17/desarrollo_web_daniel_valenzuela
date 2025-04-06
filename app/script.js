@@ -38,7 +38,7 @@ function inicializarTemaActividad() {
     }
 }
 
-// Manejar fotos (máximo 5)
+// Manejar fotos (limita la cantidad de inputs creados a 5)
 function inicializarManejoDeFotos() {
     const btnAgregarFoto = document.getElementById('agregar-foto');
     if (btnAgregarFoto) {
