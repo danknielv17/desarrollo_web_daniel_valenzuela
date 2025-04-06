@@ -1,11 +1,3 @@
-// ===== VALIDACIONES DEL FORMULARIO =====
-
-// 1. Validar formato de teléfono móvil
-function validarTelefono(telefono) {
-    const regex = /^\+[0-9]{3}\.[0-9]{8}$/;
-    return regex.test(telefono);
-}
-
 // ===== MANEJO DE FORMULARIO =====
 
 // Manejar selección de "contactar por"
