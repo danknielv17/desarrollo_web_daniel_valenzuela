@@ -20,15 +20,6 @@ function validarRangoFechas(inicio, termino) {
     return new Date(inicio) < new Date(termino);
 }
 
-/**
- * Valida que el sector especificado tenga un mínimo de caracteres
- * @param {string} sector - Sector de la actividad
- * @returns {boolean} - true si el sector es válido
- */
-function validarSector(sector) {
-    return sector && sector.trim().length >= 5;
-}
-
 // Validar longitud de texto
 function validarLongitud(texto, min, max) {
     return texto.length >= min && texto.length <= max;
@@ -39,9 +30,9 @@ function validarCantidadFotos(inputFiles, maxFotos = 5) {
     return inputFiles.length <= maxFotos;
 }
 
-// Exportamos las funciones para usarlas en script.js
+<!-- Exportamos las funciones para usarlas en script.js
 const validacion = {
     validarTelefono,
     validarFechas,
     validarSector
-};
+}; -->
