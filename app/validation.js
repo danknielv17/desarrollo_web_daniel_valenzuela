@@ -16,14 +16,8 @@ function validarTelefono(telefono) {
  * @param {string} termino - Fecha y hora de término en formato ISO
  * @returns {boolean} - true si el término es posterior al inicio, false en caso contrario
  */
-function validarFechas(inicio, termino) {
-    // Si no hay fecha de término, no validamos
-    if (!termino) return true;
-
-    const fechaInicio = new Date(inicio);
-    const fechaTermino = new Date(termino);
-
-    return fechaTermino > fechaInicio;
+function validarRangoFechas(inicio, termino) {
+    return new Date(inicio) < new Date(termino);
 }
 
 /**
