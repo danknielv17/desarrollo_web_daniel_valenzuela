@@ -3,7 +3,7 @@
  * Archivo principal de JavaScript
  ****************************************************/
 
-// ===== DATOS DE EJEMPLO =====
+// ===== ACTIVIDADES DE EJEMPLO LISTADO =====
 const actividadesEjemplo = [
     {
         id: 1,
@@ -216,9 +216,10 @@ function inicializarManejoDeFotos() {
 function confirmarEnvio(confirmado) {
     const mensaje = document.getElementById('mensaje-confirmacion');
     if (confirmado) {
+        alert('¡Hemos recibido su información! Muchas gracias y suerte en su actividad.')
         mensaje.innerHTML = `
             <div class="exito">
-                <p>¡Hemos recibido su información! Muchas gracias y suerte en su actividad.</p>
+                <p>¡Hemos recibido su información!</p>
                 <button onclick="volverAPortada()">Volver a la Portada</button>
             </div>
         `;
@@ -285,9 +286,19 @@ function inicializarFormulario() {
 
             // 7. Validar cantidad de fotos
             const fotos = document.querySelectorAll('input[type="file"][name="foto-actividad[]"]');
-            if (!validarCantidadFotos(fotos)) {
-                alert('Solo puedes subir hasta 5 fotos.');
+            let fotosSeleccionadas = 0;
+
+            for (const input of fotos) {
+                if (input.files.length > 0) {
+                    fotosSeleccionadas++;
+                }
+            }
+
+            if (fotosSeleccionadas === 0) {
+                alert('Debe subir al menos una foto.');
                 return;
+            } else if (fotosSeleccionadas > 5) {
+                alert('Solo se permiten hasta 5 fotos.');
             }
 
             // Confirmación
@@ -295,7 +306,7 @@ function inicializarFormulario() {
                 <div class="confirmacion">
                     <p>¿Está seguro que desea agregar esta actividad?</p>
                     <button onclick="confirmarEnvio(true)">Sí, estoy seguro</button>
-                    <button onclick="confirmarEnvio(false)">No, quiero volver</button>
+                    <button onclick="confirmarEnvio(false)">No, no estoy seguro, quiero volver al formulario</button>
                 </div>
             `;
         });
