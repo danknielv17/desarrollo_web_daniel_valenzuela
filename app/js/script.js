@@ -169,7 +169,7 @@ function inicializarContactarPor() {
                 let placeholder = '';
                 let label = '';
 
-                // Personalizar el label y placeholder según la red social seleccionada
+                // Label y placeholder según la red social seleccionada
                 switch(this.value) {
                     case 'whatsapp':
                         label = 'Número de WhatsApp:';
@@ -300,7 +300,7 @@ function inicializarFormulario() {
 
             // Validar la fecha de término si está presente
             const termino = document.getElementById('termino-actividad').value;
-            if (!validarFormatoFecha(termino)) {
+            if (termino && !validarFormatoFecha(termino)) {
                 alert('La fecha de término debe tener un formato válido (YYYY-MM-DD HH:MM).');
                 return;
             }
