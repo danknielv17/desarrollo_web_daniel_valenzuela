@@ -348,6 +348,19 @@ function inicializarFormulario() {
                 alert('Solo se permiten hasta 5 fotos.');
             }
 
+            // 8. Validar región y comuna
+            const region = document.getElementById('region').value;
+            if (!region) {
+                alert('Debe seleccionar una región.');
+                return;
+            }
+
+            const comuna = document.getElementById('comuna').value;
+            if (!comuna) {
+                alert('Debe seleccionar una comuna.');
+                return;
+            }
+
             // Confirmación
             document.getElementById('mensaje-confirmacion').innerHTML = `
                 <div class="confirmacion">
