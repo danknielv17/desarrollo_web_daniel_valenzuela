@@ -20,7 +20,13 @@ function validarRangoFechas(inicio, termino) {
     return new Date(inicio) < new Date(termino);
 }
 
-// Validar longitud de texto
+/**
+ * Valida la longitud de un texto
+ * @param {string} texto - Texto a validar
+ * @param {number} min - Longitud mínima permitida
+ * @param {number} max - Longitud máxima permitida
+ * @returns {boolean} - true si la longitud está dentro del rango, false en caso contrario
+ */
 function validarLongitud(texto, min, max) {
     return texto.length >= min && texto.length <= max;
 }
