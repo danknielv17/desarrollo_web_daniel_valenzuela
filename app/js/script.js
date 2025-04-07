@@ -1,142 +1,9 @@
-// ===== MANEJO DE FORMULARIO =====
+/****************************************************
+ * GESTIÓN DE ACTIVIDADES RECREATIVAS
+ * Archivo principal de JavaScript
+ ****************************************************/
 
-// Manejar selección de "contactar por"
-function inicializarContactarPor() {
-    const contactarPor = document.getElementById('contactar-por');
-    if (contactarPor) {
-        contactarPor.addEventListener('change', function() {
-            const contactoExtra = document.getElementById('contacto-extra');
-            if (this.value === 'otra') {
-                contactoExtra.innerHTML = `
-                    <label for="otro-contacto">Especifique contacto:</label>
-                    <input type="text" id="otro-contacto" name="otro-contacto"
-                           minlength="4" maxlength="50" required>
-                `;
-            } else {
-                contactoExtra.innerHTML = '';
-            }
-        });
-    }
-}
-
-// Manejar selección de tema "otro"
-function inicializarTemaActividad() {
-    const temaActividad = document.getElementById('tema-actividad');
-    if (temaActividad) {
-        temaActividad.addEventListener('change', function() {
-            const temaExtra = document.getElementById('tema-extra');
-            if (this.value === 'otro') {
-                temaExtra.innerHTML = `
-                    <label for="otro-tema">Especifique tema:</label>
-                    <input type="text" id="otro-tema" name="otro-tema"
-                           minlength="3" maxlength="15" required>
-                `;
-            } else {
-                temaExtra.innerHTML = '';
-            }
-        });
-    }
-}
-
-// Manejar fotos (limita la cantidad de inputs creados a 5)
-function inicializarManejoDeFotos() {
-    const btnAgregarFoto = document.getElementById('agregar-foto');
-    if (btnAgregarFoto) {
-        let photoCount = 1;
-        btnAgregarFoto.addEventListener('click', function() {
-            if (photoCount < 5) {
-                const contenedorFotos = document.getElementById('contenedor-fotos');
-                const nuevoInput = document.createElement('input');
-                nuevoInput.type = 'file';
-                nuevoInput.name = 'foto-actividad[]';
-                nuevoInput.accept = '.jpg,.png,.jpeg,.gif';
-                contenedorFotos.appendChild(nuevoInput);
-                photoCount++;
-            }
-            if (photoCount === 5) {
-            }
-        });
-    }
-}
-
-// Manejo del envío del formulario
-function inicializarFormulario() {
-    const formActividad = document.getElementById('form-actividad');
-    if (formActividad) {
-        formActividad.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // 1. Validar teléfono
-            const telefono = document.getElementById('telefono-organizador').value;
-            if (telefono && !validarTelefono(telefono)) {
-                alert('Formato de teléfono inválido. Use +NNN.NNNNNNNN');
-                return;
-            }
-
-            // 2. Validar fechas
-            const inicio = document.getElementById('inicio-actividad').value;
-            const termino = document.getElementById('termino-actividad').value;
-            if (!validarRangoFechas(inicio, termino)) {
-                alert('La fecha/hora de inicio debe ser anterior a la de término.');
-                return;
-            }
-
-            // 3. Validar longitud de "otro contacto" si aplica
-            const otroContacto = document.getElementById('otro-contacto');
-            if (otroContacto) {
-                const valor = otroContacto.value.trim();
-                if (!validarLongitud(valor, 4, 50)) {
-                    alert('El contacto adicional debe tener entre 4 y 50 caracteres.');
-                    return;
-                }
-            }
-
-            // 4. Validar longitud de "otro tema" si aplica
-            const otroTema = document.getElementById('otro-tema');
-            if (otroTema) {
-                const valor = otroTema.value.trim();
-                if (!validarLongitud(valor, 3, 15)) {
-                    alert('El tema adicional debe tener entre 3 y 15 caracteres.');
-                    return;
-                }
-            }
-
-            // 5. Validar cantidad de fotos
-            const fotos = document.querySelectorAll('input[type="file"][name="foto-actividad[]"]');
-            if (!validarCantidadFotos(fotos)) {
-                alert('Solo puedes subir hasta 5 fotos.');
-                return;
-            }
-
-            // Confirmación
-            document.getElementById('mensaje-confirmacion').innerHTML = `
-                <div class="confirmacion">
-                    <p>¿Está seguro que desea agregar esta actividad?</p>
-                    <button onclick="confirmarEnvio(true)">Sí, estoy seguro</button>
-                    <button onclick="confirmarEnvio(false)">No, quiero volver</button>
-                </div>
-            `;
-        });
-    }
-}
-
-
-function confirmarEnvio(confirmado) {
-    const mensaje = document.getElementById('mensaje-confirmacion');
-    if (confirmado) {
-        mensaje.innerHTML = `
-            <div class="exito">
-                <p>¡Hemos recibido su información! Muchas gracias y suerte en su actividad.</p>
-                <button onclick="volverAPortada()">Volver a la Portada</button>
-            </div>
-        `;
-        document.getElementById('form-actividad').reset();
-    } else {
-        mensaje.innerHTML = '';
-    }
-}
-
-// ===== MANEJO DEL LISTADO DE ACTIVIDADES =====
+// ===== DATOS DE EJEMPLO =====
 const actividadesEjemplo = [
     {
         id: 1,
@@ -190,56 +57,6 @@ const actividadesEjemplo = [
     }
 ];
 
-function mostrarDetalleActividad(id) {
-    // Redirigir a la página de información con el ID como parámetro en la URL
-    window.location.href = `informacion-actividad.html?id=${id}`;
-}
-
-// ===== MANEJO DE REGIONES Y COMUNAS =====
-
-// Función para llenar el selector de regiones
-function llenarRegiones() {
-    const regionSelect = document.getElementById('region');
-    if (regionSelect && region_comuna && region_comuna.regiones) {
-        region_comuna.regiones.forEach(region => {
-            const opcion = document.createElement('option');
-            opcion.value = region.numero;
-            opcion.textContent = region.nombre;
-            regionSelect.appendChild(opcion);
-        });
-    }
-}
-
-// Función para llenar el selector de comunas según la región seleccionada
-function llenarComunas(regionNumero) {
-    const comunaSelect = document.getElementById('comuna');
-    if (!comunaSelect) return;
-
-    comunaSelect.innerHTML = '<option value="">Seleccione una comuna</option>'; // Limpiar opciones previas
-
-    if (region_comuna && region_comuna.regiones) {
-        const regionSeleccionada = region_comuna.regiones.find(region => region.numero == regionNumero);
-        if (regionSeleccionada) {
-            regionSeleccionada.comunas.forEach(comuna => {
-                const opcion = document.createElement('option');
-                opcion.value = comuna.id;
-                opcion.textContent = comuna.nombre;
-                comunaSelect.appendChild(opcion);
-            });
-        }
-    }
-}
-
-// Inicializar selector de regiones
-function inicializarSelectorRegion() {
-    const regionSelect = document.getElementById('region');
-    if (regionSelect) {
-        regionSelect.addEventListener('change', function() {
-            llenarComunas(this.value);
-        });
-    }
-}
-
 // ===== FUNCIONES DE NAVEGACIÓN =====
 function volverAPortada() {
     window.location.href = 'index.html';
@@ -249,6 +66,11 @@ function volverAlListado() {
     window.location.href = 'listado.html';
 }
 
+function mostrarDetalleActividad(id) {
+    window.location.href = `informacion-actividad.html?id=${id}`;
+}
+
+// ===== MANEJO DE VISUALIZACIÓN =====
 function ampliarFoto(url) {
     const overlay = document.createElement('div');
     overlay.className = 'overlay-foto';
@@ -261,53 +83,10 @@ function ampliarFoto(url) {
     document.body.appendChild(overlay);
 }
 
-// ===== INICIALIZACIÓN =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Precargar fecha/hora en formulario
-    const ahora = new Date();
-    const inicioActividad = document.getElementById('inicio-actividad');
-    if (inicioActividad) {
-        inicioActividad.value = ahora.toISOString().slice(0, 16);
-    }
-
-    const terminoActividad = document.getElementById('termino-actividad');
-    if (terminoActividad) {
-        const termino = new Date(ahora.getTime() + 3*60*60*1000);
-        terminoActividad.value = termino.toISOString().slice(0, 16);
-    }
-
-    // Inicializar formulario
-    inicializarContactarPor();
-    inicializarTemaActividad();
-    inicializarManejoDeFotos();
-    inicializarFormulario();
-
-    // Cargar regiones y comunas
-    llenarRegiones();
-    inicializarSelectorRegion();
-
-    // Inicializar botón "Agregar Actividad"
-    const btnAgregarActividad = document.getElementById('btn-agregar-actividad');
-    if (btnAgregarActividad) {
-        btnAgregarActividad.addEventListener('click', function() {
-            const seccionInformar = document.getElementById('informar-actividad');
-            if (seccionInformar) {
-                seccionInformar.style.display = 'block';
-                seccionInformar.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    }
-
-    // Cargar detalle de actividad si estamos en la página de información
-    cargarDetalleActividad();
-});
-
-// Función para cargar el detalle de una actividad específica
 function cargarDetalleActividad() {
     const detalleDiv = document.getElementById('detalle-actividad');
-    if (!detalleDiv) return; // Si no estamos en la página de detalle, salir
-    
-    // Obtener el ID de la actividad de la URL
+    if (!detalleDiv) return;
+
     const urlParams = new URLSearchParams(window.location.search);
     const id = parseInt(urlParams.get('id'));
 
@@ -337,3 +116,236 @@ function cargarDetalleActividad() {
         detalleDiv.innerHTML = '<p>No se especificó una actividad para mostrar.</p>';
     }
 }
+
+// ===== MANEJO DE REGIONES Y COMUNAS =====
+function llenarRegiones() {
+    const regionSelect = document.getElementById('region');
+    if (regionSelect && region_comuna && region_comuna.regiones) {
+        region_comuna.regiones.forEach(region => {
+            const opcion = document.createElement('option');
+            opcion.value = region.numero;
+            opcion.textContent = region.nombre;
+            regionSelect.appendChild(opcion);
+        });
+    }
+}
+
+function llenarComunas(regionNumero) {
+    const comunaSelect = document.getElementById('comuna');
+    if (!comunaSelect) return;
+
+    comunaSelect.innerHTML = '<option value="">Seleccione una comuna</option>';
+
+    if (region_comuna && region_comuna.regiones) {
+        const regionSeleccionada = region_comuna.regiones.find(region => region.numero == regionNumero);
+        if (regionSeleccionada) {
+            regionSeleccionada.comunas.forEach(comuna => {
+                const opcion = document.createElement('option');
+                opcion.value = comuna.id;
+                opcion.textContent = comuna.nombre;
+                comunaSelect.appendChild(opcion);
+            });
+        }
+    }
+}
+
+function inicializarSelectorRegion() {
+    const regionSelect = document.getElementById('region');
+    if (regionSelect) {
+        regionSelect.addEventListener('change', function() {
+            llenarComunas(this.value);
+        });
+    }
+}
+
+// ===== MANEJO DE FORMULARIO =====
+function inicializarContactarPor() {
+    const contactarPor = document.getElementById('contactar-por');
+    if (contactarPor) {
+        contactarPor.addEventListener('change', function() {
+            const contactoExtra = document.getElementById('contacto-extra');
+            if (this.value === 'otra') {
+                contactoExtra.innerHTML = `
+                    <label for="otro-contacto">Especifique contacto:</label>
+                    <input type="text" id="otro-contacto" name="otro-contacto"
+                           minlength="4" maxlength="50" required>
+                `;
+            } else {
+                contactoExtra.innerHTML = '';
+            }
+        });
+    }
+}
+
+function inicializarTemaActividad() {
+    const temaActividad = document.getElementById('tema-actividad');
+    if (temaActividad) {
+        temaActividad.addEventListener('change', function() {
+            const temaExtra = document.getElementById('tema-extra');
+            if (this.value === 'otro') {
+                temaExtra.innerHTML = `
+                    <label for="otro-tema">Especifique tema:</label>
+                    <input type="text" id="otro-tema" name="otro-tema"
+                           minlength="3" maxlength="15" required>
+                `;
+            } else {
+                temaExtra.innerHTML = '';
+            }
+        });
+    }
+}
+
+function inicializarManejoDeFotos() {
+    const btnAgregarFoto = document.getElementById('agregar-foto');
+    if (btnAgregarFoto) {
+        let photoCount = 1;
+        btnAgregarFoto.addEventListener('click', function() {
+            if (photoCount < 5) {
+                const contenedorFotos = document.getElementById('contenedor-fotos');
+                const nuevoInput = document.createElement('input');
+                nuevoInput.type = 'file';
+                nuevoInput.name = 'foto-actividad[]';
+                nuevoInput.accept = '.jpg,.png,.jpeg,.gif';
+                contenedorFotos.appendChild(nuevoInput);
+                photoCount++;
+            }
+        });
+    }
+}
+
+function confirmarEnvio(confirmado) {
+    const mensaje = document.getElementById('mensaje-confirmacion');
+    if (confirmado) {
+        mensaje.innerHTML = `
+            <div class="exito">
+                <p>¡Hemos recibido su información! Muchas gracias y suerte en su actividad.</p>
+                <button onclick="volverAPortada()">Volver a la Portada</button>
+            </div>
+        `;
+        document.getElementById('form-actividad').reset();
+    } else {
+        mensaje.innerHTML = '';
+    }
+}
+
+function inicializarFormulario() {
+    const formActividad = document.getElementById('form-actividad');
+    if (formActividad) {
+        formActividad.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 1. Validar nombre organizador
+            const nombreOrganizador = document.getElementById('nombre-organizador').value;
+            if (!validarNombre(nombreOrganizador)) {
+                alert('El nombre del organizador debe tener al menos 4 caracteres y solo puede contener letras.');
+                return;
+            }
+
+            // 2. Validar email
+            const email = document.getElementById('email-organizador').value;
+            if (email && !validarEmail(email)) {
+                alert('Formato de email inválido.');
+                return;
+            }
+
+            // 3. Validar teléfono
+            const telefono = document.getElementById('telefono-organizador').value;
+            if (telefono && !validarTelefono(telefono)) {
+                alert('Formato de teléfono inválido. Use +NNN.NNNNNNNN');
+                return;
+            }
+
+            // 4. Validar fechas
+            const inicio = document.getElementById('inicio-actividad').value;
+            const termino = document.getElementById('termino-actividad').value;
+            if (!validarRangoFechas(inicio, termino)) {
+                alert('La fecha/hora de inicio debe ser anterior a la de término.');
+                return;
+            }
+
+            // 5. Validar longitud de "otro contacto" si aplica
+            const otroContacto = document.getElementById('otro-contacto');
+            if (otroContacto) {
+                const valor = otroContacto.value.trim();
+                if (!validarLongitud(valor, 4, 50)) {
+                    alert('El contacto adicional debe tener entre 4 y 50 caracteres.');
+                    return;
+                }
+            }
+
+            // 6. Validar longitud de "otro tema" si aplica
+            const otroTema = document.getElementById('otro-tema');
+            if (otroTema) {
+                const valor = otroTema.value.trim();
+                if (!validarLongitud(valor, 3, 15)) {
+                    alert('El tema adicional debe tener entre 3 y 15 caracteres.');
+                    return;
+                }
+            }
+
+            // 7. Validar cantidad de fotos
+            const fotos = document.querySelectorAll('input[type="file"][name="foto-actividad[]"]');
+            if (!validarCantidadFotos(fotos)) {
+                alert('Solo puedes subir hasta 5 fotos.');
+                return;
+            }
+
+            // Confirmación
+            document.getElementById('mensaje-confirmacion').innerHTML = `
+                <div class="confirmacion">
+                    <p>¿Está seguro que desea agregar esta actividad?</p>
+                    <button onclick="confirmarEnvio(true)">Sí, estoy seguro</button>
+                    <button onclick="confirmarEnvio(false)">No, quiero volver</button>
+                </div>
+            `;
+        });
+    }
+}
+
+function inicializarBtnAgregarActividad() {
+    const btnAgregarActividad = document.getElementById('btn-agregar-actividad');
+    if (btnAgregarActividad) {
+        btnAgregarActividad.addEventListener('click', function() {
+            const seccionInformar = document.getElementById('informar-actividad');
+            if (seccionInformar) {
+                seccionInformar.style.display = 'block';
+                seccionInformar.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+}
+
+function precargarFechas() {
+    const ahora = new Date();
+
+    const inicioActividad = document.getElementById('inicio-actividad');
+    if (inicioActividad) {
+        inicioActividad.value = ahora.toISOString().slice(0, 16);
+    }
+
+    const terminoActividad = document.getElementById('termino-actividad');
+    if (terminoActividad) {
+        const termino = new Date(ahora.getTime() + 3*60*60*1000);
+        terminoActividad.value = termino.toISOString().slice(0, 16);
+    }
+}
+
+// ===== INICIALIZACIÓN =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Precarga de datos en formularios
+    precargarFechas();
+
+    // Inicialización de formularios
+    inicializarContactarPor();
+    inicializarTemaActividad();
+    inicializarManejoDeFotos();
+    inicializarFormulario();
+    inicializarBtnAgregarActividad();
+
+    // Inicialización de selector de regiones
+    llenarRegiones();
+    inicializarSelectorRegion();
+
+    // Carga de detalles de actividad
+    cargarDetalleActividad();
+});
