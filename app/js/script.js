@@ -333,19 +333,13 @@ function inicializarFormulario() {
 
             // 7. Validar cantidad de fotos
             const fotos = document.querySelectorAll('input[type="file"][name="foto-actividad[]"]');
-            let fotosSeleccionadas = 0;
-
-            for (const input of fotos) {
-                if (input.files.length > 0) {
-                    fotosSeleccionadas++;
+            if (!validarCantidadFotos(fotos, 1, 5)) {
+                if (fotos.length === 0 || [...fotos].every(input => input.files.length === 0)) {
+                    alert('Debe subir al menos una foto.');
+                } else {
+                    alert('Solo se permiten hasta 5 fotos.');
                 }
-            }
-
-            if (fotosSeleccionadas === 0) {
-                alert('Debe subir al menos una foto.');
                 return;
-            } else if (fotosSeleccionadas > 5) {
-                alert('Solo se permiten hasta 5 fotos.');
             }
 
             // 8. Validar región y comuna

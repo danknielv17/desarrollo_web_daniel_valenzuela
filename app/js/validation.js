@@ -99,13 +99,22 @@ function validarLongitud(texto, min, max) {
 
 /**
  * Valida la cantidad de fotos seleccionadas
- * @param inputFiles
- * @param minFoto
- * @param maxFotos
- * @returns {boolean}
+ * @param {NodeList|HTMLCollection} inputFiles - Colección de elementos input file
+ * @param {number} minFotos - Cantidad mínima de fotos requerida (por defecto: 1)
+ * @param {number} maxFotos - Cantidad máxima de fotos permitida (por defecto: 5)
+ * @returns {boolean} - true si la cantidad está dentro del rango permitido
  */
-function validarCantidadFotos(inputFiles, minFoto = 1 ,maxFotos = 5) {
-    return minFoto <= inputFiles.length && inputFiles.length <= maxFotos;
+function validarCantidadFotos(inputFiles, minFotos = 1, maxFotos = 5) {
+    let fotosSeleccionadas = 0;
+
+    // Contar archivos seleccionados
+    for (const input of inputFiles) {
+        if (input.files && input.files.length > 0) {
+            fotosSeleccionadas++;
+        }
+    }
+
+    return fotosSeleccionadas >= minFotos && fotosSeleccionadas <= maxFotos;
 }
 
 // Disponible las funciones globalmente
