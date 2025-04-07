@@ -164,13 +164,47 @@ function inicializarContactarPor() {
     if (contactarPor) {
         contactarPor.addEventListener('change', function() {
             const contactoExtra = document.getElementById('contacto-extra');
-            if (this.value === 'otra') {
+
+            if (this.value) { // Si se seleccionó cualquier opción (no está vacío)
+                let placeholder = '';
+                let label = '';
+
+                // Personalizar el label y placeholder según la red social seleccionada
+                switch(this.value) {
+                    case 'whatsapp':
+                        label = 'Número de WhatsApp:';
+                        placeholder = 'Ej: +569.12345678';
+                        break;
+                    case 'telegram':
+                        label = 'Usuario de Telegram:';
+                        placeholder = 'Ej: @usuario';
+                        break;
+                    case 'x':
+                        label = 'Usuario de X (Twitter):';
+                        placeholder = 'Ej: @usuario';
+                        break;
+                    case 'instagram':
+                        label = 'Usuario de Instagram:';
+                        placeholder = 'Ej: @usuario';
+                        break;
+                    case 'tiktok':
+                        label = 'Usuario de TikTok:';
+                        placeholder = 'Ej: @usuario';
+                        break;
+                    case 'otra':
+                        label = 'Especifique contacto:';
+                        placeholder = 'Usuario/URL red socual';
+                        break;
+                }
+
                 contactoExtra.innerHTML = `
-                    <label for="otro-contacto">Especifique contacto:</label>
+                    <label for="otro-contacto">${label}</label>
                     <input type="text" id="otro-contacto" name="otro-contacto"
-                           minlength="4" maxlength="50" required>
+                           minlength="4" maxlength="50" 
+                           placeholder="${placeholder}" required>
                 `;
             } else {
+                // Si no se ha seleccionado ninguna opción, limpiar el contenedor
                 contactoExtra.innerHTML = '';
             }
         });
