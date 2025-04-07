@@ -57,3 +57,21 @@ th, td {
     padding: 10px;
     text-align: left;
 }
+
+.galeria img {
+     margin: 10px;
+     border-radius: 8px;
+     box-shadow: 0 0 8px rgba(0,0,0,0.2);
+ }
+
+.detalle {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
