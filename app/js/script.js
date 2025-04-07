@@ -271,7 +271,7 @@ function inicializarFormulario() {
                 return;
             }
 
-            // Valida rango de fechas
+            // Validar rango de fechas
             if (termino && !validarRangoFechas(inicio, termino)) {
                 alert('La fecha/hora de inicio debe ser anterior a la de término.');
                 return;
