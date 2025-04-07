@@ -257,9 +257,22 @@ function inicializarFormulario() {
             }
 
             // 4. Validar fechas
+            // Validar que la fecha de inicio existe y tiene formato válido
             const inicio = document.getElementById('inicio-actividad').value;
+            if (!validarFormatoFecha(inicio)) {
+                alert('La fecha de inicio es obligatoria y debe tener un formato válido (YYYY-MM-DD HH:MM).');
+                return;
+            }
+
+            // Validar la fecha de término si está presente
             const termino = document.getElementById('termino-actividad').value;
-            if (!validarRangoFechas(inicio, termino)) {
+            if (!validarFormatoFecha(termino)) {
+                alert('La fecha de término debe tener un formato válido (YYYY-MM-DD HH:MM).');
+                return;
+            }
+
+            // Valida rango de fechas
+            if (termino && !validarRangoFechas(inicio, termino)) {
                 alert('La fecha/hora de inicio debe ser anterior a la de término.');
                 return;
             }
