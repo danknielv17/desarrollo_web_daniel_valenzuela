@@ -11,9 +11,7 @@ function validarNombre(nombre) {
 
     // Verificamos longitud mínima después de eliminar espacios extras
     const nombreLimpio = nombre.trim();
-    // Verificamos longitud máxima
-    const longitudMaxima = 200;
-    const longitudValida = nombreLimpio.length >= 3 && nombreLimpio.length <= longitudMaxima;
+    const longitudValida = nombreLimpio.length >= 4 && nombreLimpio.length <= 200;
 
     // Expresión regular para validar caracteres permitidos (letras, espacios y acentos)
     const regex = /^[a-zA-ZÀ-ÿ\s]+$/;
