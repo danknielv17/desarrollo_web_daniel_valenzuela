@@ -57,6 +57,26 @@ function validarTelefono(telefono) {
 }
 
 /**
+ * Valida que una fecha exista y tenga el formato correcto (YYYY-MM-DD HH:MM)
+ * @param {string} fecha - Fecha a validar
+ * @returns {boolean} - true si la fecha tiene un formato válido, false en caso contrario
+ */
+function validarFormatoFecha(fecha) {
+    // Verificar que la fecha existe
+    if (!fecha) return false;
+
+    // Expresión para el formato YYYY-MM-DD HH:MM
+    const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+    // Verificar el formato
+    if (!regex.test(fecha)) return false;
+
+    // Verificar que la fecha es válida usando Date
+    const dateObj = new Date(fecha);
+    return !isNaN(dateObj.getTime());
+}
+
+/**
  * Valida que la fecha de término sea posterior a la fecha de inicio
  * @param {string} inicio - Fecha y hora de inicio en formato ISO
  * @param {string} termino - Fecha y hora de término en formato ISO
@@ -92,6 +112,7 @@ function validarCantidadFotos(inputFiles, minFoto = 1 ,maxFotos = 5) {
 window.validarNombre = validarNombre;
 window.validarEmail = validarEmail;
 window.validarTelefono = validarTelefono;
+window.validarFormatoFecha = validarFormatoFecha;
 window.validarRangoFechas = validarRangoFechas;
 window.validarLongitud = validarLongitud;
 window.validarCantidadFotos = validarCantidadFotos;
