@@ -24,39 +24,5 @@
 </main>
 
 <script src="script.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Obtener el ID de la actividad de la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = parseInt(urlParams.get('id'));
-
-    if (id) {
-      const actividad = actividadesEjemplo.find(a => a.id === id);
-
-      if (actividad) {
-        const detalleDiv = document.getElementById('detalle-actividad');
-        detalleDiv.innerHTML = `
-          <h3>${actividad.tema}</h3>
-          <p><strong>Inicio:</strong> ${actividad.inicio}</p>
-          <p><strong>Término:</strong> ${actividad.termino || '-'}</p>
-          <p><strong>Comuna:</strong> ${actividad.comuna}</p>
-          <p><strong>Sector:</strong> ${actividad.sector}</p>
-          <p><strong>Organizador:</strong> ${actividad.organizador}</p>
-          <div class="galeria">
-            ${actividad.fotos.map(foto => `
-              <img src="img/${foto}" alt="Foto actividad"
-                   width="320" height="240"
-                   onclick="ampliarFoto('img/${foto}')">
-            `).join('')}
-          </div>
-        `;
-      } else {
-        document.getElementById('detalle-actividad').innerHTML = '<p>No se encontró la actividad solicitada.</p>';
-      }
-    } else {
-      document.getElementById('detalle-actividad').innerHTML = '<p>No se especificó una actividad para mostrar.</p>';
-    }
-  });
-</script>
 </body>
 </html>

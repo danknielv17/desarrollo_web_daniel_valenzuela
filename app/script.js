@@ -297,4 +297,43 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Cargar detalle de actividad si estamos en la página de información
+    cargarDetalleActividad();
 });
+
+// Función para cargar el detalle de una actividad específica
+function cargarDetalleActividad() {
+    const detalleDiv = document.getElementById('detalle-actividad');
+    if (!detalleDiv) return; // Si no estamos en la página de detalle, salir
+    
+    // Obtener el ID de la actividad de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = parseInt(urlParams.get('id'));
+
+    if (id) {
+        const actividad = actividadesEjemplo.find(a => a.id === id);
+
+        if (actividad) {
+            detalleDiv.innerHTML = `
+                <h3>${actividad.tema}</h3>
+                <p><strong>Inicio:</strong> ${actividad.inicio}</p>
+                <p><strong>Término:</strong> ${actividad.termino || '-'}</p>
+                <p><strong>Comuna:</strong> ${actividad.comuna}</p>
+                <p><strong>Sector:</strong> ${actividad.sector}</p>
+                <p><strong>Organizador:</strong> ${actividad.organizador}</p>
+                <div class="galeria">
+                    ${actividad.fotos.map(foto => `
+                        <img src="img/${foto}" alt="Foto actividad"
+                            width="320" height="240"
+                            onclick="ampliarFoto('img/${foto}')">
+                    `).join('')}
+                </div>
+            `;
+        } else {
+            detalleDiv.innerHTML = '<p>No se encontró la actividad solicitada.</p>';
+        }
+    } else {
+        detalleDiv.innerHTML = '<p>No se especificó una actividad para mostrar.</p>';
+    }
+}
