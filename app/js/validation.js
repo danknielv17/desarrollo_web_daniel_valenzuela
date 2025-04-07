@@ -11,7 +11,9 @@ function validarNombre(nombre) {
 
     // Verificamos longitud mínima después de eliminar espacios extras
     const nombreLimpio = nombre.trim();
-    const longitudValida = nombreLimpio.length >= 4;
+    // Verificamos longitud máxima
+    const longitudMaxima = 200;
+    const longitudValida = nombreLimpio.length >= 3 && nombreLimpio.length <= longitudMaxima;
 
     // Expresión regular para validar caracteres permitidos (letras, espacios y acentos)
     const regex = /^[a-zA-ZÀ-ÿ\s]+$/;
@@ -21,15 +23,31 @@ function validarNombre(nombre) {
     return longitudValida && formatoValido;
 }
 
-// Reemplazamos la referencia global
-window.validarNombre = validarNombre;
+/**
+ * Valida el formato de una dirección de correo electrónico
+ * @param {string} email - Dirección de correo electrónico a validar
+ * @returns {boolean} - true si el formato es válido, false en caso contrario
+ */
+function validarEmail(email) {
+    // Verificamos que el email exista
+    if (!email) return false;
 
-validateName = (name) => {
-    if(!name) return false;
-    let lengthValid = name.trim().length >= 4;
+    // Verificamos una longitud mínima razonable (usuario@dom.in = 10 chars)
+    const longitudMinima = 6;
+    // Verificamos longitud máxima
+    const longitudMaxima = 100;
+    const longitudValida = email.length >= longitudMinima && email.length <= longitudMaxima;
 
-    return lengthValid;
+    // Expresión regular mejorada que permite:
+    // - Caracteres alfanuméricos, puntos, guiones y subrayados en la parte local
+    // - Dominios de 2 a 6 caracteres (.com, .co, .info, etc.)
+    const regex = /^[\w.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
+    const formatoValido = regex.test(email);
+
+    // Devolvemos true solo si cumple ambas condiciones
+    return longitudValida && formatoValido;
 }
+
 /**
  * Valida el formato de teléfono móvil
  * @param {string} telefono - Número de teléfono en formato +NNN.NNNNNNNN
@@ -71,33 +89,10 @@ function validarCantidadFotos(inputFiles, maxFotos = 5) {
     return inputFiles.length <= maxFotos;
 }
 
-/**
- * Valida el formato de una dirección de correo electrónico
- * @param {string} email - Dirección de correo electrónico a validar
- * @returns {boolean} - true si el formato es válido, false en caso contrario
- */
-function validarEmail(email) {
-    // Verificamos que el email exista
-    if (!email) return false;
-
-    // Verificamos una longitud mínima razonable (usuario@dom.in = 10 chars)
-    const longitudMinima = 6;
-    const longitudValida = email.length >= longitudMinima;
-
-    // Expresión regular mejorada que permite:
-    // - Caracteres alfanuméricos, puntos, guiones y subrayados en la parte local
-    // - Dominios de 2 a 6 caracteres (.com, .co, .info, etc.)
-    const regex = /^[\w.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
-    const formatoValido = regex.test(email);
-
-    // Devolvemos true solo si cumple ambas condiciones
-    return longitudValida && formatoValido;
-}
-
 // Disponible las funciones globalmente
 window.validarNombre = validarNombre;
+window.validarEmail = validarEmail;
 window.validarTelefono = validarTelefono;
 window.validarRangoFechas = validarRangoFechas;
 window.validarLongitud = validarLongitud;
 window.validarCantidadFotos = validarCantidadFotos;
-window.validarEmail = validarEmail;
