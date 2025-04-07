@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Información de la Actividad</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .galeria img {
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
+
+    .detalle {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="img/dcc-logo.png" alt="Logo DCC" width="150">
+  </div>
+  <h1>Información de la Actividad</h1>
+  <nav>
+    <ul>
+      <li><a href="index.html">Portada</a></li>
+      <li><a href="listado.html">Ver Listado de Actividades</a></li>
+      <li><a href="agregar.html">Agregar Actividad</a></li>
+      <li><a href="estadisticas.html">Estadísticas</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="detalle">
+    <div id="detalle-actividad"></div>
+    <div class="botones-navegacion">
+      <button onclick="volverAlListado()">Volver al Listado</button>
+      <button onclick="volverAPortada()">Volver a la Portada</button>
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Obtener el ID de la actividad de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = parseInt(urlParams.get('id'));
+
+    if (id) {
+      const actividad = actividadesEjemplo.find(a => a.id === id);
+
+      if (actividad) {
+        const detalleDiv = document.getElementById('detalle-actividad');
+        detalleDiv.innerHTML = `
+          <h3>${actividad.tema}</h3>
+          <p><strong>Inicio:</strong> ${actividad.inicio}</p>
+          <p><strong>Término:</strong> ${actividad.termino || '-'}</p>
+          <p><strong>Comuna:</strong> ${actividad.comuna}</p>
+          <p><strong>Sector:</strong> ${actividad.sector}</p>
+          <p><strong>Organizador:</strong> ${actividad.organizador}</p>
+          <div class="galeria">
+            ${actividad.fotos.map(foto => `
+              <img src="img/${foto}" alt="Foto actividad"
+                   width="320" height="240"
+                   onclick="ampliarFoto('img/${foto}')">
+            `).join('')}
+          </div>
+        `;
+      } else {
+        document.getElementById('detalle-actividad').innerHTML = '<p>No se encontró la actividad solicitada.</p>';
+      }
+    } else {
+      document.getElementById('detalle-actividad').innerHTML = '<p>No se especificó una actividad para mostrar.</p>';
+    }
+  });
+</script>
+</body>
+</html>
