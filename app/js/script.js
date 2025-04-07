@@ -278,8 +278,8 @@ function inicializarFormulario() {
 
             // 2. Validar email
             const email = document.getElementById('email-organizador').value;
-            if (email && !validarEmail(email)) {
-                alert('Formato de email inválido.');
+            if (!validarEmail(email)) {
+                alert('El email es obligatorio y debe tener un formato válido.');
                 return;
             }
 
