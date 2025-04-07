@@ -191,33 +191,8 @@ const actividadesEjemplo = [
 ];
 
 function mostrarDetalleActividad(id) {
-    const actividad = actividadesEjemplo.find(a => a.id === id);
-    const detalle = document.getElementById('detalle-actividad');
-
-    if (!actividad) {
-        console.error(`No se encontró actividad con id ${id}`);
-        return;
-    }
-
-    detalle.innerHTML = `
-        <h3>Detalle de la Actividad</h3>
-        <p><strong>Inicio:</strong> ${actividad.inicio}</p>
-        <p><strong>Término:</strong> ${actividad.termino || '-'}</p>
-        <p><strong>Comuna:</strong> ${actividad.comuna}</p>
-        <p><strong>Sector:</strong> ${actividad.sector}</p>
-        <p><strong>Tema:</strong> ${actividad.tema}</p>
-        <p><strong>Organizador:</strong> ${actividad.organizador}</p>
-        <div class="galeria">
-            ${actividad.fotos.map(foto => `
-                <img src="img/${foto}" alt="Foto actividad"
-                     width="320" height="240"
-                     onclick="ampliarFoto('img/${foto}')">
-            `).join('')}
-        </div>
-        <button onclick="volverAlListado()">Volver al Listado</button>
-        <button onclick="volverAPortada()">Volver a la Portada</button>
-    `;
-    detalle.style.display = 'block';
+    // Redirigir a la página de información con el ID como parámetro en la URL
+    window.location.href = `informacion-actividad.html?id=${id}`;
 }
 
 // ===== MANEJO DE REGIONES Y COMUNAS =====
@@ -271,10 +246,7 @@ function volverAPortada() {
 }
 
 function volverAlListado() {
-    const detalle = document.getElementById('detalle-actividad');
-    if (detalle) {
-        detalle.style.display = 'none';
-    }
+    window.location.href = 'listado.html';
 }
 
 function ampliarFoto(url) {
