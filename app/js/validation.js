@@ -80,11 +80,12 @@ function validarLongitud(texto, min, max) {
 /**
  * Valida la cantidad de fotos seleccionadas
  * @param inputFiles
+ * @param minFoto
  * @param maxFotos
  * @returns {boolean}
  */
-function validarCantidadFotos(inputFiles, maxFotos = 5) {
-    return inputFiles.length <= maxFotos;
+function validarCantidadFotos(inputFiles, minFoto = 1 ,maxFotos = 5) {
+    return minFoto <= inputFiles.length && inputFiles.length <= maxFotos;
 }
 
 // Disponible las funciones globalmente
