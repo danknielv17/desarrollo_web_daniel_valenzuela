@@ -1,7 +1,7 @@
 // ===== VALIDACIONES DEL FORMULARIO =====
 
 /**
- * Valida el nombre del organizador
+ * Valida el nombre del organizador obligatorio
  * @param {string} nombre - Nombre a validar
  * @returns {boolean} - true si el nombre es válido, false en caso contrario
  */
@@ -22,7 +22,7 @@ function validarNombre(nombre) {
 }
 
 /**
- * Valida el formato de una dirección de correo electrónico
+ * Valida el formato de una dirección de correo electrónico obligatorio
  * @param {string} email - Dirección de correo electrónico a validar
  * @returns {boolean} - true si el formato es válido, false en caso contrario
  */
@@ -47,7 +47,7 @@ function validarEmail(email) {
 }
 
 /**
- * Valida el formato de teléfono móvil
+ * Valida el formato de teléfono móvil, no es obligatorio
  * @param {string} telefono - Número de teléfono en formato +NNN.NNNNNNNN
  * @returns {boolean} - true si el formato es válido, false en caso contrario
  */
@@ -57,7 +57,7 @@ function validarTelefono(telefono) {
 }
 
 /**
- * Valida que una fecha exista y tenga el formato correcto (YYYY-MM-DD HH:MM)
+ * Valida que una fecha exista y tenga el formato correcto (YYYY-MM-DD HH:MM) obligatorio
  * @param {string} fecha - Fecha a validar
  * @returns {boolean} - true si la fecha tiene un formato válido, false en caso contrario
  */
@@ -77,7 +77,7 @@ function validarFormatoFecha(fecha) {
 }
 
 /**
- * Valida que la fecha de término sea posterior a la fecha de inicio
+ * Valida que la fecha de término sea posterior a la fecha de inicio obligatorio
  * @param {string} inicio - Fecha y hora de inicio en formato ISO
  * @param {string} termino - Fecha y hora de término en formato ISO
  * @returns {boolean} - true si el término es posterior al inicio, false en caso contrario
@@ -98,7 +98,7 @@ function validarLongitud(texto, min, max) {
 }
 
 /**
- * Valida la cantidad de fotos seleccionadas
+ * Valida la cantidad de fotos seleccionadas en los inputs de tipo file obligatorio
  * @param {NodeList|HTMLCollection} inputFiles - Colección de elementos input file
  * @param {number} minFotos - Cantidad mínima de fotos requerida (por defecto: 1)
  * @param {number} maxFotos - Cantidad máxima de fotos permitida (por defecto: 5)
