@@ -26,17 +26,17 @@
        - Región y comuna (selects obligatorios)
        - Sector (opcional de llenar)
      - Datos del organizador:
-     - Nombre, email (inputs obligatorios de llenar)
-     - Teléfono (input opcional de llenar)
-     - Contactar por (select opcional de elegir, si elige, es obligatorio llenar el campo 
-       correspondiente)
+       - Nombre, email (inputs obligatorios de llenar)
+       - Teléfono (input opcional de llenar)
+       - Contactar por (select opcional de elegir, si elige, es obligatorio llenar el campo 
+         correspondiente)
      - Información de la actividad: (fechas, descripción, tema, fotos)
-     - Fecha de inicio (input de fecha obligatorio)
-     - Fecha de término (input de fecha opcional)
-     - Descripción (textarea opcional)
-     - Tema (select obligatorio)
-       - Si elige "Otro", se habilita un input de texto para especificar el tema
-     Fotos (input de archivo, obligatorio al menos una foto)
+       - Fecha de inicio (input de fecha obligatorio)
+       - Fecha de término (input de fecha opcional)
+       - Descripción (textarea opcional)
+       - Tema (select obligatorio)
+         - Si elige "Otro", se habilita un input de texto para especificar el tema 
+       - Fotos (input de archivo, obligatorio al menos una foto)
    - Incluye validaciones básicas con atributos HTML (required, pattern, etc.)
 
 3. **Listado de actividades:**
