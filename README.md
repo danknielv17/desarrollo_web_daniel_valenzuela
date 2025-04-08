@@ -43,6 +43,7 @@
    - Tabla con actividades existentes
    - Cada fila es clickeable para ver detalles (`onclick="mostrarDetalleActividad(id)"`)
    - Incluye una sección oculta para mostrar detalles específicos de cada actividad
+     - Al hacer clic en una foto, se muestra una imagen ampliada junto con un botón para cerrar la vista
 
 4. **Estadísticas:**
    - Gráficos que muestran estadísticas de actividades 
