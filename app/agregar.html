@@ -37,7 +37,7 @@
                 </select>
 
                 <label for="sector">Sector:</label>
-                <input type="text" id="sector" name="sector" maxlength="100" placeholder="Ej: Plaza, Parque, etc.">
+                <input type="text" id="sector" name="sector" maxlength="100" placeholder="Ej: Plaza, Parque, etc." required>
             </fieldset>
 
             <!-- Datos del organizador -->
@@ -50,10 +50,10 @@
                 <input type="email" id="email-organizador" name="email-organizador" maxlength="100" placeholder="usuario@dominio.in" required>
 
                 <label for="telefono-organizador">Número de celular:</label>
-                <input type="tel" id="telefono-organizador" name="telefono-organizador" pattern="\+[0-9]{3}\.[0-9]{8}" placeholder="Ej: +569.12345678">
+                <input type="tel" id="telefono-organizador" name="telefono-organizador" placeholder="Ej: +569.12345678" required>
 
                 <label for="contactar-por">Contactar por:</label>
-                <select id="contactar-por" name="contactar-por">
+                <select id="contactar-por" name="contactar-por" required>
                     <option value="">Seleccione una opción</option>
                     <option value="whatsapp">WhatsApp</option>
                     <option value="telegram">Telegram</option>
@@ -76,7 +76,7 @@
                 <input type="datetime-local" id="termino-actividad" name="termino-actividad">
 
                 <label for="descripcion-actividad">Descripción:</label>
-                <textarea id="descripcion-actividad" name="descripcion-actividad" rows="10" cols="50"></textarea>
+                <textarea id="descripcion-actividad" name="descripcion-actividad" rows="10" cols="50" placeholder="Opcional"></textarea>
 
                 <label for="tema-actividad">Tema:</label>
                 <select id="tema-actividad" name="tema-actividad" required>
