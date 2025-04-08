@@ -56,15 +56,17 @@
 
 ## Validaciones
 - Validaciones básicas en el formulario de agregar actividad
-- Los campos obligatorios presentan required y a su vez, su respectiva validación en validation.js e inicializarFormulario
+- Los campos obligatorios presentan required y a su vez, su respectiva validación en validation.js e inicializarFormulario en script.js
+- Sin los requiered, los campos obligatorios no se pueden enviar, mostrando un mensaje de alerta.
   - Región y comuna valida que se hayan seleccionado 
-  - Nombre y email validan que estén llenos y que el email tenga un formato correcto
-  - Fecha de inicio valida que esté seleccionada y que sea una fecha válida
+  - Nombre y email validan que estén llenos, valida un largo válido de nombre y que el email tenga un formato correcto
+  - Fecha de inicio valida que esté seleccionada y que sea una fecha válida con formato YYYY-MM-DD
   - Tema valida que se haya seleccionado y si elige otro, que el campo de texto esté lleno
   - Foto valida que al menos una foto esté seleccionada
-- Los campos con validaciones opcionales presentan no son obligatorios de llenar, pero si el usuario decide llenar el campo, se valida su correcta 
+- Los campos con validaciones opcionales no son obligatorios de llenar, pero si el usuario decide llenar el campo, se valida su correcta 
   escritura y selección.
-  - Sector valida que sea un texto válido
+  - Sector valida que sea un texto de largo válido
   - Teléfono valida que el número esté escrito en un formato válido 
-  - En contactar por, si elige una opción, valida que el campo correspondiente esté lleno
+  - En contactar por, si elige una opción, tiene required para que el campo correspondiente esté lleno (lógica presente en inicializarContactarPor 
+    en script.js)
   - Fecha de término valida que sea una fecha válida y posterior a la fecha de inicio
