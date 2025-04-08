@@ -49,3 +49,9 @@
 - **Interactividad**: Elementos que cambian dinámicamente basados en selecciones del usuario
 - **Maquetación organizada** usando secciones y fieldsets para agrupar información relacionada
 - **Navegación simple** entre las diferentes partes de la aplicación
+
+## Validaciones
+- Validaciones básicas en el formulario de agregar actividad
+- Los campos con validaciones obligatorias presentan required y a su vez, su respectiva validación en validation.js e inicializarFormulario
+- Los campos con validaciones opcionales presentan no son obligatorios de llenar, pero si el usuario decide llenar el campo, se valida su correcta 
+  escritura y selección.
