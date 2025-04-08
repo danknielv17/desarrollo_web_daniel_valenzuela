@@ -345,7 +345,14 @@ function inicializarFormulario() {
                 }
             }
 
-            // 7. Validar cantidad de fotos
+            // 7. Validar selección de tema
+            const temaActividad = document.getElementById('tema-actividad');
+            if (!temaActividad.value) {
+                alert('Debe seleccionar un tema para la actividad.');
+                return;
+            }
+
+            // 8. Validar cantidad de fotos
             const fotos = document.querySelectorAll('input[type="file"][name="foto-actividad[]"]');
             if (!validarCantidadFotos(fotos, 1, 5)) {
                 if (fotos.length === 0 || [...fotos].every(input => input.files.length === 0)) {
