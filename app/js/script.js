@@ -269,6 +269,19 @@ function inicializarFormulario() {
         formActividad.addEventListener('submit', function(e) {
             e.preventDefault();
 
+            // Validar región y comuna
+            const region = document.getElementById('region').value;
+            if (!region) {
+                alert('Debe seleccionar una región.');
+                return;
+            }
+
+            const comuna = document.getElementById('comuna').value;
+            if (!comuna) {
+                alert('Debe seleccionar una comuna.');
+                return;
+            }
+
             // 1. Validar nombre organizador
             const nombreOrganizador = document.getElementById('nombre-organizador').value;
             if (!validarNombre(nombreOrganizador)) {
@@ -339,19 +352,6 @@ function inicializarFormulario() {
                 } else {
                     alert('Solo se permiten hasta 5 fotos.');
                 }
-                return;
-            }
-
-            // 8. Validar región y comuna
-            const region = document.getElementById('region').value;
-            if (!region) {
-                alert('Debe seleccionar una región.');
-                return;
-            }
-
-            const comuna = document.getElementById('comuna').value;
-            if (!comuna) {
-                alert('Debe seleccionar una comuna.');
                 return;
             }
 
