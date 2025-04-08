@@ -54,13 +54,6 @@
      El eje X son los meses y para cada mes muestra una barra con la cantidad de actividades que se inician en la mañana, 
      la cantidad de actividades que se inician al mediodía y la cantidad de actividades de la tarde. El eje Y indica la cantidad.
 
-## Destacables
-
-- **Formulario completo** con múltiples tipos de campos: selects, inputs de texto, fechas, archivos, etc.
-- **Interactividad**: Elementos que cambian dinámicamente basados en selecciones del usuario
-- **Maquetación organizada** usando secciones y fieldsets para agrupar información relacionada
-- **Navegación simple** entre las diferentes partes de la aplicación
-
 ## Validaciones
 - Validaciones básicas en el formulario de agregar actividad
 - Los campos obligatorios presentan required y a su vez, su respectiva validación en validation.js e inicializarFormulario
