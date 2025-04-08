@@ -56,7 +56,7 @@
 
 ## Validaciones
 - Validaciones básicas en el formulario de agregar actividad
-- Los campos obligatorios presentan required y a su vez, su respectiva validación en validation.js e inicializarFormulario en script.js
+- Los campos obligatorios presentan required y a su vez, su respectiva validación en `validation.js` e `inicializarFormulario` en script.js
 - Sin los requiered, los campos obligatorios no se pueden enviar, mostrando un mensaje de alerta.
   - Región y comuna valida que se hayan seleccionado 
   - Nombre y email validan que estén llenos, valida un largo válido de nombre y que el email tenga un formato correcto
@@ -67,6 +67,6 @@
   escritura y selección.
   - Sector valida que sea un texto de largo válido
   - Teléfono valida que el número esté escrito en un formato válido 
-  - En contactar por, si elige una opción, tiene required para que el campo correspondiente esté lleno (lógica presente en inicializarContactarPor 
-    en script.js)
+  - En contactar por, si elige una opción, tiene required para que el campo correspondiente esté lleno (lógica presente en `inicializarContactarPor` 
+    en `script.js`)
   - Fecha de término valida que sea una fecha válida y posterior a la fecha de inicio
