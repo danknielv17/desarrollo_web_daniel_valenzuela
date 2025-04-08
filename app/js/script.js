@@ -286,7 +286,7 @@ function inicializarFormulario() {
             // 1. Validar nombre organizador
             const nombreOrganizador = document.getElementById('nombre-organizador').value;
             if (!validarNombre(nombreOrganizador)) {
-                alert('El nombre del organizador debe tener al menos 3 caracteres y solo puede contener letras.');
+                alert('El nombre del organizador es obligatorio. Debe tener al menos 3 caracteres y solo puede contener letras.');
                 return;
             }
 
