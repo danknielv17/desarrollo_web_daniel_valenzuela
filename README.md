@@ -2,7 +2,7 @@
 
 ## CC5002 - Tarea 1
 
-# HTML de Gestión de Actividades Recreativas
+# HTML, CSS y JS: Gestión de Actividades Recreativas
 
 ## Estructura general
 
