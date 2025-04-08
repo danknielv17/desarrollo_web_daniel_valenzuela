@@ -263,6 +263,7 @@ function confirmarEnvio(confirmado) {
     }
 }
 
+// inicializarFormulario: Función para inicializar el formulario de actividad
 function inicializarFormulario() {
     const formActividad = document.getElementById('form-actividad');
     if (formActividad) {
