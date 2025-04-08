@@ -18,13 +18,16 @@
    - **Listado con las últimas actividades agregadas:**
    - Muestra una tabla con actividades recientes
    - Incluye datos como fecha/hora, ubicación, tema y fotos
-   - Hay algunos errores en la estructura de la tabla (por ejemplo, etiqueta `<\tr>` mal cerrada)
 
 2. **Agregar nueva actividad:**
    - Formulario para agregar una nueva actividad
    - Dividido en fieldsets para organizar la información:
-     - Información del lugar (región, comuna, sector)
-     - Datos del organizador (nombre, email, teléfono, método de contacto)
+     - Información del lugar: 
+       - Región y comuna (selects obligatorios)
+       - Sector (opcional de llenar)
+     - Datos del organizador:
+     - Nombre, email (inputs obligatorios de llenar)
+     - Teléfono (input opcional de llenar)
      - Información de la actividad (fechas, descripción, tema, fotos)
    - Incluye validaciones básicas con atributos HTML (required, pattern, etc.)
    - Tiene elementos dinámicos que probablemente se gestionan con JavaScript
