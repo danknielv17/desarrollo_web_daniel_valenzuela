@@ -67,6 +67,6 @@
   escritura y selección.
   - Sector valida que sea un texto de largo válido
   - Teléfono valida que el número esté escrito en un formato válido 
-  - En contactar por, si elige una opción, tiene required para que el campo correspondiente esté lleno (lógica presente en `inicializarContactarPor` 
+  - Contactar por es opcional, pero si elige una opción, tiene required para que el campo correspondiente esté lleno (lógica presente en `inicializarContactarPor` 
     en `script.js`)
   - Fecha de término valida que sea una fecha válida y posterior a la fecha de inicio
