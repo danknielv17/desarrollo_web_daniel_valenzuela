@@ -40,7 +40,7 @@
    - Incluye validaciones básicas con atributos HTML (required, pattern, etc.)
 
 3. **Listado de actividades:**
-   - Tabla con actividades existentes
+   - Tabla con actividades existentes (como decisión personal, se muestran las mismas que en la portada)
    - Cada fila es clickeable para ver detalles (`onclick="mostrarDetalleActividad(id)"`)
    - Incluye una sección oculta para mostrar detalles específicos de cada actividad
      - Al hacer clic en una foto, se muestra una imagen ampliada junto con un botón para cerrar la vista
