@@ -312,7 +312,7 @@ function inicializarFormulario() {
                 return;
             }
 
-            // Validar la fecha de término si está presente
+            // Validar si la fecha de término está presente valida su formato
             const termino = document.getElementById('termino-actividad').value;
             if (termino && !validarFormatoFecha(termino)) {
                 alert('La fecha de término debe tener un formato válido (YYYY-MM-DD HH:MM).');
