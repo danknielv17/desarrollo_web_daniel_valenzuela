@@ -4,6 +4,7 @@
  ****************************************************/
 
 // ===== ACTIVIDADES DE EJEMPLO LISTADO =====
+// Datos de ejemplo para el listado desplegado de las actividades recreativas
 const actividadesEjemplo = [
     {
         id: 1,
