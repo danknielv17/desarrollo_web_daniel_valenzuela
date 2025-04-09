@@ -56,8 +56,8 @@
 
 ## Validaciones
 - Validaciones básicas en el formulario de agregar actividad
-- Los campos obligatorios presentan required y a su vez, su respectiva validación en `validation.js` y`script.js`
-- Sin los requiered, los campos obligatorios no se pueden enviar, mostrando un mensaje de alerta.
+- Los campos obligatorios presentan required y a su vez, su respectiva validación en `validation.js` y `script.js`
+- Sin los requiered, el usuario al intentar enviar el formulario, se le indicará con una alerta que debe llenar los campos obligatorios con el formato correcto
   - Región y comuna valida que se hayan seleccionado 
   - Nombre y email validan que estén llenos, valida un largo válido de nombre y que el email tenga un formato correcto
   - Fecha de inicio valida que esté seleccionada y que sea una fecha válida con formato YYYY-MM-DD
