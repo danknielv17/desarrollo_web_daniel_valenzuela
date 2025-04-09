@@ -335,7 +335,14 @@ function inicializarFormulario() {
                 }
             }
 
-            // 6. Validar longitud de "otro tema" si aplica
+            // 6. Validar selección de tema
+            const temaActividad = document.getElementById('tema-actividad');
+            if (!temaActividad.value) {
+                alert('Debe seleccionar un tema para la actividad.');
+                return;
+            }
+
+            // 7. Validar longitud de "otro tema" si aplica
             const otroTema = document.getElementById('otro-tema');
             if (otroTema) {
                 const valor = otroTema.value.trim();
@@ -343,13 +350,6 @@ function inicializarFormulario() {
                     alert('El tema adicional debe tener entre 3 y 15 caracteres.');
                     return;
                 }
-            }
-
-            // 7. Validar selección de tema
-            const temaActividad = document.getElementById('tema-actividad');
-            if (!temaActividad.value) {
-                alert('Debe seleccionar un tema para la actividad.');
-                return;
             }
 
             // 8. Validar cantidad de fotos
