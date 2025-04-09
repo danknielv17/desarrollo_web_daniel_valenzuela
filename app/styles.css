@@ -1,22 +1,31 @@
+/* General */
 body {
-    font-family: "Arial", sans-serif;
+    font-family: "Roboto", Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
 }
 
+/* Header */
 header {
-    position: relative;
-
-    background-color: #7791ac;
-    color: #040404;
-    padding: 10px 0;
+    background: linear-gradient(90deg, #7791ac, #4a6fa5);
+    color: #000000;
+    padding: 20px 0;
     text-align: center;
+    border-bottom: 3px solid #333;
+}
 
-    border-bottom: 2px solid #000000;
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
 }
 
 nav ul {
     list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0;
 }
 
 nav ul li {
@@ -25,41 +34,92 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #6c2121;
+    color: #6a0606;
     text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
-h2 {
-    margin-top: 20px;
+nav ul li a:hover {
+    color: #ffffff;
 }
 
+/* Tablas */
 table {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 table, th, td {
-    border: 1px solid #000000;
+    border: 1px solid #ddd;
 }
 
-th, td {
+th {
+    background-color: #4a6fa5;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+td {
     padding: 10px;
     text-align: left;
 }
 
-.galeria img {
-     margin: 10px;
- }
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
 
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Botones */
+button {
+    background-color: #4a6fa5;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #7791ac;
+}
+
+/* Imágenes */
+.galeria img, table img {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.galeria img:hover, table img:hover {
+    transform: scale(1.05);
+}
+
+/* Detalle */
 .detalle {
     max-width: 800px;
     margin: auto;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
+/* Enlaces */
+a {
+    color: #3169bc;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
+a:hover {
+    color: #0d1f71;
+}
