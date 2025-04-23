@@ -2,7 +2,7 @@
 
 ## CC5002 - Tarea 2
 
-# SQL: Gestión de Actividades Recreativas
+# SQL y Flask: Gestión de Actividades Recreativas
 
 ## Estructura general
 
