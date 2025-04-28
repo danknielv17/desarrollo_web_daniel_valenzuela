@@ -104,7 +104,7 @@ function cargarDetalleActividad() {
                 <p><strong>Organizador:</strong> ${actividad.organizador}</p>
                 <div class="galeria">
                     ${actividad.fotos.map(foto => `
-                        <img src="img/${foto}" alt="Foto actividad"
+                        <img src="/app/static/img/${foto}" alt="Foto actividad"
                             width="320" height="240"
                             onclick="ampliarFoto('img/${foto}')">
                     `).join('')}
