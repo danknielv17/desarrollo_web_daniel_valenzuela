@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Información de la Actividad</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<header>
+  <h1>Información de la Actividad Seleccionada</h1>
+</header>
+
+<main>
+  <div class="detalle">
+    <h2>{{ actividad.descripcion or actividad.tema or 'Actividad' }}</h2>
+    <p><strong>Inicio:</strong> {{ actividad.inicio }}</p>
+    <p><strong>Término:</strong> {{ actividad.termino or '-' }}</p>
+    <p><strong>Comuna:</strong> {{ actividad.comuna }}</p>
+    <p><strong>Sector:</strong> {{ actividad.sector or '-' }}</p>
+    <p><strong>Descripción:</strong> {{ actividad.descripcion or '-' }}</p>
+    <p><strong>Organizador:</strong> {{ actividad.nombre_organizador }}</p>
+    <p><strong>Email:</strong> {{ actividad.email_organizador }}</p>
+    <p><strong>Teléfono:</strong> {{ actividad.telefono_organizador or '-' }}</p>
+
+    <h3>Temas asociados</h3>
+    <ul>
+      {% for tema in temas %}
+        <li>{{ tema }}</li>
+      {% endfor %}
+    </ul>
+
+    {% if contactos %}
+    <h3>Formas de Contacto</h3>
+    <ul>
+      {% for c in contactos %}
+        <li><strong>{{ c.red_social }}:</strong> {{ c.valor }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if archivos %}
+    <h3>Fotos de la Actividad</h3>
+    <div class="galeria">
+      {% for archivo in archivos %}
+        <img src="{{ '/' + archivo.ruta }}" alt="{{ archivo.nombre }}" width="300">
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="botones-navegacion">
+      <a href="{{ url_for('listado') }}"><button>Volver al Listado</button></a>
+      <a href="{{ url_for('portada') }}"><button>Volver a la Portada</button></a>
+    </div>
+  </div>
+</main>
+</body>
+</html>
