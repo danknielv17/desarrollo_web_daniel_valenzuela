@@ -2,83 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Actividades Recreativas</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <title>Portada - Actividades Recreativas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 <header>
     <h1>Bienvenido a la Gestión de Actividades Recreativas</h1>
     <nav>
         <ul>
-            <li><a href="agregar.html">Agregar actividad</a></li>
-            <li><a href="listado.html">Ver Listado de Actividades</a></li>
-            <li><a href="estadisticas.html">Estadísticas</a></li>
+            <li><a href="{{ url_for('agregar') }}">Agregar Actividad</a></li>
+            <li><a href="{{ url_for('listado') }}">Ver Listado de Actividades</a></li>
+            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
         </ul>
     </nav>
 </header>
-
 <main>
-    <section id="ultimas-actividades">
-        <h2>Últimas 5 Actividades Agregadas</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Inicio</th>
-                <th>Término</th>
-                <th>Comuna</th>
-                <th>Sector</th>
-                <th>Tema</th>
-                <th>Foto</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Datos de ejemplo -->
-            <tr>
-                <td>2025-03-28 12:00</td>
-                <td>2025-03-28 14:00</td>
-                <td>Santiago</td>
-                <td>Beauchef 850, terraza</td>
-                <td>Escuela de Boxeo</td>
-                <td><img src="../static/img/boxeo.jpeg" alt="Escuela de Boxeo" width="200"></td>
-            </tr>
-            <tr>
-                <td>2025-03-29 19:00</td>
-                <td>2025-03-29 20:00</td>
-                <td>Ñuñoa</td>
-                <td>Plaza</td>
-                <td>Cómo deshidratar fruta</td>
-                <td><img src="../static/img/deshidratacion.jpg" alt="Deshidratación" width="200"></td>
-            </tr>
-            <tr>
-                <td>2022-03-30 18:00</td>
-                <td>-</td>
-                <td>Santiago</td>
-                <td>Parque O´higgins</td>
-                <td>Música Urbana</td>
-                <td><img src="../static/img/musica.jpg" alt="Música Urbana" width="200"></td>
-            </tr>
-            <tr>
-                <td>2025-03-30 10:00</td>
-                <td>2025-03-30 12:00</td>
-                <td>Las Condes</td>
-                <td>Parque Araucano</td>
-                <td>Yoga</td>
-                <td><img src="../static/img/yoga.jpg" alt="Yoga" width="200"></td>
-            </tbody>
-            <tr>
-                <td>2025-03-30 11:00</td>
-                <td>2025-03-30 13:00</td>
-                <td>Santiago</td>
-                <td>Beauchef 850, canchas</td>
-                <td>Reunión G.O.</td>
-                <td><img src="../static/img/furs.jpg" alt="Furs" width="200"></td>
-            </tr>
-        </table>
-    </section>
+    <h2>Últimas 5 actividades agregadas</h2>
+    <ul>
+        {% for act in actividades %}
+        <li>
+            <strong>{{ act['descripcion'] }}</strong><br>
+            <b>Inicio:</b> {{ act['inicio'] }}<br>
+            <b>Término:</b> {{ act['termino'] or '-' }}<br>
+            <b>Comuna:</b> {{ act['comuna'] }}<br>
+            <b>Sector:</b> {{ act['sector'] or '-' }}<br>
+            <b>Organizador:</b> {{ act['nombre_organizador'] }} ({{ act['email_organizador'] }})
+        </li>
+        {% endfor %}
+    </ul>
 </main>
-
-<!-- Incluye el archivo JavaScript para manejar la lógica de la aplicación -->
-<script src="../static/js/script.js"></script>
-<script src="../static/js/validation.js"></script>
 </body>
 </html>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="mensajes">
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}

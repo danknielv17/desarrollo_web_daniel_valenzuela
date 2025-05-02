@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Informar Actividad</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
 <header>
     <h1>Informar Nueva Actividad</h1>
     <nav>
         <ul>
-            <li><a href="index.html">Portada</a></li>
-            <li><a href="listado.html">Ver Listado de Actividades</a></li>
-            <li><a href="estadisticas.html">Estadísticas</a></li>
+            <li><a href="{{ url_for('portada') }}">Portada</a></li>
+            <li><a href="{{ url_for('listado') }}">Ver Listado de Actividades</a></li>
+            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
         </ul>
     </nav>
 </header>
@@ -20,20 +20,30 @@
 <main>
     <section id="agregar-actividad">
         <h2>Informar una Nueva Actividad</h2>
-        <form id="form-actividad">
+
+        <!-- Mostrar errores -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="mensajes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form id="form-actividad" method="POST" enctype="multipart/form-data" action="{{ url_for('agregar') }}" enctype="multipart/form-data">
             <!-- Información del lugar -->
             <fieldset>
                 <legend>Información del Lugar</legend>
                 <label for="region">Región:</label>
                 <select id="region" name="region" required>
                     <option value="">Seleccione una región</option>
-                    <!-- Las regiones se cargarán dinámicamente desde region_comuna.js -->
                 </select>
 
                 <label for="comuna">Comuna:</label>
                 <select id="comuna" name="comuna" required>
                     <option value="">Seleccione primero una región</option>
-                    <!-- Las comunas se cargarán dinámicamente según la región seleccionada -->
                 </select>
 
                 <label for="sector">Sector (Opcional):</label>
@@ -62,7 +72,6 @@
                     <option value="tiktok">TikTok</option>
                     <option value="otra">Otra</option>
                 </select>
-                <!-- Input dinámico para ID o URL de contacto -->
                 <div id="contacto-extra"></div>
             </fieldset>
 
@@ -90,29 +99,25 @@
                     <option value="juegos">Juegos</option>
                     <option value="baile">Baile</option>
                     <option value="comida">Comida</option>
-                    <!-- Para "Otro" -->
                     <option value="otro">Otro</option>
                 </select>
-                <!-- Input dinámico para tema "Otro" -->
                 <div id="tema-extra"></div>
-                <!-- Fotos -->
+
                 <div id="contenedor-fotos">
                     <input type="file" name="foto-actividad[]" accept=".jpg,.png,.jpeg,.gif" required>
                 </div>
                 <button type="button" id="agregar-foto">Agregar otra foto</button>
             </fieldset>
 
-            <!-- Botón para agregar actividad -->
             <button type="submit">Agregar esta Actividad</button>
         </form>
 
-        <!-- Mensaje de confirmación (se mostrará dinámicamente) -->
         <div id="mensaje-confirmacion"></div>
     </section>
 </main>
 
-<script src="../static/js/region_comuna.js"></script>
-<script src="../static/js/validation.js"></script>
-<script src="../static/js/script.js"></script>
+<script src="{{ url_for('static', filename='js/region_comuna.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

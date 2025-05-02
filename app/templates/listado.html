@@ -3,22 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Listado de Actividades</title>
-  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
 <header>
   <h1>Listado de Actividades</h1>
   <nav>
     <ul>
-      <li><a href="index.html">Portada</a></li>
-      <li><a href="agregar.html">Agregar Actividad</a></li>
-      <li><a href="estadisticas.html">Estadísticas</a></li>
+      <li><a href="{{ url_for('portada') }}">Portada</a></li>
+      <li><a href="{{ url_for('agregar') }}">Agregar Actividad</a></li>
+      <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
     </ul>
   </nav>
 </header>
 
 <main>
-  <!-- Tabla de actividades -->
   <table id="tabla-actividades">
     <thead>
     <tr>
@@ -27,62 +26,36 @@
       <th>Comuna</th>
       <th>Sector</th>
       <th>Tema</th>
-      <th>Nombre Organizador</th>
+      <th>Organizador</th>
       <th>Total Fotos</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Filas de actividades -->
-    <tr onclick="mostrarDetalleActividad(1)">
-      <td>2025-03-28 12:00</td>
-      <td>2025-03-28 14:00</td>
-      <td>Santiago</td>
-      <td>Beauchef 850, terraza</td>
-      <td>Escuela de Boxeo</td>
-      <td>Juan Pérez</td>
-      <td>2</td>
+    {% for act in actividades %}
+    <tr> onclick="window.location.href='{{ url_for('detalle_actividad', id=act.id) }}'"
+      <td>{{ act.inicio }}</td>
+      <td>{{ act.termino or '-' }}</td>
+      <td>{{ act.comuna }}</td>
+      <td>{{ act.sector }}</td>
+      <td>{{ act.tema }}</td>
+      <td>{{ act.nombre_organizador }}</td>
+      <td>{{ act.total_fotos or 0 }}</td>
     </tr>
-    <tr onclick="mostrarDetalleActividad(2)">
-      <td>2025-03-29 19:00</td>
-      <td>2025-03-29 20:00</td>
-      <td>Ñuñoa</td>
-      <td>Plaza</td>
-      <td>Cómo deshidratar fruta</td>
-      <td>María Gómez</td>
-      <td>3</td>
-    </tr>
-    <tr onclick="mostrarDetalleActividad(3)">
-      <td>2025-03-30 18:00</td>
-      <td>-</td>
-      <td>Santiago</td>
-      <td>Parque O'higgins</td>
-      <td>Música Urbana</td>
-      <td>Pedro López</td>
-      <td>2</td>
-    </tr>
-    <tr onclick="mostrarDetalleActividad(4)">
-      <td>2025-04-01 15:00</td>
-      <td>2025-04-01 17:00</td>
-      <td>Las Condes</td>
-      <td>Gimnasio</td>
-      <td>Clase de Yoga</td>
-      <td>Carlos Rodríguez</td>
-      <td>2</td>
-    </tr>
-    <tr onclick="mostrarDetalleActividad(5)">
-      <td>2025-03-30 11:00</td>
-      <td>2025-03-30 13:00</td>
-      <td>Santiago</td>
-      <td>Beauchef 850, canchas</td>
-      <td>Reunión G.O.</td>
-      <td>Grupo Beauchef Furs</td>
-      <td>1</td>
-    </tr>
+    {% endfor %}
     </tbody>
   </table>
+
+  <!-- Paginación -->
+  <div class="paginacion">
+    {% if pagina_actual > 1 %}
+      <a href="{{ url_for('listado', page=pagina_actual-1) }}">⬅ Anterior</a>
+    {% endif %}
+    <span>Página {{ pagina_actual }} de {{ total_paginas }}</span>
+    {% if pagina_actual < total_paginas %}
+      <a href="{{ url_for('listado', page=pagina_actual+1) }}">Siguiente ➡</a>
+    {% endif %}
+  </div>
 </main>
 
-<script src="../static/js/script.js"></script>
-<script src="../static/js/validation.js"></script>
 </body>
 </html>
