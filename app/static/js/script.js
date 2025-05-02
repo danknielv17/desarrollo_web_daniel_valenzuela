@@ -258,7 +258,7 @@ function confirmarEnvio(confirmado) {
                 <button onclick="volverAPortada()">Volver a la Portada</button>
             </div>
         `;
-        document.getElementById('form-actividad').reset();
+        document.getElementById('form-actividad').submit();
     } else {
         mensaje.innerHTML = '';
     }
