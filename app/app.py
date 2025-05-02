@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Configuración para archivos
-UPLOAD_FOLDER = os.path.join('static', 'uploads')
+UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -26,13 +26,13 @@ def allowed_file(filename):
 @app.route('/')
 def portada():
     actividades = Actividad.query.order_by(Actividad.fecha_creacion.desc()).limit(5).all()
-    return render_template('index.html', actividades=actividades)
+    return render_template("index.html", actividades=actividades)
 
 # ========== RUTA AGREGAR ==========
 @app.route('/agregar', methods=['GET', 'POST'])
 def agregar():
     if request.method == 'GET':
-        return render_template('agregar.html')
+        return render_template("agregar.html")
 
     errores = []
     datos = request.form
