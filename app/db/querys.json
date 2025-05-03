@@ -1,0 +1,14 @@
+{
+  "get_actividad_by_id": "SELECT * FROM actividad WHERE id = %(id)s",
+  "get_all_actividades": "SELECT * FROM actividad ORDER BY fecha DESC",
+  "get_actividades_by_tema": "SELECT a.* FROM actividad a JOIN actividad_tema t ON a.id = t.actividad_id WHERE t.tema = %(tema)s",
+  "get_foto_actividad_id": "SELECT nombre, ruta FROM archivo WHERE actividad_id = %(actividad_id)s",
+  "get_region_by_id": "SELECT * FROM region WHERE id = %(id)s",
+  "get_comunas_by_region_id": "SELECT * FROM comuna WHERE region_id = %(region_id)s",
+  "get_temas_by_actividad_id": "SELECT tema FROM actividad_tema WHERE actividad_id = %(actividad_id)s",
+  "get_contactos_by_actividad_id": "SELECT red_social, valor FROM contactar_por WHERE actividad_id = %(actividad_id)s",
+  "insert_actividad": "INSERT INTO actividad (nombre, descripcion, tipo, fecha, hora, duracion, organizador_id, comuna_id, direccion) VALUES (%(nombre)s, %(descripcion)s, %(tipo)s, %(fecha)s, %(hora)s, %(duracion)s, %(organizador_id)s, %(comuna_id)s, %(direccion)s)",
+  "insert_participante": "INSERT INTO participante (nombre, correo) VALUES (%(nombre)s, %(correo)s)",
+  "insert_inscripcion": "INSERT INTO inscripcion (actividad_id, participante_id) VALUES (%(actividad_id)s, %(participante_id)s)",
+  "get_inscripciones_by_actividad": "SELECT p.* FROM inscripcion i JOIN participante p ON i.participante_id = p.id WHERE i.actividad_id = %(actividad_id)s"
+}
