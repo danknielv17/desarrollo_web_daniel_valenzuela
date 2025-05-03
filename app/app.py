@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 from datetime import datetime
 from utils.validations import validar_nombre, validar_email, validar_telefono
-from db.models import db, Actividad, ActividadTema, ContactarPor, Archivo
+from db.db import db, Actividad, ActividadTema, ContactarPor, Archivo
 
 app = Flask(__name__)
 app.secret_key = 'clave_flask'
