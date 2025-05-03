@@ -2,7 +2,9 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/app/app.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/app/db/drop_db.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/app/db/region-comuna.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/app/db/tarea2.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/app/db/user.sql" dialect="MySQL" />
   </component>
 </project>
