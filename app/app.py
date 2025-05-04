@@ -2,8 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 import os
 from datetime import datetime
-from utils.validations import validar_nombre, validar_email, validar_telefono
-from db.db import db, Actividad, ActividadTema, ContactarPor, Archivo
+from app.utils.validations import validar_nombre, validar_email, validar_telefono
+from app.db.db import db, Actividad, ActividadTema, ContactarPor, Archivo
 
 app = Flask(__name__)
 app.secret_key = 'clave_flask'
@@ -24,9 +24,29 @@ def allowed_file(filename):
 
 # ========== RUTA PORTADA ==========
 @app.route('/')
+@app.route('/index', methods=['GET'])
 def portada():
-    actividades = Actividad.query.order_by(Actividad.fecha_creacion.desc()).limit(5).all()
-    return render_template("index.html", actividades=actividades)
+    try:
+        actividades_db = Actividad.query.order_by(Actividad.inicio.desc()).limit(5).all()
+
+        # Convertir objetos de SQLAlchemy a diccionarios para el template
+        actividades = []
+        for act in actividades_db:
+            actividades.append({
+                'descripcion': act.descripcion or '',  # Manejo de nulos
+                'inicio': act.inicio,
+                'termino': act.termino,
+                'comuna': act.comuna or '',  # Manejo de nulos
+                'sector': act.sector or '',  # Manejo de nulos
+                'nombre_organizador': act.nombre_organizador or '',  # Manejo de nulos
+                'email_organizador': act.email_organizador or ''  # Manejo de nulos
+            })
+
+        return render_template("index.html", actividades=actividades)
+    except Exception as e:
+        # Registro y manejo de errores
+        print(f"Error en portada: {str(e)}")
+        return render_template("index.html", actividades=[])
 
 # ========== RUTA AGREGAR ==========
 @app.route('/agregar', methods=['GET', 'POST'])
@@ -95,23 +115,56 @@ def agregar():
 # ========== RUTA LISTADO ==========
 @app.route('/listado')
 def listado():
-    page = int(request.args.get('page', 1))
-    por_pagina = 5
-    actividades = Actividad.query.order_by(Actividad.inicio.desc()).paginate(page=page, per_page=por_pagina)
-    return render_template('listado.html',
-                           actividades=actividades.items,
-                           pagina_actual=page,
-                           total_paginas=actividades.pages)
+    try:
+        page = int(request.args.get('page', 1))
+        por_pagina = 5
+        actividades_query = Actividad.query.order_by(Actividad.inicio.desc())
+
+        # Obtener datos paginados
+        paginacion = actividades_query.paginate(page=page, per_page=por_pagina)
+
+        # Enriquecer los datos
+        actividades = []
+        for act in paginacion.items:
+            tema_obj = ActividadTema.query.filter_by(actividad_id=act.id).first()
+            total_fotos = Archivo.query.filter_by(actividad_id=act.id).count()
+
+            act.tema = tema_obj.tema if tema_obj else "-"
+            act.total_fotos = total_fotos
+            # Asegurar que sector no sea None
+            if act.sector is None:
+                act.sector = "-"
+
+            actividades.append(act)
+
+        return render_template('listado.html',
+                               actividades=actividades,
+                               pagina_actual=page,
+                               total_paginas=paginacion.pages or 1)
+    except Exception as e:
+        print(f"Error en listado: {str(e)}")
+        return render_template('listado.html',
+                               actividades=[],
+                               pagina_actual=1,
+                               total_paginas=1)
 
 # ========== RUTA DETALLE ==========
 @app.route('/actividad/<int:id>')
 def detalle_actividad(id):
     actividad = Actividad.query.get_or_404(id)
-    temas = ActividadTema.query.filter_by(actividad_id=id).all()
+    temas_obj = ActividadTema.query.filter_by(actividad_id=id).all()
+
+    # Extraer solo los nombres de los temas
+    temas = [tema.tema for tema in temas_obj]
+
     contactos = ContactarPor.query.filter_by(actividad_id=id).all()
     archivos = Archivo.query.filter_by(actividad_id=id).all()
-    return render_template('detalle.html', actividad=actividad, temas=temas, contactos=contactos, archivos=archivos)
 
+    return render_template('detalle.html',
+                           actividad=actividad,
+                           temas=temas,
+                           contactos=contactos,
+                           archivos=archivos)
 # ========== RUTA ESTADISTICAS ==========
 @app.route('/estadisticas')
 def estadisticas():
