@@ -16,30 +16,35 @@
         </ul>
     </nav>
 </header>
+
 <main>
-    <h2>Últimas 5 actividades agregadas</h2>
-    <ul>
-        {% for act in actividades %}
-        <li>
-            <strong>{{ act['descripcion'] }}</strong><br>
-            <b>Inicio:</b> {{ act['inicio'] }}<br>
-            <b>Término:</b> {{ act['termino'] or '-' }}<br>
-            <b>Comuna:</b> {{ act['comuna'] }}<br>
-            <b>Sector:</b> {{ act['sector'] or '-' }}<br>
-            <b>Organizador:</b> {{ act['nombre_organizador'] }} ({{ act['email_organizador'] }})
-        </li>
-        {% endfor %}
-    </ul>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="mensajes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if actividades %}
+        <h2>Últimas 5 actividades agregadas</h2>
+        <ul>
+            {% for act in actividades %}
+            <li>
+                <strong>{{ act['descripcion'] }}</strong><br>
+                <b>Inicio:</b> {{ act['inicio'] }}<br>
+                <b>Término:</b> {{ act['termino'] or '-' }}<br>
+                <b>Comuna:</b> {{ act['comuna'] }}<br>
+                <b>Sector:</b> {{ act['sector'] or '-' }}<br>
+                <b>Organizador:</b> {{ act['nombre_organizador'] }} ({{ act['email_organizador'] }})
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay actividades registradas.</p>
+    {% endif %}
 </main>
 </body>
 </html>
-
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <ul class="mensajes">
-      {% for category, message in messages %}
-        <li class="{{ category }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
