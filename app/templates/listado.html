@@ -32,11 +32,11 @@
     </thead>
     <tbody>
     {% for act in actividades %}
-    <tr> onclick="window.location.href='{{ url_for('detalle_actividad', id=act.id) }}'"
+    <tr onclick="window.location.href='{{ url_for('detalle_actividad', id=act.id) }}'">
       <td>{{ act.inicio }}</td>
       <td>{{ act.termino or '-' }}</td>
       <td>{{ act.comuna }}</td>
-      <td>{{ act.sector }}</td>
+      <td>{{ act.sector or '-' }}</td>
       <td>{{ act.tema }}</td>
       <td>{{ act.nombre_organizador }}</td>
       <td>{{ act.total_fotos or 0 }}</td>
@@ -47,13 +47,15 @@
 
   <!-- Paginación -->
   <div class="paginacion">
-    {% if pagina_actual > 1 %}
-      <a href="{{ url_for('listado', page=pagina_actual-1) }}">⬅ Anterior</a>
-    {% endif %}
-    <span>Página {{ pagina_actual }} de {{ total_paginas }}</span>
-    {% if pagina_actual < total_paginas %}
-      <a href="{{ url_for('listado', page=pagina_actual+1) }}">Siguiente ➡</a>
-    {% endif %}
+      {% if pagina_actual > 1 %}
+        <a href="{{ url_for('listado', page=pagina_actual-1) }}">⬅ Anterior</a>
+      {% endif %}
+
+      <span>Página {{ pagina_actual }} de {{ total_paginas }}</span>
+
+      {% if pagina_actual < total_paginas %}
+        <a href="{{ url_for('listado', page=pagina_actual+1) }}">Siguiente ➡</a>
+      {% endif %}
   </div>
 </main>
 
