@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informar Actividad</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Informar Nueva Actividad</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('portada') }}">Portada</a></li>
+            <li><a href="{{ url_for('listado') }}">Ver Listado de Actividades</a></li>
+            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h2>¡Actividad registrada correctamente!</h2>
+    <div class="botones-navegacion">
+        <a href="{{ url_for('listado') }}"><button>Ver Listado de Actividades</button></a>
+        <a href="{{ url_for('portada') }}"><button>Volver a la Portada</button></a>
+    </div>
+</main>
+</body>
+</html>
