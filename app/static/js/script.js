@@ -5,6 +5,7 @@
 
 // ===== ACTIVIDADES DE EJEMPLO LISTADO =====
 // Datos de ejemplo para el listado desplegado de las actividades recreativas
+    // Ya no se usa, ahora se carga desde el servidor
 const actividadesEjemplo = [
     {
         id: 1,
@@ -62,11 +63,11 @@ const actividadesEjemplo = [
 function volverAPortada() {
     window.location.href = 'index.html';
 }
-
+// Reemplazada por flask
 function volverAlListado() {
     window.location.href = 'listado.html';
 }
-
+// Reemplazada por flask
 function mostrarDetalleActividad(id) {
     window.location.href = `informacion-actividad.html?id=${id}`;
 }
