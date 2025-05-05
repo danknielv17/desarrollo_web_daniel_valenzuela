@@ -10,9 +10,9 @@
   <h1>Estadísticas</h1>
   <nav>
     <ul>
-      <li><a href="index.html">Portada</a></li>
-      <li><a href="agregar.html">Agregar Actividad</a></li>
-      <li><a href="listado.html">Ver Listado de Actividades</a></li>
+      <li><a href="{{ url_for('portada') }}">Portada</a></li>
+      <li><a href="{{ url_for('agregar') }}">Agregar Actividad</a></li>
+      <li><a href="{{ url_for('listado') }}">Ver Listado de Actividades</a></li>
     </ul>
   </nav>
 </header>
@@ -41,7 +41,7 @@
 
   <!-- Enlace para volver a la portada -->
     <div class="enlace-volver">
-        <a href="index.html">Volver a la Portada</a>
+        <a href="{{ url_for('portada') }}">Volver a la Portada</a>
     </div>
 </main>
 
