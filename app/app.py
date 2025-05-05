@@ -114,7 +114,7 @@ def agregar():
 
         db.session.commit()
         flash('Actividad registrada correctamente.', 'success')
-        return render_template('confirmacion.html')
+        return render_template('index.html')
 
     except Exception as e:
         db.session.rollback()
