@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 import os
+import hashlib
+import filetype
 from datetime import datetime
 from app.utils.validations import validar_nombre, validar_email, validar_telefono
-from app.db.db import db, Actividad, ActividadTema, ContactarPor, Archivo
+from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna
 
 app = Flask(__name__)
 app.secret_key = 'clave_flask'
@@ -14,7 +16,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Configuración para archivos
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -24,29 +26,28 @@ def allowed_file(filename):
 
 # ========== RUTA PORTADA ==========
 @app.route('/')
-@app.route('/index', methods=['GET'])
 def portada():
-    try:
-        actividades_db = Actividad.query.order_by(Actividad.inicio.desc()).limit(5).all()
+    actividades = []
+    ultimas = Actividad.query.order_by(Actividad.dia_hora_inicio.desc()).limit(5).all()
 
-        # Convertir objetos de SQLAlchemy a diccionarios para el template
-        actividades = []
-        for act in actividades_db:
-            actividades.append({
-                'descripcion': act.descripcion or '',  # Manejo de nulos
-                'inicio': act.inicio,
-                'termino': act.termino,
-                'comuna': act.comuna or '',  # Manejo de nulos
-                'sector': act.sector or '',  # Manejo de nulos
-                'nombre_organizador': act.nombre_organizador or '',  # Manejo de nulos
-                'email_organizador': act.email_organizador or ''  # Manejo de nulos
-            })
+    for act in ultimas:
+        comuna = Comuna.query.get(act.comuna_id)
+        tema_obj = ActividadTema.query.filter_by(actividad_id=act.id).first()
+        primera_foto = Foto.query.filter_by(actividad_id=act.id).first()
 
-        return render_template("index.html", actividades=actividades)
-    except Exception as e:
-        # Registro y manejo de errores
-        print(f"Error en portada: {str(e)}")
-        return render_template("index.html", actividades=[])
+        actividades.append({
+            'id': act.id,
+            'descripcion': act.descripcion,
+            'inicio': act.dia_hora_inicio.strftime("%Y-%m-%d %H:%M"),
+            'termino': act.dia_hora_termino.strftime("%Y-%m-%d %H:%M") if act.dia_hora_termino else None,
+            'comuna': comuna.nombre if comuna else '',
+            'sector': act.sector,
+            'tema': tema_obj.tema if tema_obj else '',
+            'glosa_otro': tema_obj.glosa_otro if tema_obj and tema_obj.tema == 'otro' else None,
+            'foto': primera_foto.nombre_archivo if primera_foto else None
+        })
+
+    return render_template('index.html', actividades=actividades)
 
 # ========== RUTA AGREGAR ==========
 @app.route('/agregar', methods=['GET', 'POST'])
@@ -70,42 +71,50 @@ def agregar():
 
     try:
         actividad = Actividad(
-            inicio=datos['inicio-actividad'],
-            termino=datos.get('termino-actividad') or None,
-            comuna=datos['comuna'],
-            sector=datos['sector'],
-            descripcion=datos.get('descripcion-actividad', ''),
-            nombre_organizador=datos['nombre-organizador'],
-            email_organizador=datos['email-organizador'],
-            telefono_organizador=datos.get('telefono-organizador'),
+            dia_hora_inicio=datetime.strptime(datos['inicio-actividad'], '%Y-%m-%dT%H:%M'),
+            dia_hora_termino=datetime.strptime(datos['termino-actividad'], '%Y-%m-%dT%H:%M') if datos.get(
+                'termino-actividad') else None,
+            comuna_id=int(datos['comuna']),
+            sector=datos.get('sector'),
+            descripcion=datos.get('descripcion-actividad'),
+            nombre=datos['nombre-organizador'],
+            email=datos['email-organizador'],
+            celular=datos.get('telefono-organizador')
         )
         db.session.add(actividad)
         db.session.commit()
 
         # Tema
         tema = datos['tema-actividad']
-        if tema == 'otro':
-            tema = datos['otro-tema']
-        db.session.add(ActividadTema(actividad_id=actividad.id, tema=tema))
+        temas_predefinidos = ['música', 'deporte', 'ciencias', 'religión', 'política', 'tecnología', 'juegos', 'baile',
+                              'comida', 'otro']
+
+        if tema not in temas_predefinidos:
+            db.session.add(ActividadTema(actividad_id=actividad.id, tema='otro', glosa_otro=tema))
+        elif tema == 'otro':
+            glosa_otro = datos.get('otro-tema')
+            db.session.add(ActividadTema(actividad_id=actividad.id, tema='otro', glosa_otro=glosa_otro))
+        else:
+            db.session.add(ActividadTema(actividad_id=actividad.id, tema=tema))
 
         # Contacto
         red = datos.get('contactar-por')
         contacto = datos.get('otro-contacto')
         if red and contacto:
-            db.session.add(ContactarPor(actividad_id=actividad.id, red_social=red, valor=contacto))
+            db.session.add(ContactarPor(actividad_id=actividad.id, nombre=red, identificador=contacto))
 
         # Archivos
         fotos = request.files.getlist('foto-actividad[]')
-        for archivo in fotos:
-            if archivo and allowed_file(archivo.filename):
-                filename = secure_filename(archivo.filename)
+        for foto in fotos:
+            if foto and allowed_file(foto.filename):
+                filename = secure_filename(foto.filename)
                 ruta = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                archivo.save(ruta)
-                db.session.add(Archivo(actividad_id=actividad.id, nombre=filename, ruta=ruta))
+                foto.save(ruta)
+                db.session.add(Foto(actividad_id=actividad.id, nombre_archivo=filename, ruta_archivo=ruta))
 
         db.session.commit()
         flash('Actividad registrada correctamente.', 'success')
-        return redirect(url_for('portada'))
+        return render_template('confirmacion.html')
 
     except Exception as e:
         db.session.rollback()
@@ -118,25 +127,24 @@ def listado():
     try:
         page = int(request.args.get('page', 1))
         por_pagina = 5
-        actividades_query = Actividad.query.order_by(Actividad.inicio.desc())
-
-        # Obtener datos paginados
+        actividades_query = Actividad.query.order_by(Actividad.dia_hora_inicio.desc())
         paginacion = actividades_query.paginate(page=page, per_page=por_pagina)
-
-        # Enriquecer los datos
         actividades = []
         for act in paginacion.items:
+            comuna = Comuna.query.get(act.comuna_id)
             tema_obj = ActividadTema.query.filter_by(actividad_id=act.id).first()
-            total_fotos = Archivo.query.filter_by(actividad_id=act.id).count()
-
-            act.tema = tema_obj.tema if tema_obj else "-"
-            act.total_fotos = total_fotos
-            # Asegurar que sector no sea None
-            if act.sector is None:
-                act.sector = "-"
-
-            actividades.append(act)
-
+            total_fotos = Foto.query.filter_by(actividad_id=act.id).count()
+            actividades.append({
+                'id': act.id,
+                'inicio': act.dia_hora_inicio.strftime('%Y-%m-%d %H:%M'),
+                'termino': act.dia_hora_termino.strftime('%Y-%m-%d %H:%M') if act.dia_hora_termino else None,
+                'comuna': comuna.nombre if comuna else '-',
+                'sector': act.sector,
+                'tema': tema_obj.tema if tema_obj else '-',
+                'glosa_otro': tema_obj.glosa_otro if tema_obj and tema_obj.tema == 'otro' else None,
+                'nombre_organizador': act.nombre,
+                'total_fotos': total_fotos
+            })
         return render_template('listado.html',
                                actividades=actividades,
                                pagina_actual=page,
@@ -152,19 +160,22 @@ def listado():
 @app.route('/actividad/<int:id>')
 def detalle_actividad(id):
     actividad = Actividad.query.get_or_404(id)
+    comuna = Comuna.query.get(actividad.comuna_id)
+    actividad.comuna = comuna  # Asigna la comuna al objeto actividad
     temas_obj = ActividadTema.query.filter_by(actividad_id=id).all()
 
     # Extraer solo los nombres de los temas
     temas = [tema.tema for tema in temas_obj]
 
     contactos = ContactarPor.query.filter_by(actividad_id=id).all()
-    archivos = Archivo.query.filter_by(actividad_id=id).all()
+    archivos = Foto.query.filter_by(actividad_id=id).all()
 
     return render_template('detalle.html',
                            actividad=actividad,
                            temas=temas,
                            contactos=contactos,
                            archivos=archivos)
+
 # ========== RUTA ESTADISTICAS ==========
 @app.route('/estadisticas')
 def estadisticas():
