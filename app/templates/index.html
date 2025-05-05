@@ -30,37 +30,48 @@
 
     {% if actividades %}
         <h2>Últimas 5 actividades agregadas</h2>
-        <ul class="lista-actividades">
-            {% for act in actividades %}
-            <li>
-                {% if act['foto'] %}
-                <div class="foto-actividad">
-                    <img src="{{ url_for('static', filename='uploads/' + act['foto']) }}"
-                         alt="Foto de la actividad"
-                         width="150"
-                         onerror="this.onerror=null; this.src='{{ url_for('static', filename='img/no-image.png') }}';">
-                </div>
-                {% endif %}
-                <div class="info-actividad">
-                    <b>Inicio:</b> {{ act['inicio'] }}<br>
-                    <b>Término:</b> {{ act['termino'] or '-' }}<br>
-                    <b>Comuna:</b> {{ act['comuna'] }}<br>
-                    <b>Sector:</b> {{ act['sector'] or '-' }}<br>
-                    <b>Tema:</b>
+        <table>
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for act in actividades %}
+                <tr>
+                    <td>
+                        {% if act['foto'] %}
+                        <img src="{{ url_for('static', filename='uploads/' + act['foto']) }}"
+                             alt="Foto de la actividad"
+                             width="80"
+                             onerror="this.onerror=null; this.src='{{ url_for('static', filename='img/no-image.png') }}';">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='img/no-image.png') }}" alt="Sin foto" width="80">
+                        {% endif %}
+                    </td>
+                    <td>{{ act['inicio'] }}</td>
+                    <td>{{ act['termino'] or '-' }}</td>
+                    <td>{{ act['comuna'] }}</td>
+                    <td>{{ act['sector'] or '-' }}</td>
+                    <td>
                         {% if act['tema'] == 'otro' and act.get('glosa_otro') %}
                           {{ act['glosa_otro'] }}
                         {% else %}
                           {{ act['tema'] }}
                         {% endif %}
-                    <br>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
         <p>No hay actividades registradas.</p>
-{% endif %}
-
+    {% endif %}
 </main>
 </body>
 </html>
