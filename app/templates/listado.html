@@ -37,7 +37,13 @@
       <td>{{ act.termino or '-' }}</td>
       <td>{{ act.comuna }}</td>
       <td>{{ act.sector or '-' }}</td>
-      <td>{{ act.tema }}</td>
+      <td>
+        {% if act.tema == 'otro' and act.glosa_otro %}
+          {{ act.glosa_otro }}
+        {% else %}
+          {{ act.tema }}
+        {% endif %}
+      </td>
       <td>{{ act.nombre_organizador }}</td>
       <td>{{ act.total_fotos or 0 }}</td>
     </tr>
