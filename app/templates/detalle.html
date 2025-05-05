@@ -12,15 +12,15 @@
 
 <main>
   <div class="detalle">
-    <h2>{{ actividad.descripcion or actividad.tema or 'Actividad' }}</h2>
-    <p><strong>Inicio:</strong> {{ actividad.inicio }}</p>
-    <p><strong>Término:</strong> {{ actividad.termino or '-' }}</p>
-    <p><strong>Comuna:</strong> {{ actividad.comuna }}</p>
+    <h2>{{ actividad.descripcion or 'Actividad' }}</h2>
+    <p><strong>Inicio:</strong> {{ actividad.dia_hora_inicio.strftime('%Y-%m-%d %H:%M') }}</p>
+    <p><strong>Término:</strong> {{ actividad.dia_hora_termino.strftime('%Y-%m-%d %H:%M') if actividad.dia_hora_termino else '-' }}</p>
+    <p><strong>Comuna:</strong> {{ actividad.comuna.nombre if actividad.comuna_id else '-' }}</p>
     <p><strong>Sector:</strong> {{ actividad.sector or '-' }}</p>
     <p><strong>Descripción:</strong> {{ actividad.descripcion or '-' }}</p>
-    <p><strong>Organizador:</strong> {{ actividad.nombre_organizador }}</p>
-    <p><strong>Email:</strong> {{ actividad.email_organizador }}</p>
-    <p><strong>Teléfono:</strong> {{ actividad.telefono_organizador or '-' }}</p>
+    <p><strong>Organizador:</strong> {{ actividad.nombre }}</p>
+    <p><strong>Email:</strong> {{ actividad.email }}</p>
+    <p><strong>Teléfono:</strong> {{ actividad.celular or '-' }}</p>
 
     <h3>Temas asociados</h3>
     <ul>
@@ -33,7 +33,7 @@
     <h3>Formas de Contacto</h3>
     <ul>
       {% for c in contactos %}
-        <li><strong>{{ c.red_social }}:</strong> {{ c.valor }}</li>
+        <li><strong>{{ c.nombre }}:</strong> {{ c.identificador }}</li>
       {% endfor %}
     </ul>
     {% endif %}
@@ -42,7 +42,12 @@
     <h3>Fotos de la Actividad</h3>
     <div class="galeria">
       {% for archivo in archivos %}
-        <img src="{{ '/' + archivo.ruta }}" alt="{{ archivo.nombre }}" width="300">
+        <img src="{{ url_for('static', filename='uploads/' + archivo.nombre_archivo) }}"
+           alt="320"
+           width="240"
+           style="cursor:pointer"
+           onclick="ampliarFoto('{{ url_for('static', filename='uploads/' + archivo.nombre_archivo) }}')"
+           onerror="this.onerror=null; this.src='{{ url_for('static', filename='img/no-image.png') }}';">
       {% endfor %}
     </div>
     {% endif %}
@@ -55,3 +60,5 @@
 </main>
 </body>
 </html>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
