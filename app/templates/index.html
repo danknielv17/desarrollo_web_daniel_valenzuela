@@ -30,21 +30,38 @@
 
     {% if actividades %}
         <h2>Últimas 5 actividades agregadas</h2>
-        <ul>
+        <ul class="lista-actividades">
             {% for act in actividades %}
             <li>
-                <strong>{{ act['descripcion'] }}</strong><br>
-                <b>Inicio:</b> {{ act['inicio'] }}<br>
-                <b>Término:</b> {{ act['termino'] or '-' }}<br>
-                <b>Comuna:</b> {{ act['comuna'] }}<br>
-                <b>Sector:</b> {{ act['sector'] or '-' }}<br>
-                <b>Organizador:</b> {{ act['nombre_organizador'] }} ({{ act['email_organizador'] }})
+                {% if act['foto'] %}
+                <div class="foto-actividad">
+                    <img src="{{ url_for('static', filename='uploads/' + act['foto']) }}"
+                         alt="Foto de la actividad"
+                         width="150"
+                         onerror="this.onerror=null; this.src='{{ url_for('static', filename='img/no-image.png') }}';">
+                </div>
+                {% endif %}
+                <div class="info-actividad">
+                    <b>Inicio:</b> {{ act['inicio'] }}<br>
+                    <b>Término:</b> {{ act['termino'] or '-' }}<br>
+                    <b>Comuna:</b> {{ act['comuna'] }}<br>
+                    <b>Sector:</b> {{ act['sector'] or '-' }}<br>
+                    <b>Tema:</b>
+                        {% if act['tema'] == 'otro' and act.get('glosa_otro') %}
+                          {{ act['glosa_otro'] }}
+                        {% else %}
+                          {{ act['tema'] }}
+                        {% endif %}
+                    <br>
+                    <a href="{{ url_for('detalle_actividad', id=act['id']) }}">Ver detalles</a>
+                </div>
             </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>No hay actividades registradas.</p>
-    {% endif %}
+{% endif %}
+
 </main>
 </body>
 </html>
