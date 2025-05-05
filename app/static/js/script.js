@@ -73,15 +73,41 @@ function mostrarDetalleActividad(id) {
 
 // ===== MANEJO DE VISUALIZACIÓN =====
 function ampliarFoto(url) {
+    // Elimina cualquier overlay existente
+    const existente = document.getElementById('overlay-foto');
+    if (existente) existente.remove();
+
+    // Crea el overlay
     const overlay = document.createElement('div');
-    overlay.className = 'overlay-foto';
+    overlay.id = 'overlay-foto';
+    overlay.style.position = 'fixed';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.background = 'rgba(0,0,0,0.8)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = 9999;
+
     overlay.innerHTML = `
-        <div class="foto-ampliada">
-            <img src="${url}" alt="Foto ampliada" width="800" height="600">
-            <button onclick="this.parentElement.parentElement.remove()">Cerrar</button>
+        <div style="position:relative; background:#fff; padding:10px; border-radius:8px;">
+            <img src="${url}" alt="Foto ampliada" width="800" height="600" style="display:block; object-fit:contain;">
+            <button id="cerrar-foto" style="position:absolute; top:10px; right:10px;">Cerrar</button>
         </div>
     `;
+
     document.body.appendChild(overlay);
+
+    document.getElementById('cerrar-foto').onclick = function() {
+        overlay.remove();
+    };
+
+    // También cerrar al hacer clic fuera de la imagen
+    overlay.onclick = function(e) {
+        if (e.target === overlay) overlay.remove();
+    };
 }
 
 function cargarDetalleActividad() {
