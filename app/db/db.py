@@ -21,38 +21,39 @@ db = SQLAlchemy()
 class Actividad(db.Model):
     __tablename__ = 'actividad'
     id = Column(Integer, primary_key=True)
-    inicio = Column(DateTime, nullable=False)
-    termino = Column(DateTime)
-    comuna = Column(String(100), nullable=False)
-    sector = Column(String(200))
-    descripcion = Column(Text)
-    nombre_organizador = Column(String(100), nullable=False)
-    email_organizador = Column(String(100), nullable=False)
-    telefono_organizador = Column(String(20))
+    dia_hora_inicio = Column(DateTime, nullable=False)
+    dia_hora_termino = Column(DateTime)
+    comuna_id = Column(Integer, ForeignKey('comuna.id'), nullable=False)
+    sector = Column(String(100))
+    descripcion = Column(String(500))
+    nombre = Column(String(200), nullable=False)
+    email = Column(String(100), nullable=False)
+    celular = Column(String(15))
 
     temas = relationship('ActividadTema', backref='actividad', cascade="all, delete-orphan")
     contactos = relationship('ContactarPor', backref='actividad', cascade="all, delete-orphan")
-    archivos = relationship('Archivo', backref='actividad', cascade="all, delete-orphan")
+    fotos = relationship('Foto', backref='actividad', cascade="all, delete-orphan")
 
 class ActividadTema(db.Model):
     __tablename__ = 'actividad_tema'
     id = Column(Integer, primary_key=True)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
-    tema = Column(String(100), nullable=False)
+    tema = Column(String(100), nullable=False)  # O mantén como ENUM
+    glosa_otro = Column(String(100))  # Añade esta línea
 
 class ContactarPor(db.Model):
     __tablename__ = 'contactar_por'
     id = Column(Integer, primary_key=True)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
-    red_social = Column(String(50))
-    valor = Column(String(100))
+    nombre = Column(String(50))  # antes: red_social
+    identificador = Column(String(100))  # antes: valor
 
-class Archivo(db.Model):
-    __tablename__ = 'archivo'
+class Foto(db.Model):
+    __tablename__ = 'foto'
     id = Column(Integer, primary_key=True)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
-    nombre = Column(String(255))
-    ruta = Column(String(255))
+    nombre_archivo = Column(String(300))
+    ruta_archivo = Column(String(300))
 
 class Region(db.Model):
     __tablename__ = 'region'
@@ -68,6 +69,27 @@ class Comuna(db.Model):
 
 # --- Database Functions ---
 
+def get_tema(actividad_id, tema_texto):
+    # Verificar si el tema es personalizado
+    if tema_texto not in ['música', 'deporte', 'ciencias', 'religión', 'política',
+                          'tecnología', 'juegos', 'baile', 'comida', 'otro']:
+        # Es un tema personalizado, guardar como "otro" y el texto en glosa_otro
+        tema_actividad = ActividadTema(
+            actividad_id=actividad_id,
+            tema='otro',
+            glosa_otro=tema_texto
+        )
+    else:
+        # Es uno de los temas predefinidos
+        tema_actividad = ActividadTema(
+            actividad_id=actividad_id,
+            tema=tema_texto
+        )
+
+    db.session.add(tema_actividad)
+    db.session.commit()
+    return tema_actividad
+
 def get_actividad_by_id(actividad_id):
     with SessionLocal() as session:
         return session.query(Actividad).filter_by(id=actividad_id).first()
@@ -82,7 +104,7 @@ def get_actividades_by_tema(tema):
 
 def get_fotos_by_actividad_id(actividad_id):
     with SessionLocal() as session:
-        return session.query(Archivo).filter_by(actividad_id=actividad_id).all()
+        return session.query(Foto).filter_by(actividad_id=actividad_id).all()
 
 def get_region_by_id(region_id):
     with SessionLocal() as session:
