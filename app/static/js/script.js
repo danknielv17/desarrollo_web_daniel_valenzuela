@@ -63,11 +63,11 @@ const actividadesEjemplo = [
 function volverAPortada() {
     window.location.href = 'index.html';
 }
-// Reemplazada por flask
+// Función reemplazada por flask
 function volverAlListado() {
     window.location.href = 'listado.html';
 }
-// Reemplazada por flask
+// Función reemplazada por flask
 function mostrarDetalleActividad(id) {
     window.location.href = `informacion-actividad.html?id=${id}`;
 }
