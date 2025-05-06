@@ -50,6 +50,7 @@ def portada():
     return render_template('index.html', actividades=actividades)
 
 # ========== RUTA AGREGAR ==========
+# Solicita datos del servidor con GET y envia datos al servidor con POST
 @app.route('/agregar', methods=['GET', 'POST'])
 def agregar():
     if request.method == 'GET':
@@ -65,7 +66,7 @@ def agregar():
     if not datos.get('inicio-actividad'):
         errores.append('Debe indicar una fecha de inicio.')
 
-    if errores:
+    if errores: # Si hay errores, mantiene visible el formulario
         flash('\n'.join(errores), 'error')
         return render_template('agregar.html', datos=datos)
 
@@ -116,6 +117,7 @@ def agregar():
         flash('Actividad registrada correctamente.', 'success')
         return redirect(url_for('portada'))
 
+    # Si ocurre un error, se hace rollback y se muestra el error
     except Exception as e:
         db.session.rollback()
         flash(f'Error al registrar: {str(e)}', 'error')
