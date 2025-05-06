@@ -4,8 +4,6 @@
 
 # SQL y Flask: Gestión de Actividades Recreativas
 
-# desarrollo_web_daniel_valenzuela
-
 ## Características principales
 
 - Registro de actividades con datos como fecha, comuna, sector, tema y fotos.
@@ -27,3 +25,12 @@
 - `app/app.py`: Lógica principal de la aplicación Flask, incluyendo rutas y controladores.
 
 ---
+
+## Ejecución de la aplicación
+
+Para correr flask, por temas de tiempo y problemas en la estructura de las carpetas, correr el siguiente comando en 
+el virtual environment:
+```
+$env:FLASK_APP="app.app:app"
+flask run
+```
