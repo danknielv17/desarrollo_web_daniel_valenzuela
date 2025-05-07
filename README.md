@@ -34,3 +34,24 @@ el virtual environment:
 $env:FLASK_APP="app.app:app"
 flask run
 ```
+
+### Portada: 
+- **Mensaje de bienvenida:** En `app/templates/index.html` aparece el mensaje "Bienvenido a la Gestión de Actividades Recreativas".
+- **Menú con opciones:** El menú contiene "Agregar Actividad", "Ver Listado de Actividades" y "Estadísticas", cada una enlazada a su respectiva URL de Flask (`/agregar`, `/listado`, `/estadisticas`).
+- **Listado de actividades:** Se muestran las últimas 5 actividades agregadas, obtenidas desde la base de datos en la función `portada()` de `app/app.py`.
+
+### Agregar Actividad:
+
+- El formulario de "Informar Actividad" en `app/templates/agregar.html` mantiene todas las validaciones en JavaScript (ver `app/static/js/script.js`).
+- Al confirmar, el formulario hace submit a la ruta `/agregar` de Flask.
+- En el backend (`app/app.py`, función `agregar`), se validan los datos nuevamente y se insertan los registros en las tablas `actividad`, `actividad_tema`, `contactar_por` y `foto` (archivo).
+- Se permite más de una inserción en `actividad_tema` y `contactar_por` según los datos recibidos.
+- Los archivos se almacenan en la carpeta correspondiente.
+- Si todo es correcto, redirige a la portada con un mensaje de éxito.
+- Si hay errores, el formulario se muestra nuevamente con los mensajes de validación.
+
+### Listado de Actividades:
+- El listado de actividades se obtiene desde la base de datos usando SQLAlchemy en la ruta `/listado` de `app/app.py`.
+- Se muestran 5 actividades por página, con paginación para avanzar y retroceder (`paginacion`).
+- El template `app/templates/listado.html` muestra las actividades en una tabla, y al hacer clic en una fila se redirige al detalle de la actividad.
+- El detalle de la actividad se obtiene desde la base de datos en la ruta `/actividad/<int:id>` y se muestra en `app/templates/detalle.html`.
