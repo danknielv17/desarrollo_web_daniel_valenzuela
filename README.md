@@ -34,6 +34,7 @@ el virtual environment:
 $env:FLASK_APP="app.app:app"
 flask run
 ```
+## Detalles de la implementación
 
 ### Portada: 
 - **Mensaje de bienvenida:** En `app/templates/index.html` aparece el mensaje "Bienvenido a la Gestión de Actividades Recreativas".
