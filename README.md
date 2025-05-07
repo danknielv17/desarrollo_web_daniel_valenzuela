@@ -42,7 +42,7 @@ flask run
 
 ### Agregar Actividad:
 
-- El formulario de "Informar Actividad" en `app/templates/agregar.html` mantiene todas las validaciones en JavaScript (ver `app/static/js/script.js`).
+- El formulario de "Informar Actividad" en `app/templates/agregar.html` mantiene todas las validaciones en JavaScript (ver `app/static/js/script.js`, `app/static/js/validations.js`).
 - Al confirmar, el formulario hace submit a la ruta `/agregar` de Flask.
 - En el backend (`app/app.py`, función `agregar`), se validan los datos nuevamente y se insertan los registros en las tablas `actividad`, `actividad_tema`, `contactar_por` y `foto` (archivo).
 - Se permite más de una inserción en `actividad_tema` y `contactar_por` según los datos recibidos.
