@@ -43,8 +43,9 @@
     <div class="galeria">
       {% for archivo in archivos %}
         <img src="{{ url_for('static', filename='uploads/' + archivo.nombre_archivo) }}"
-           alt="320"
-           width="240"
+           alt="Foto de la actividad"
+           width="320"
+             height="240"
            style="cursor:pointer"
            onclick="ampliarFoto('{{ url_for('static', filename='uploads/' + archivo.nombre_archivo) }}')"
            onerror="this.onerror=null; this.src='{{ url_for('static', filename='img/no-image.png') }}';">
