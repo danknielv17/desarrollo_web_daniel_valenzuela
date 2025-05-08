@@ -1,7 +1,7 @@
--- Active: root:fox17@localhost/tarea2
+-- Active: cc5002:@localhost/tarea2
 
 -- Crear usuario
-CREATE USER 'dbadmin'@'localhost' IDENTIFIED BY 'dbadmin';
+CREATE USER 'cc5002'@'localhost' IDENTIFIED BY 'programacionweb';
 
 -- Eliminar usuario de ser necesario
-DROP USER 'dbadmin'@'localhost';
+DROP USER 'cc5002'@'localhost';
