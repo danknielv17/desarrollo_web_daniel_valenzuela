@@ -182,6 +182,7 @@ def detalle_actividad(id):
 @app.route('/estadisticas')
 def estadisticas():
     return render_template('estadisticas.html')
+# Las funcionalidades relacionadas a las estadísticas quedarán pendientes para la siguiente tarea.
 
 # ========== MAIN ==========
 if __name__ == '__main__':
