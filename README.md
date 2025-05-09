@@ -34,6 +34,18 @@ el virtual environment:
 $env:FLASK_APP="app.app:app"
 flask run
 ```
+
+## Sobre el user
+
+- DB_NAME = "tarea2"
+- DB_USERNAME = "cc5002"
+- DB_PASSWORD = "programacionweb"
+- DB_HOST = "localhost"
+- DB_PORT = 3306
+
+`user.sql` es un script para crear el usuario y la base de datos en MySQL con las credenciales dadas por el profesor.
+Lo utilicé entregándole priviliegios, pues mi db ya estaba creada con el user root y una contraseña diferente.
+
 ## Detalles de la implementación
 
 ### Portada: 
