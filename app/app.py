@@ -28,7 +28,7 @@ def allowed_file(filename):
 @app.route('/')
 def portada():
     actividades = []
-    ultimas = Actividad.query.order_by(Actividad.dia_hora_inicio.desc()).limit(5).all()
+    ultimas = Actividad.query.order_by(Actividad.dia_hora_inicio.asc()).limit(5).all()
 
     for act in ultimas:
         comuna = Comuna.query.get(act.comuna_id)
@@ -129,7 +129,7 @@ def listado():
     try:
         page = int(request.args.get('page', 1))
         por_pagina = 5
-        actividades_query = Actividad.query.order_by(Actividad.dia_hora_inicio.desc())
+        actividades_query = Actividad.query.order_by(Actividad.dia_hora_inicio.asc())
         paginacion = actividades_query.paginate(page=page, per_page=por_pagina)
         actividades = []
         for act in paginacion.items:
