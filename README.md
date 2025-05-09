@@ -52,7 +52,7 @@ Lo utilicé entregándole priviliegios, pues mi db ya estaba creada con el user 
 - **Mensaje de bienvenida:** En `app/templates/index.html` aparece el mensaje "Bienvenido a la Gestión de Actividades Recreativas".
 - **Menú con opciones:** El menú contiene "Agregar Actividad", "Ver Listado de Actividades" y "Estadísticas", cada una enlazada a su respectiva URL de Flask (`/agregar`, `/listado`, `/estadisticas`).
 - **Listado de actividades:** Se muestran las últimas 5 actividades agregadas, obtenidas desde la base de datos en la función `portada()` de `app/app.py`.
-  - Se ordenan las actividades desde la más cercana a la más lejana a la fecha actual.
+  - Las actividades se ordenan por su id en la base de datos.
 
 ### Agregar Actividad:
 
@@ -67,6 +67,7 @@ Lo utilicé entregándole priviliegios, pues mi db ya estaba creada con el user 
 ### Listado de Actividades:
 - El listado de actividades se obtiene desde la base de datos usando SQLAlchemy en la ruta `/listado` de `app/app.py`.
 - Se muestran 5 actividades por página, con paginación para avanzar y retroceder (`paginacion`).
+- Las actividades se ordenan por su fecha, desde la más cercana a la más lejana de acuerdo a la fecha de actual.
 - El template `app/templates/listado.html` muestra las actividades en una tabla, y al hacer clic en una fila se redirige al detalle de la actividad.
 - El detalle de la actividad se obtiene desde la base de datos en la ruta `/actividad/<int:id>` y se muestra en `app/templates/detalle.html`.
 
