@@ -9,5 +9,5 @@ DROP USER 'cc5002'@'localhost';
 -- Otorgar todos los privilegios al usuario cc5002 en la base de datos tarea2
 GRANT ALL PRIVILEGES ON tarea2.* TO 'cc5002'@'localhost';
 
--- No olvides actualizar los privilegios
+-- Actualizar los privilegios
 FLUSH PRIVILEGES;
