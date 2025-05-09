@@ -28,7 +28,7 @@ def allowed_file(filename):
 @app.route('/')
 def portada():
     actividades = []
-    ultimas = Actividad.query.order_by(Actividad.dia_hora_inicio.asc()).limit(5).all()
+    ultimas = Actividad.query.order_by(Actividad.id.desc()).limit(5).all()
 
     for act in ultimas:
         comuna = Comuna.query.get(act.comuna_id)
