@@ -40,7 +40,7 @@ flask run
 - **Mensaje de bienvenida:** En `app/templates/index.html` aparece el mensaje "Bienvenido a la Gestión de Actividades Recreativas".
 - **Menú con opciones:** El menú contiene "Agregar Actividad", "Ver Listado de Actividades" y "Estadísticas", cada una enlazada a su respectiva URL de Flask (`/agregar`, `/listado`, `/estadisticas`).
 - **Listado de actividades:** Se muestran las últimas 5 actividades agregadas, obtenidas desde la base de datos en la función `portada()` de `app/app.py`.
-  - Se ordenan las actividades desde la más lejana a la más proxima a la fecha actual en forma descendente.
+  - Se ordenan las actividades desde la más cercana a la más lejana a la fecha actual.
 
 ### Agregar Actividad:
 
