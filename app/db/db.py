@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 # --- Configuración de la base de datos ---
 
 # Credenciales para acceder a la base de datos
-# Crear user en user.sql
+# Necesario crear user (user.sql)
 DB_NAME = "tarea2"
 DB_USERNAME = "cc5002"
 DB_PASSWORD = "programacionweb"
