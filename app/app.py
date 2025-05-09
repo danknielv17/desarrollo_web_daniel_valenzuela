@@ -11,7 +11,8 @@ app = Flask(__name__)
 app.secret_key = 'clave_flask'
 
 # Configuración de SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:fox17@localhost/tarea2' # Conexión a mi base de datos
+# Conexión a mi base de datos (así la configuré en mysql en mi pc)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:fox17@localhost/tarea2' # Cambiar por las credenciales dadas por profesor
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
