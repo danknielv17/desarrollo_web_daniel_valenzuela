@@ -57,3 +57,9 @@ flask run
 - Se muestran 5 actividades por página, con paginación para avanzar y retroceder (`paginacion`).
 - El template `app/templates/listado.html` muestra las actividades en una tabla, y al hacer clic en una fila se redirige al detalle de la actividad.
 - El detalle de la actividad se obtiene desde la base de datos en la ruta `/actividad/<int:id>` y se muestra en `app/templates/detalle.html`.
+
+### Estadísticas:
+- La ruta `/estadisticas` en `app/app.py` solamente renderiza `app/templates/estadisticas.html`.
+- Solo la ruta `/estadisticas` está implementada, y no se generan estadísticas dinámicas.
+  - El template sigue mostrando información estática, con los gráficos com imagenes.
+- Las funcionalidades relacionadas a las estadísticas quedarán pendientes para la siguiente tarea.
