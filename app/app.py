@@ -5,14 +5,14 @@ import hashlib
 import filetype
 from datetime import datetime
 from app.utils.validations import validar_nombre, validar_email, validar_telefono
-from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna
+from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna, DATABASE_URL
 
 app = Flask(__name__)
 app.secret_key = 'clave_flask'
 
 # Configuración de SQLAlchemy
-# Conexión a mi base de datos (así la configuré en mysql en mi pc)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:fox17@localhost/tarea2' # Cambiar por las credenciales dadas por profesor
+# Conexión a mi base de datos
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
