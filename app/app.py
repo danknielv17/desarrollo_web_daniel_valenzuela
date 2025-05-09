@@ -11,7 +11,6 @@ app = Flask(__name__)
 app.secret_key = 'clave_flask'
 
 # Configuración de SQLAlchemy
-# Conexión a mi base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
