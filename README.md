@@ -43,7 +43,7 @@ flask run
 - DB_HOST = "localhost"
 - DB_PORT = 3306
 
-`user.sql` es un script para crear el usuario y la base de datos en MySQL con las credenciales dadas por el profesor.
+`user.sql` es un script para crear el usuario y la base de datos en MySQL con las credenciales solicitadas.
 Lo utilicé entregándole priviliegios, pues mi db ya estaba creada con el user root y una contraseña diferente.
 
 ## Detalles de la implementación
