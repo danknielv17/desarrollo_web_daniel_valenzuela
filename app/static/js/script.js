@@ -7,14 +7,6 @@
 function volverAPortada() {
     window.location.href = 'index.html';
 }
-// Función reemplazada por flask
-function volverAlListado() {
-    window.location.href = 'listado.html';
-}
-// Función reemplazada por flask
-function mostrarDetalleActividad(id) {
-    window.location.href = `informacion-actividad.html?id=${id}`;
-}
 
 // ===== MANEJO DE VISUALIZACIÓN =====
 function ampliarFoto(url) {
