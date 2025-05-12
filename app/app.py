@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 import os
 import hashlib
@@ -9,6 +10,8 @@ from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, 
 
 app = Flask(__name__)
 app.secret_key = 'clave_flask'
+
+csrf = CSRFProtect(app)
 
 # Configuración de SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
