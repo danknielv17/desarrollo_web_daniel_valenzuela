@@ -3,62 +3,6 @@
  * Archivo principal de JavaScript
  ****************************************************/
 
-// ===== ACTIVIDADES DE EJEMPLO LISTADO =====
-// Datos de ejemplo para el listado desplegado de las actividades recreativas
-// Ya no se usa, ahora se carga desde el servidor
-const actividadesEjemplo = [
-    {
-        id: 1,
-        inicio: '2025-03-28 12:00',
-        termino: '2025-03-28 14:00',
-        comuna: 'Santiago',
-        sector: 'Beauchef 850, terraza',
-        tema: 'Escuela de Boxeo',
-        fotos: ['boxeo1.jpg', 'boxeo2.jpeg'],
-        organizador: 'Juan Pérez'
-    },
-    {
-        id: 2,
-        inicio: '2025-03-29 19:00',
-        termino: '2025-03-29 20:00',
-        comuna: 'Ñuñoa',
-        sector: 'Plaza',
-        tema: 'Cómo deshidratar fruta',
-        fotos: ['deshidratacion1.jpg', 'deshidratacion2.jpg', 'deshidratacion3.jpg'],
-        organizador: 'María Gómez'
-    },
-    {
-        id: 3,
-        inicio: '2025-03-30 18:00',
-        termino: null,
-        comuna: 'Santiago',
-        sector: 'Parque O\'higgins',
-        tema: 'Música Urbana',
-        fotos: ['musica1.jpg', "musica2.jpg"],
-        organizador: 'Pedro López'
-    },
-    {
-        id: 4,
-        inicio: '2025-04-01 15:00',
-        termino: '2025-04-01 17:00',
-        comuna: 'Las Condes',
-        sector: 'Gimnasio',
-        tema: 'Clase de Yoga',
-        fotos: ['yoga.jpg', 'yoga2.jpg'],
-        organizador: 'Carlos Rodríguez'
-    },
-    {
-        id: 5,
-        inicio: '2025-03-30 11:00',
-        termino: '2025-03-30 13:00',
-        comuna: 'Santiago',
-        sector: 'Beauchef 850, canchas',
-        tema: 'Reunión G.O.',
-        fotos: ['furs.jpg'],
-        organizador: 'Grupo Beauchef Furs'
-    }
-];
-
 // ===== FUNCIONES DE NAVEGACIÓN =====
 function volverAPortada() {
     window.location.href = 'index.html';
