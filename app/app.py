@@ -27,6 +27,15 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+fetch('/ruta', {
+    method: 'POST',
+    headers: {
+        'X-CSRFToken': '{{ csrf_token() }}',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+
 # ========== RUTA PORTADA ==========
 @app.route('/')
 def portada():
