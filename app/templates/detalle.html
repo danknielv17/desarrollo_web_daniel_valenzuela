@@ -24,8 +24,14 @@
 
     <h3>Temas asociados</h3>
     <ul>
-      {% for tema in temas %}
-        <li>{{ tema }}</li>
+      {% for tema_obj in temas_obj %}
+        <li>
+          {% if tema_obj.tema == 'otro' and tema_obj.glosa_otro %}
+            {{ tema_obj.glosa_otro }}
+          {% else %}
+            {{ tema_obj.tema }}
+          {% endif %}
+        </li>
       {% endfor %}
     </ul>
 
