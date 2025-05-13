@@ -3,6 +3,16 @@
  * Archivo principal de JavaScript
  ****************************************************/
 
+// ===== Seguridad CSRF para peticiones AJAX/Fetc =====
+fetch('/ruta', {
+    method: 'POST',
+    headers: {
+        'X-CSRFToken': '{{ csrf_token() }}',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+
 // ===== FUNCIONES DE NAVEGACIÓN =====
 function volverAPortada() {
     window.location.href = 'index.html';
