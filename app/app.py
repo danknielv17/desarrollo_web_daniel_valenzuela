@@ -167,17 +167,16 @@ def detalle_actividad(id):
     actividad = Actividad.query.get_or_404(id)
     comuna = Comuna.query.get(actividad.comuna_id)
     actividad.comuna = comuna  # Asigna la comuna al objeto actividad
-    temas_obj = ActividadTema.query.filter_by(actividad_id=id).all()
 
-    # Extraer solo los nombres de los temas
-    temas = [tema.tema for tema in temas_obj]
+    # Obtener los objetos completos de tema en lugar de solo los nombres
+    temas_obj = ActividadTema.query.filter_by(actividad_id=id).all()
 
     contactos = ContactarPor.query.filter_by(actividad_id=id).all()
     archivos = Foto.query.filter_by(actividad_id=id).all()
 
     return render_template('detalle.html',
                            actividad=actividad,
-                           temas=temas,
+                           temas_obj=temas_obj,
                            contactos=contactos,
                            archivos=archivos)
 
