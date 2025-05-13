@@ -58,7 +58,7 @@ function cargarDetalleActividad() {
         const actividad = actividadesEjemplo.find(a => a.id === id);
 
         if (actividad) {
-            detalleDiv.textContent = `
+            detalleDiv.innerHTML = `
                 <h3>${actividad.tema}</h3>
                 <p><strong>Inicio:</strong> ${actividad.inicio}</p>
                 <p><strong>Término:</strong> ${actividad.termino || '-'}</p>
@@ -74,10 +74,10 @@ function cargarDetalleActividad() {
                 </div>
             `;
         } else {
-            detalleDiv.textContent = '<p>No se encontró la actividad solicitada.</p>';
+            detalleDiv.innerHTML = '<p>No se encontró la actividad solicitada.</p>';
         }
     } else {
-        detalleDiv.textContent = '<p>No se especificó una actividad para mostrar.</p>';
+        detalleDiv.innerHTML = '<p>No se especificó una actividad para mostrar.</p>';
     }
 }
 
@@ -215,7 +215,7 @@ function confirmarEnvio(confirmado) {
     const mensaje = document.getElementById('mensaje-confirmacion');
     if (confirmado) {
         alert('¡Hemos recibido su información! Muchas gracias y suerte en su actividad.')
-        mensaje.textContent = `
+        mensaje.innerHTML = `
             <div class="exito">
                 <p>¡Hemos recibido su información!</p>
                 <button onclick="volverAPortada()">Volver a la Portada</button>
@@ -223,7 +223,7 @@ function confirmarEnvio(confirmado) {
         `;
         document.getElementById('form-actividad').submit();
     } else {
-        mensaje.textContent = '';
+        mensaje.innerHTML = '';
     }
 }
 
@@ -328,7 +328,7 @@ function inicializarFormulario() {
             }
 
             // Confirmación
-            document.getElementById('mensaje-confirmacion').textContent = `
+            document.getElementById('mensaje-confirmacion').innerHTML = `
                 <div class="confirmacion">
                     <p>¿Está seguro que desea agregar esta actividad?</p>
                     <button onclick="confirmarEnvio(true)">Sí, estoy seguro</button>
