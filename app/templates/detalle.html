@@ -12,7 +12,7 @@
 
 <main>
   <div class="detalle">
-    <h2>{{ actividad.descripcion or 'Actividad' }}</h2>
+    <h2>{{ 'Actividad' }}</h2>
     <p><strong>Inicio:</strong> {{ actividad.dia_hora_inicio.strftime('%Y-%m-%d %H:%M') }}</p>
     <p><strong>Término:</strong> {{ actividad.dia_hora_termino.strftime('%Y-%m-%d %H:%M') if actividad.dia_hora_termino else '-' }}</p>
     <p><strong>Comuna:</strong> {{ actividad.comuna.nombre if actividad.comuna_id else '-' }}</p>
