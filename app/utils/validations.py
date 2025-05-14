@@ -1,6 +1,7 @@
 import re
 import filetype
 
+# ========== VALIDACIONES ==========
 def validar_nombre (value):
     return value and len(value) > 3
 
