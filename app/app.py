@@ -24,7 +24,7 @@ db.init_app(app)
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'} # Decidí que no era necesario permitir archivos .gif
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -170,7 +170,7 @@ def detalle_actividad(id):
     comuna = Comuna.query.get(actividad.comuna_id)
     actividad.comuna = comuna  # Asigna la comuna al objeto actividad
 
-    # Obtener los objetos completos de tema en lugar de solo los nombres
+    # Obtener los objetos completos de tema
     temas_obj = ActividadTema.query.filter_by(actividad_id=id).all()
 
     contactos = ContactarPor.query.filter_by(actividad_id=id).all()
