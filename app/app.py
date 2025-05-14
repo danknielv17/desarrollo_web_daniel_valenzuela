@@ -8,9 +8,11 @@ from datetime import datetime
 from app.utils.validations import validar_nombre, validar_email, validar_telefono
 from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna, DATABASE_URL
 
+# ========== CONFIGURACION ==========
 app = Flask(__name__)
 app.secret_key = 'clave_flask'
 
+# Configuración de CSRF
 csrf = CSRFProtect(app)
 
 # Configuración de SQLAlchemy
