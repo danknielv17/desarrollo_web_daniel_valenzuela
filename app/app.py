@@ -73,7 +73,7 @@ def agregar():
 
     # Validar teléfono solo si se proporcionó
     if datos.get('telefono-organizador') and not validar_telefono(datos.get('telefono-organizador')):
-        errores.append('El formato del teléfono no es válido. Debe contener 10 dígitos.')
+        errores.append('El formato del teléfono no es válido. Debe tener formato +NN.NNNNNNNN')
 
     if not datos.get('inicio-actividad'):
         errores.append('Debe indicar una fecha de inicio.')
