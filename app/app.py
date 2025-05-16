@@ -3,9 +3,8 @@ from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 import os
 import hashlib
-import filetype
 from datetime import datetime
-from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_extension_archivo
+from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_imagen
 from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna, DATABASE_URL
 
 # ========== CONFIGURACION ==========
@@ -24,10 +23,6 @@ db.init_app(app)
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'} # Decidí que no era necesario permitir archivos .gif
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # ========== RUTA PORTADA ==========
 @app.route('/')
@@ -92,11 +87,24 @@ def agregar():
     if datos.get('contactar-por') and not validar_contactar_por(datos.get('otro-contacto')):
         errores.append('El identificador de contacto debe tener al menos 3 caracteres y máximo 50.')
 
-    # Validar extensión de archivos utilizando validar_extension_archivo
+    # Validar imágenes
     fotos = request.files.getlist('foto-actividad[]')
     for foto in fotos:
-        if foto and not validar_extension_archivo(foto.filename):
-            errores.append(f'El archivo {foto.filename} no tiene una extensión permitida (.jpg, .jpeg, .png).')
+        if foto and foto.filename:
+            # Guarda temporalmente el archivo para validarlo
+            temp_path = os.path.join(app.config['UPLOAD_FOLDER'], 'temp_' + secure_filename(foto.filename))
+            foto.save(temp_path)
+
+            # Reposiciona el puntero del archivo
+            foto.seek(0)
+
+            # Valida la imagen
+            if not validar_imagen(foto):
+                errores.append(f'El archivo {foto.filename} no es una imagen válida o no tiene un formato permitido (.jpg, .jpeg, .png).')
+
+            # Elimina el archivo temporal
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
 
     if errores:  # Si hay errores, mantiene visible el formulario
         flash('\n'.join(errores), 'error')
@@ -119,8 +127,7 @@ def agregar():
 
         # Tema
         tema = datos['tema-actividad']
-        temas_predefinidos = ['música', 'deporte', 'ciencias', 'religión', 'política', 'tecnología', 'juegos', 'baile',
-                              'comida', 'otro']
+        temas_predefinidos = ['música', 'deporte', 'ciencias', 'religión', 'política', 'tecnología', 'juegos', 'baile', 'comida', 'otro']
 
         if tema not in temas_predefinidos:
             db.session.add(ActividadTema(actividad_id=actividad.id, tema='otro', glosa_otro=tema))
@@ -139,8 +146,11 @@ def agregar():
         # Archivos
         fotos = request.files.getlist('foto-actividad[]')
         for foto in fotos:
-            if foto and allowed_file(foto.filename):
+            if foto and foto.filename:
+                # Aquí ya no necesitas allowed_file() porque validar_imagen ya verifica todo
                 filename = secure_filename(foto.filename)
+                timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+                filename = f"{timestamp}_{hashlib.md5(filename.encode()).hexdigest()[:10]}_{filename}"
                 ruta = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 foto.save(ruta)
                 db.session.add(Foto(actividad_id=actividad.id, nombre_archivo=filename, ruta_archivo=ruta))
