@@ -60,23 +60,27 @@ def agregar():
     datos = request.form
 
     # Validaciones del lado del servidor
+    # Validar nombre del organizador
     if not validar_nombre(datos.get('nombre-organizador')):
         errores.append('El nombre del organizador es obligatorio y debe tener al menos 3 caracteres.')
 
+    # Validar email
     if not validar_email(datos.get('email-organizador')):
         errores.append('El email es obligatorio y debe tener un formato válido.')
 
-    # Validar teléfono solo si se proporcionó
+    # Validar telefono
     if datos.get('telefono-organizador') and not validar_telefono(datos.get('telefono-organizador')):
         errores.append('El formato del teléfono no es válido. Debe tener formato +NN.NNNNNNNN')
 
+    # Validar fecha de inicio de la actividad
     if not datos.get('inicio-actividad'):
         errores.append('Debe indicar una fecha de inicio.')
 
-    # Validar fechas
+    # Validar formato de fechas
     if not validar_formato_fecha(datos.get('inicio-actividad')):
         errores.append('El formato de la fecha de inicio no es válido.')
 
+    # Validar fecha de término de la actividad
     if datos.get('termino-actividad'):
         if not validar_formato_fecha(datos.get('termino-actividad')):
             errores.append('El formato de la fecha de término no es válido.')
@@ -105,8 +109,8 @@ def agregar():
             # Elimina el archivo temporal
             if os.path.exists(temp_path):
                 os.remove(temp_path)
-
-    if errores:  # Si hay errores, mantiene visible el formulario
+    # Si hay errores, mantiene visible el formulario
+    if errores:
         flash('\n'.join(errores), 'error')
         return render_template('agregar.html', datos=datos)
 
@@ -147,7 +151,6 @@ def agregar():
         fotos = request.files.getlist('foto-actividad[]')
         for foto in fotos:
             if foto and foto.filename:
-                # Aquí ya no necesitas allowed_file() porque validar_imagen ya verifica todo
                 filename = secure_filename(foto.filename)
                 timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
                 filename = f"{timestamp}_{hashlib.md5(filename.encode()).hexdigest()[:10]}_{filename}"
