@@ -48,10 +48,10 @@ def validar_telefono(value):
 
 def validar_contactar_por(value):
     """
-    Valida que el nombre del método de contacto tenga una longitud adecuada.
+    Valida que el nombre del metodo de contacto tenga una longitud adecuada.
 
     Args:
-        value (str): Nombre del método de contacto
+        value (str): Nombre del metodo de contacto
 
     Returns:
         bool: True si existe y tiene entre 4 y 49 caracteres, False en caso contrario
