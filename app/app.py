@@ -5,7 +5,7 @@ import os
 import hashlib
 import filetype
 from datetime import datetime
-from app.utils.validations import validar_nombre, validar_email, validar_telefono
+from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por
 from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna, DATABASE_URL
 
 # ========== CONFIGURACION ==========
@@ -64,15 +64,35 @@ def agregar():
     errores = []
     datos = request.form
 
-    # Validaciones de los datos del lado del servidor
-    if not datos.get('nombre-organizador') or len(datos['nombre-organizador']) < 3:
-        errores.append('El nombre del organizador es obligatorio.')
-    if not datos.get('email-organizador'):
-        errores.append('El email es obligatorio.')
+    # Validaciones del lado del servidor
+    if not validar_nombre(datos.get('nombre-organizador')):
+        errores.append('El nombre del organizador es obligatorio y debe tener al menos 3 caracteres.')
+
+    if not validar_email(datos.get('email-organizador')):
+        errores.append('El email es obligatorio y debe tener un formato válido.')
+
+    # Validar teléfono solo si se proporcionó
+    if datos.get('telefono-organizador') and not validar_telefono(datos.get('telefono-organizador')):
+        errores.append('El formato del teléfono no es válido. Debe contener 10 dígitos.')
+
     if not datos.get('inicio-actividad'):
         errores.append('Debe indicar una fecha de inicio.')
 
-    if errores: # Si hay errores, mantiene visible el formulario
+    # Validar fechas
+    if not validar_formato_fecha(datos.get('inicio-actividad')):
+        errores.append('El formato de la fecha de inicio no es válido.')
+
+    if datos.get('termino-actividad'):
+        if not validar_formato_fecha(datos.get('termino-actividad')):
+            errores.append('El formato de la fecha de término no es válido.')
+        elif not validar_rango_fechas(datos.get('inicio-actividad'), datos.get('termino-actividad')):
+            errores.append('La fecha de término debe ser posterior a la de inicio.')
+
+    # Si hay campos de contactar-por, validar que tengan contenido válido
+    if datos.get('contactar-por') and not validar_contactar_por(datos.get('otro-contacto')):
+        errores.append('El identificador de contacto debe tener al menos 3 caracteres.')
+
+    if errores:  # Si hay errores, mantiene visible el formulario
         flash('\n'.join(errores), 'error')
         return render_template('agregar.html', datos=datos)
 
