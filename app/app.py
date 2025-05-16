@@ -5,7 +5,7 @@ import os
 import hashlib
 import filetype
 from datetime import datetime
-from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por
+from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_extension_archivo
 from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna, DATABASE_URL
 
 # ========== CONFIGURACION ==========
@@ -91,6 +91,12 @@ def agregar():
     # Si hay campos de contactar-por, validar que tengan contenido válido
     if datos.get('contactar-por') and not validar_contactar_por(datos.get('otro-contacto')):
         errores.append('El identificador de contacto debe tener al menos 3 caracteres.')
+
+    # Validar extensión de archivos utilizando validar_extension_archivo
+    fotos = request.files.getlist('foto-actividad[]')
+    for foto in fotos:
+        if foto and not validar_extension_archivo(foto.filename):
+            errores.append(f'El archivo {foto.filename} no tiene una extensión permitida (.jpg, .jpeg, .png).')
 
     if errores:  # Si hay errores, mantiene visible el formulario
         flash('\n'.join(errores), 'error')
