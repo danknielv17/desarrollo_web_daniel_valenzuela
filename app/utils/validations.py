@@ -99,15 +99,41 @@ def validar_rango_fechas(inicio, termino):
         return False
 
 
-def validar_extension_archivo(filename):
+def validar_imagen(foto_file):
     """
-    Valida que la extensión del archivo sea una de las permitidas.
+    Valida que el archivo sea una imagen de formato permitido.
 
     Args:
-        filename (str): Nombre del archivo a validar
+        foto_file (FileStorage): Objeto de archivo subido desde un formulario
 
     Returns:
-        bool: True si la extensión es png, jpg o jpeg, False en caso contrario
+        bool: True si el archivo es una imagen válida, False en caso contrario
     """
-    extensiones_permitidas = {'png', 'jpg', 'jpeg'}
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in extensiones_permitidas
+    ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+    ALLOWED_MIMETYPES = {"image/jpeg", "image/png"}
+
+    # Verifica si se envió un archivo
+    if foto_file is None:
+        return False
+
+    # Verifica si el navegador envió un archivo vacío
+    if foto_file.filename == "":
+        return False
+
+    try:
+        # Verifica el tipo de archivo usando filetype
+        ftype_guess = filetype.guess(foto_file)
+        if ftype_guess is None:
+            return False
+
+        # Verifica la extensión
+        if ftype_guess.extension not in ALLOWED_EXTENSIONS:
+            return False
+
+        # Verifica el tipo MIME
+        if ftype_guess.mime not in ALLOWED_MIMETYPES:
+            return False
+
+        return True
+    except Exception:
+        return False
