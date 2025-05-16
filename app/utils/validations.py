@@ -11,3 +11,6 @@ def validar_email(value):
 
 def validar_telefono (value):
     return re.match(r'^\d{10}$', value) is not None
+
+def validar_contactar_por(value):
+    return value and len(value) > 3
