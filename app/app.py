@@ -64,6 +64,7 @@ def agregar():
     errores = []
     datos = request.form
 
+    # Validaciones de los datos del lado del servidor
     if not datos.get('nombre-organizador') or len(datos['nombre-organizador']) < 3:
         errores.append('El nombre del organizador es obligatorio.')
     if not datos.get('email-organizador'):
