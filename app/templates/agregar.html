@@ -33,7 +33,7 @@
         {% endwith %}
 
         <form id="form-actividad" method="POST" enctype="multipart/form-data" action="{{ url_for('agregar') }}">
-            <input type ="hidden" name="csrf_token" value="{{ csrf_token() }}"> # CSRF token para proteger el formulario
+            <input type ="hidden" name="csrf_token" value="{{ csrf_token() }}"> <!-- Token CSRF para protección -->
             <!-- Información del lugar -->
             <fieldset>
                 <legend>Información del Lugar</legend>
