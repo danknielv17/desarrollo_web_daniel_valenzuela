@@ -10,8 +10,9 @@ def validar_email(value):
     pattern = r'^[\w.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$'
     return re.match(pattern, value) is not None
 
-def validar_telefono (value):
-    return re.match(r'^\d{10}$', value) is not None
+def validar_telefono(value):
+    pattern = r'^\+\d{2,3}\.\d{8,9}$'
+    return re.match(pattern, value) is not None
 
 def validar_contactar_por(value):
     return value and 3 < len(value) < 50
