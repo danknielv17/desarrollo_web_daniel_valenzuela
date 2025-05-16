@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 import filetype
 
 # ========== VALIDACIONES ==========
@@ -13,4 +14,23 @@ def validar_telefono (value):
     return re.match(r'^\d{10}$', value) is not None
 
 def validar_contactar_por(value):
-    return value and len(value) > 3
+    return value and 3 < len(value) < 5
+
+def validar_formato_fecha(value):
+    try:
+        if not value:
+            return False
+        datetime.strptime(value, '%Y-%m-%dT%H:%M')
+        return True
+    except ValueError:
+        return False
+
+def validar_rango_fechas(inicio, termino):
+    try:
+        if not inicio or not termino:
+            return False
+        fecha_inicio = datetime.strptime(inicio, '%Y-%m-%dT%H:%M')
+        fecha_termino = datetime.strptime(termino, '%Y-%m-%dT%H:%M')
+        return fecha_inicio < fecha_termino
+    except ValueError:
+        return False
