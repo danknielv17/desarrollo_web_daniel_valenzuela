@@ -28,7 +28,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/')
 def portada():
     actividades = []
-    ultimas = Actividad.query.order_by(Actividad.id.desc()).limit(5).all()
+    ultimas = Actividad.query.order_by(Actividad.id.desc()).limit(5).all() # Ordenar por id descendente para obtener las últimas 5 actividades
 
     for act in ultimas:
         comuna = Comuna.query.get(act.comuna_id)
@@ -76,7 +76,7 @@ def agregar():
     if not datos.get('inicio-actividad'):
         errores.append('Debe indicar una fecha de inicio.')
 
-    # Validar formato de fechas
+    # Validar formato de fecha de inicio de la actividad
     if not validar_formato_fecha(datos.get('inicio-actividad')):
         errores.append('El formato de la fecha de inicio no es válido.')
 
@@ -109,7 +109,7 @@ def agregar():
             # Elimina el archivo temporal
             if os.path.exists(temp_path):
                 os.remove(temp_path)
-    # Si hay errores, mantiene visible el formulario
+    # Si hay errores de validación, mantiene visible el formulario
     if errores:
         flash('\n'.join(errores), 'error')
         return render_template('agregar.html', datos=datos)
