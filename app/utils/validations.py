@@ -14,7 +14,7 @@ def validar_telefono (value):
     return re.match(r'^\d{10}$', value) is not None
 
 def validar_contactar_por(value):
-    return value and 3 < len(value) < 5
+    return value and 3 < len(value) < 50
 
 def validar_formato_fecha(value):
     try:
