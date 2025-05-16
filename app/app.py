@@ -90,7 +90,7 @@ def agregar():
 
     # Si hay campos de contactar-por, validar que tengan contenido válido
     if datos.get('contactar-por') and not validar_contactar_por(datos.get('otro-contacto')):
-        errores.append('El identificador de contacto debe tener al menos 3 caracteres.')
+        errores.append('El identificador de contacto debe tener al menos 3 caracteres y máximo 50.')
 
     # Validar extensión de archivos utilizando validar_extension_archivo
     fotos = request.files.getlist('foto-actividad[]')
