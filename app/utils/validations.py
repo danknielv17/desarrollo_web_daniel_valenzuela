@@ -34,3 +34,8 @@ def validar_rango_fechas(inicio, termino):
         return fecha_inicio < fecha_termino
     except ValueError:
         return False
+
+def validar_extension_archivo(filename):
+    """Valida que la extensión del archivo sea permitida."""
+    extensiones_permitidas = {'png', 'jpg', 'jpeg'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in extensiones_permitidas
