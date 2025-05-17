@@ -13,7 +13,7 @@ def validar_nombre(value):
         value (str): Nombre a validar
 
     Returns:
-        bool: True si el nombre existe y tiene 3 o más caracteres, False en caso contrario
+        bool: True si el nombre existe y tiene entre 3 y 200 caracteres, False en caso contrario
     """
     return value and 3 <= len(value) <= 200
 
