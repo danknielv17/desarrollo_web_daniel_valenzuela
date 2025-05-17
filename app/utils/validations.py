@@ -15,7 +15,7 @@ def validar_nombre(value):
     Returns:
         bool: True si el nombre existe y tiene más de 3 caracteres, False en caso contrario
     """
-    return value and len(value) > 3
+    return value and 3 <= len(value) <= 200
 
 
 def validar_email(value):
@@ -29,7 +29,7 @@ def validar_email(value):
         bool: True si el formato es válido, False en caso contrario
     """
     pattern = r'^[\w.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$'
-    return re.match(pattern, value) is not None
+    return re.match(pattern, value) is not None and 6 <= len(value) <= 100
 
 
 def validar_telefono(value):
@@ -56,7 +56,7 @@ def validar_contactar_por(value):
     Returns:
         bool: True si existe y tiene entre 4 y 49 caracteres, False en caso contrario
     """
-    return value and 3 < len(value) < 50
+    return value and 4 <= len(value) <= 50
 
 
 def validar_formato_fecha(value):
