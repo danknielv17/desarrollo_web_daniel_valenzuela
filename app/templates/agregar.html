@@ -6,119 +6,122 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-<header>
-    <h1>Informar Nueva Actividad</h1>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('portada') }}">Portada</a></li>
-            <li><a href="{{ url_for('listado') }}">Ver Listado de Actividades</a></li>
-            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
-        </ul>
-    </nav>
-</header>
+    <header>
+        <h1>Informar Nueva Actividad</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('portada') }}">Portada</a></li>
+                <li><a href="{{ url_for('listado') }}">Ver Listado de Actividades</a></li>
+                <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<main>
-    <section id="agregar-actividad">
-        <h2>Informar una Nueva Actividad</h2>
+    <main>
+        <section id="agregar-actividad">
+            <h2>Informar una Nueva Actividad</h2>
 
-        <!-- Mostrar errores -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul class="mensajes">
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="mensajes">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
 
-        <form id="form-actividad" method="POST" enctype="multipart/form-data" action="{{ url_for('agregar') }}">
-            <input type ="hidden" name="csrf_token" value="{{ csrf_token() }}"> <!-- Token CSRF para protección -->
-            <!-- Información del lugar -->
-            <fieldset>
-                <legend>Información del Lugar</legend>
-                <label for="region">Región:</label>
-                <select id="region" name="region" required>
-                    <option value="">Seleccione una región</option>
-                </select>
+            <form id="form-actividad" method="POST" enctype="multipart/form-data" action="{{ url_for('agregar') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-                <label for="comuna">Comuna:</label>
-                <select id="comuna" name="comuna" required>
-                    <option value="">Seleccione primero una región</option>
-                </select>
+                <fieldset>
+                    <legend>Información del Lugar</legend>
 
-                <label for="sector">Sector (Opcional):</label>
-                <input type="text" id="sector" name="sector" maxlength="100" placeholder="Ej: Plaza, Parque, etc.">
-            </fieldset>
+                    <label for="region">Región:</label>
+                    <select id="region" name="region" required>
+                        <option value="">Seleccione una región</option>
+                    </select>
 
-            <!-- Datos del organizador -->
-            <fieldset>
-                <legend>Datos del Organizador</legend>
-                <label for="nombre-organizador">Nombre:</label>
-                <input type="text" id="nombre-organizador" name="nombre-organizador" maxlength="200" required>
+                    <label for="comuna">Comuna:</label>
+                    <select id="comuna" name="comuna" required>
+                        <option value="">Seleccione primero una región</option>
+                    </select>
 
-                <label for="email-organizador">Email:</label>
-                <input type="email" id="email-organizador" name="email-organizador" maxlength="100" placeholder="Ej: usuario@dominio.in" required>
+                    <label for="sector">Sector (Opcional):</label>
+                    <input type="text" id="sector" name="sector" maxlength="100" placeholder="Ej: Plaza, Parque, etc.">
+                </fieldset>
 
-                <label for="telefono-organizador">Número de celular (Opcional):</label>
-                <input type="tel" id="telefono-organizador" name="telefono-organizador" placeholder="Ej: +569.12345678">
+                <fieldset>
+                    <legend>Datos del Organizador</legend>
 
-                <label for="contactar-por">Contactar por (opcional):</label>
-                <select id="contactar-por" name="contactar-por">
-                    <option value="">Seleccione una opción</option>
-                    <option value="whatsapp">WhatsApp</option>
-                    <option value="telegram">Telegram</option>
-                    <option value="x">X (Twitter)</option>
-                    <option value="instagram">Instagram</option>
-                    <option value="tiktok">TikTok</option>
-                    <option value="otra">Otra</option>
-                </select>
-                <div id="contacto-extra"></div>
-            </fieldset>
+                    <label for="nombre-organizador">Nombre:</label>
+                    <input type="text" id="nombre-organizador" name="nombre-organizador" maxlength="200" required>
 
-            <!-- Información de la actividad -->
-            <fieldset>
-                <legend>Información de la Actividad</legend>
-                <label for="inicio-actividad">Día y Hora de Inicio:</label>
-                <input type="datetime-local" id="inicio-actividad" name="inicio-actividad" required>
+                    <label for="email-organizador">Email:</label>
+                    <input type="email" id="email-organizador" name="email-organizador" maxlength="100" placeholder="Ej: usuario@dominio.in" required>
 
-                <label for="termino-actividad">Día y Hora de Término:</label>
-                <input type="datetime-local" id="termino-actividad" name="termino-actividad">
+                    <label for="telefono-organizador">Número de celular (Opcional):</label>
+                    <input type="tel" id="telefono-organizador" name="telefono-organizador" placeholder="Ej: +569.12345678">
 
-                <label for="descripcion-actividad">Descripción:</label>
-                <textarea id="descripcion-actividad" name="descripcion-actividad" rows="10" cols="50" placeholder="Opcional"></textarea>
+                    <label for="contactar-por">Contactar por (opcional):</label>
+                    <select id="contactar-por" name="contactar-por">
+                        <option value="">Seleccione una opción</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="x">X (Twitter)</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="otra">Otra</option>
+                    </select>
 
-                <label for="tema-actividad">Tema:</label>
-                <select id="tema-actividad" name="tema-actividad" required>
-                    <option value="">Seleccione un tema</option>
-                    <option value="musica">Música</option>
-                    <option value="deporte">Deporte</option>
-                    <option value="ciencias">Ciencias</option>
-                    <option value="religión">Religión</option>
-                    <option value="política">Política</option>
-                    <option value="tecnología">Tecnología</option>
-                    <option value="juegos">Juegos</option>
-                    <option value="baile">Baile</option>
-                    <option value="comida">Comida</option>
-                    <option value="otro">Otro</option>
-                </select>
-                <div id="tema-extra"></div>
+                    <div id="contacto-extra"></div>
+                </fieldset>
 
-                <div id="contenedor-fotos">
-                    <input type="file" name="foto-actividad[]" accept=".jpg,.png,.jpeg" required>
-                </div>
-                <button type="button" id="agregar-foto">Agregar otra foto</button>
-            </fieldset>
+                <fieldset>
+                    <legend>Información de la Actividad</legend>
 
-            <button type="submit">Agregar esta Actividad</button>
-        </form>
+                    <label for="inicio-actividad">Día y Hora de Inicio:</label>
+                    <input type="datetime-local" id="inicio-actividad" name="inicio-actividad" required>
 
-        <div id="mensaje-confirmacion"></div>
-    </section>
-</main>
+                    <label for="termino-actividad">Día y Hora de Término:</label>
+                    <input type="datetime-local" id="termino-actividad" name="termino-actividad">
 
-<script src="{{ url_for('static', filename='js/region_comuna.js') }}"></script>
-<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+                    <label for="descripcion-actividad">Descripción:</label>
+                    <textarea id="descripcion-actividad" name="descripcion-actividad" rows="10" cols="50" placeholder="Opcional"></textarea>
+
+                    <label for="tema-actividad">Tema:</label>
+                    <select id="tema-actividad" name="tema-actividad" required>
+                        <option value="">Seleccione un tema</option>
+                        <option value="musica">Música</option>
+                        <option value="deporte">Deporte</option>
+                        <option value="ciencias">Ciencias</option>
+                        <option value="religión">Religión</option>
+                        <option value="política">Política</option>
+                        <option value="tecnología">Tecnología</option>
+                        <option value="juegos">Juegos</option>
+                        <option value="baile">Baile</option>
+                        <option value="comida">Comida</option>
+                        <option value="otro">Otro</option>
+                    </select>
+
+                    <div id="tema-extra"></div>
+
+                    <div id="contenedor-fotos">
+                        <label for="foto-actividad">Fotos:</label>
+                        <input type="file" id="foto-actividad" name="foto-actividad[]" accept=".jpg,.png,.jpeg" required>
+                    </div>
+                    <button type="button" id="agregar-foto">Agregar otra foto</button>
+                </fieldset>
+
+                <button type="submit">Agregar esta Actividad</button>
+            </form>
+
+            <div id="mensaje-confirmacion"></div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/region_comuna.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
