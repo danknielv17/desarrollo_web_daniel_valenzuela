@@ -1,69 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Listado de Actividades</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta charset="UTF-8">
+    <title>Listado de Actividades</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-<header>
-  <h1>Listado de Actividades</h1>
-  <nav>
-    <ul>
-      <li><a href="{{ url_for('portada') }}">Portada</a></li>
-      <li><a href="{{ url_for('agregar') }}">Agregar Actividad</a></li>
-      <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
-    </ul>
-  </nav>
-</header>
+    <header>
+        <h1>Listado de Actividades</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('portada') }}">Portada</a></li>
+                <li><a href="{{ url_for('agregar') }}">Agregar Actividad</a></li>
+                <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<main>
-  <table id="tabla-actividades">
-    <thead>
-    <tr>
-      <th>Inicio</th>
-      <th>Término</th>
-      <th>Comuna</th>
-      <th>Sector</th>
-      <th>Tema</th>
-      <th>Organizador</th>
-      <th>Total Fotos</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for act in actividades %}
-    <tr onclick="window.location.href='{{ url_for('detalle_actividad', id=act.id) }}'">
-      <td>{{ act.inicio }}</td>
-      <td>{{ act.termino or '-' }}</td>
-      <td>{{ act.comuna }}</td>
-      <td>{{ act.sector or '-' }}</td>
-      <td>
-        {% if act.tema == 'otro' and act.glosa_otro %}
-          {{ act.glosa_otro }}
-        {% else %}
-          {{ act.tema }}
-        {% endif %}
-      </td>
-      <td>{{ act.nombre_organizador }}</td>
-      <td>{{ act.total_fotos or 0 }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+    <main>
+        <table id="tabla-actividades">
+            <thead>
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Organizador</th>
+                    <th>Total Fotos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for act in actividades %}
+                <tr onclick="window.location.href='{{ url_for('detalle_actividad', id=act.id) }}'">
+                    <td>{{ act.inicio }}</td>
+                    <td>{{ act.termino or '-' }}</td>
+                    <td>{{ act.comuna }}</td>
+                    <td>{{ act.sector or '-' }}</td>
+                    <td>
+                        {% if act.tema == 'otro' and act.glosa_otro %}
+                            {{ act.glosa_otro }}
+                        {% else %}
+                            {{ act.tema }}
+                        {% endif %}
+                    </td>
+                    <td>{{ act.nombre_organizador }}</td>
+                    <td>{{ act.total_fotos or 0 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-  <!-- Paginación -->
-  <div class="paginacion">
-      {% if pagina_actual > 1 %}
-        <a href="{{ url_for('listado', page=pagina_actual-1) }}">⬅ Anterior</a>
-      {% endif %}
+        <div class="paginacion">
+            {% if pagina_actual > 1 %}
+                <a href="{{ url_for('listado', page=pagina_actual-1) }}">⬅ Anterior</a>
+            {% endif %}
 
-      <span>Página {{ pagina_actual }} de {{ total_paginas }}</span>
+            <span>Página {{ pagina_actual }} de {{ total_paginas }}</span>
 
-      {% if pagina_actual < total_paginas %}
-        <a href="{{ url_for('listado', page=pagina_actual+1) }}">Siguiente ➡</a>
-      {% endif %}
-  </div>
-</main>
-
+            {% if pagina_actual < total_paginas %}
+                <a href="{{ url_for('listado', page=pagina_actual+1) }}">Siguiente ➡</a>
+            {% endif %}
+        </div>
+    </main>
 </body>
 </html>
