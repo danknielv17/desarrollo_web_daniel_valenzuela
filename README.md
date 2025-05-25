@@ -6,4 +6,13 @@
 
 ## Funcionalidades de Estadísticas
 
+## Ejecución de la aplicación
+
+Para correr flask, por temas de tiempo y problemas en la estructura de las carpetas, correr el siguiente comando en 
+el virtual environment:
+```
+$env:FLASK_APP="app.app:app"
+flask run
+```
+
 ## Características principales
