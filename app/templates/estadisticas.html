@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Estadísticas</title>
-  <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <!-- Highcharts CDN -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
 <header>
@@ -21,31 +23,30 @@
   <!-- Gráfico de líneas: Cantidad de actividades por día -->
   <div class="grafico">
     <h3>Cantidad de Actividades por Día</h3>
-    <img src="../static/img/actividades_por_dia.png" alt="Cantidad de Actividades por Día" width="800">
-    <p>Este gráfico muestra la cantidad de actividades realizadas diariamente durante el mes de marzo.</p>
+    <div id="grafico-lineas" style="width: 100%; height: 400px;"></div>
+    <p>Este gráfico muestra la cantidad de actividades realizadas diariamente.</p>
   </div>
 
   <!-- Gráfico de torta: Total de actividades por tipo -->
   <div class="grafico">
     <h3>Total de Actividades por Tipo</h3>
-    <img src="../static/img/actividades_por_tipo.png" alt="Total de Actividades por Tipo" width="800">
+    <div id="grafico-torta" style="width: 100%; height: 400px;"></div>
     <p>Este gráfico muestra la distribución porcentual de las actividades según su tipo.</p>
   </div>
 
   <!-- Gráfico de barras: Actividades por momento del día y mes -->
   <div class="grafico">
     <h3>Actividades por Momento del Día y Mes</h3>
-    <img src="../static/img/actividades_por_hora_mes.png" alt="Actividades por Momento del Día y Mes" width="800">
-    <p>Este gráfico muestra la cantidad de actividades realizadas en la mañana, mediodía y tarde durante los meses seleccionados.</p>
+    <div id="grafico-barras" style="width: 100%; height: 400px;"></div>
+    <p>Este gráfico muestra la cantidad de actividades realizadas en la mañana, mediodía y tarde por mes.</p>
   </div>
 
   <!-- Enlace para volver a la portada -->
-    <div class="enlace-volver">
-        <a href="{{ url_for('portada') }}">Volver a la Portada</a>
-    </div>
+  <div class="enlace-volver">
+    <a href="{{ url_for('portada') }}">⬅ Volver a la Portada</a>
+  </div>
 </main>
 
-<script src="../static/js/script.js"></script>
-<script src="../static/js/validation.js"></script>
+<script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
 </body>
 </html>
