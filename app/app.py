@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 import os
 import hashlib
+from sqlalchemy import func, extract
 from datetime import datetime
 from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_imagen
 from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna, DATABASE_URL
@@ -226,7 +227,65 @@ def detalle_actividad(id):
 @app.route('/estadisticas')
 def estadisticas():
     return render_template('estadisticas.html')
-# Las funcionalidades relacionadas a las estadísticas quedarán pendientes para la siguiente tarea.
+
+# ========== RUTA API ==========
+
+# Cantidad de actividades por día (gráfico de líneas)
+@app.route('/api/estadisticas/por-dia')
+def estadisticas_por_dia():
+    resultados = db.session.query(
+        func.date(Actividad.dia_hora_inicio).label('dia'),
+        func.count(Actividad.id)
+    ).group_by('dia').order_by('dia').all()
+    data = {
+        'labels': [r[0].strftime('%Y-%m-%d') for r in resultados],
+        'values': [r[1] for r in resultados]
+    }
+    return jsonify(data)
+
+# Total de actividades por tipo (gráfico de torta)
+@app.route('/api/estadisticas/por-tipo')
+def estadisticas_por_tipo():
+    resultados = db.session.query(
+        ActividadTema.tema,
+        func.count(ActividadTema.id)
+    ).group_by(ActividadTema.tema).all()
+    data = {
+        'labels': [r[0] for r in resultados],
+        'values': [r[1] for r in resultados]
+    }
+    return jsonify(data)
+
+# Actividades por momento del día y mes (gráfico de barras)
+@app.route('/api/estadisticas/por-momento-mes')
+def estadisticas_por_momento_mes():
+    # Definir momentos del día
+    def momento(hora):
+        if 6 <= hora < 12:
+            return 'Mañana'
+        elif 12 <= hora < 18:
+            return 'Mediodía'
+        else:
+            return 'Tarde'
+    actividades = db.session.query(
+        Actividad.dia_hora_inicio
+    ).all()
+    conteo = {}
+    for (dt,) in actividades:
+        mes = dt.strftime('%Y-%m')
+        hora = dt.hour
+        m = momento(hora)
+        if mes not in conteo:
+            conteo[mes] = {'Mañana': 0, 'Mediodía': 0, 'Tarde': 0}
+        conteo[mes][m] += 1
+    meses = sorted(conteo.keys())
+    data = {
+        'labels': meses,
+        'manana': [conteo[m]['Mañana'] for m in meses],
+        'mediodia': [conteo[m]['Mediodía'] for m in meses],
+        'tarde': [conteo[m]['Tarde'] for m in meses]
+    }
+    return jsonify(data)
 
 # ========== MAIN ==========
 if __name__ == '__main__':
