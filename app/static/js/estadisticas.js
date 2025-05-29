@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 title: { text: 'Actividades por Momento del Día y Mes' },
                 xAxis: { categories: data.labels, title: { text: 'Mes' } },
                 yAxis: { min: 0, title: { text: 'Cantidad de Actividades' }, allowDecimals: false },
-                plotOptions: { column: { grouping: true, stacking: 'normal' } },
+                plotOptions: { column: { grouping: true } }, // Agrupadas, no apiladas
                 series: [
                     { name: 'Mañana', data: data.manana, color: '#36a2eb' },
                     { name: 'Mediodía', data: data.mediodia, color: '#ffce56' },
