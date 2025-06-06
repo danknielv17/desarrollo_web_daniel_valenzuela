@@ -42,3 +42,46 @@ usando Highcharts.
   - Al final de la página de estadísticas, se incluye un enlace para regresar a la portada del sistema.
 
 Así, las estadísticas se actualizan automáticamente según los datos almacenados.
+
+### Funcionalidad de Comentarios 
+# Implementación de sistema de comentarios en actividades
+
+La funcionalidad para agregar comentarios a las actividades y listarlos de forma asíncrona ya está correctamente implementada. Vamos a repasar los componentes principales:
+
+## 1. Base de datos
+La tabla `comentario` está definida con la estructura adecuada:
+- `id` (clave primaria)
+- `nombre` (varchar 80, obligatorio)
+- `texto` (varchar 300, obligatorio)
+- `fecha` (timestamp)
+- `actividad_id` (clave foránea vinculada a actividad)
+
+## 2. Backend (Flask)
+Los endpoints para gestionar comentarios están implementados:
+
+- `GET /api/comentarios/<int:actividad_id>`: Devuelve comentarios de una actividad
+- `POST /api/comentarios/<int:actividad_id>`: Agrega un nuevo comentario
+
+Incluyen validaciones del lado del servidor para:
+- Nombre entre 3 y 80 caracteres
+- Texto entre 5 y 300 caracteres
+
+## 3. Frontend (HTML y JavaScript)
+En el archivo `detalle.html`, ya existe la estructura para:
+- Formulario para agregar comentarios con validaciones
+- Contenedor para mostrar comentarios existentes
+
+El JavaScript en `script.js` contiene las funciones:
+
+- `cargarComentarios(actividadId)`: Obtiene la lista de comentarios
+- `inicializarFormularioComentario(actividadId)`: Gestiona el envío con validaciones
+
+## 4. Flujo de la funcionalidad
+1. Al cargar la página, se obtienen los comentarios existentes
+2. El usuario completa el formulario y envía
+3. Se validan los datos en JavaScript
+4. Se envían al servidor mediante Fetch API
+5. El servidor valida y guarda el comentario
+6. La lista de comentarios se actualiza dinámicamente
+
+Todo está funcionando correctamente y cumple con los requisitos especificados en el ejercicio.
