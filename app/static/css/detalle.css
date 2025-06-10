@@ -48,7 +48,7 @@
 }
 
 .galeria img:hover {
-    border: 1.5px solid #36a2eb;
+    border: 1.5px solid #4a6fa5;
     box-shadow: 0 2px 12px rgba(54, 162, 235, 0.13);
 }
 
@@ -87,12 +87,12 @@
 
 #form-comentario input[type="text"]:focus,
 #form-comentario textarea:focus {
-    border-color: #36a2eb;
+    border-color: #4a6fa5;
     outline: none;
 }
 
 #form-comentario button[type="submit"] {
-    background: #36a2eb;
+    background: #4a6fa5;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -105,7 +105,7 @@
 }
 
 #form-comentario button[type="submit"]:hover {
-    background: #258ad6;
+    background: #2d4e7c;
 }
 
 #errores-comentario {
@@ -124,7 +124,7 @@
 
 #lista-comentarios li {
     background: #f4f8fb;
-    border-left: 4px solid #36a2eb;
+    border-left: 4px solid #4a6fa5;
     margin-bottom: 10px;
     padding: 10px 14px;
     border-radius: 4px;
