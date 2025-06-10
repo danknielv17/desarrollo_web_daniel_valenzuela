@@ -25,7 +25,8 @@ utilizando gráficos interactivos generados con **Highcharts** y datos obtenidos
 #### Características:
 
 - **Tres gráficos interactivos:**
-  - **Gráfico de líneas:** Muestra la cantidad de actividades por día.
+  - **Gráfico de líneas:** Muestra la cantidad de actividades por día. (Por temas de eficiencia en la visualización, a diferencia de la tarea 1, 
+aquí se muestra la cantidad de actividades por día histórico, no por semana)
   - **Gráfico de torta:** Presenta la distribución de actividades por tipo.
   - **Gráfico de barras:** Visualiza la cantidad de actividades por momento del día (mañana, mediodía, tarde) agrupadas por mes.
 
@@ -83,5 +84,3 @@ El JavaScript en `script.js` contiene las funciones:
 4. Se envían al servidor mediante Fetch API
 5. El servidor valida y guarda el comentario
 6. La lista de comentarios se actualiza dinámicamente
-
-Todo está funcionando correctamente y cumple con los requisitos especificados en el ejercicio.
