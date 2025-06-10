@@ -1,0 +1,163 @@
+/* detalle.css */
+
+/* Contenedor principal */
+.detalle {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
+    max-width: 700px;
+    margin: 32px auto 32px auto;
+    padding: 32px 36px 28px 36px;
+    color: #222;
+}
+
+.detalle h2, .detalle h3 {
+    color: #4a6fa5;
+    margin-top: 0;
+}
+
+.detalle p, .detalle ul, .detalle li {
+    font-size: 1.05em;
+    margin-bottom: 8px;
+}
+
+.detalle ul {
+    padding-left: 18px;
+    margin-bottom: 18px;
+}
+
+.detalle ul li {
+    margin-bottom: 4px;
+}
+
+/* Galería de fotos */
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.galeria img {
+    border-radius: 6px;
+    border: 1.5px solid #d1d5db;
+    background: #f4f4f9;
+    transition: box-shadow 0.2s, border 0.2s;
+    cursor: pointer;
+    box-shadow: 0 1px 6px rgba(44, 62, 80, 0.08);
+}
+
+.galeria img:hover {
+    border: 1.5px solid #36a2eb;
+    box-shadow: 0 2px 12px rgba(54, 162, 235, 0.13);
+}
+
+/* Formulario de comentarios */
+#form-comentario {
+    background: #f8fafc;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 20px 24px 16px 24px;
+    margin-top: 24px;
+    max-width: 480px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#form-comentario label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #222;
+}
+
+#form-comentario input[type="text"],
+#form-comentario textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: #fafbfc;
+    transition: border-color 0.2s;
+    margin-bottom: 8px;
+    resize: vertical;
+}
+
+#form-comentario input[type="text"]:focus,
+#form-comentario textarea:focus {
+    border-color: #36a2eb;
+    outline: none;
+}
+
+#form-comentario button[type="submit"] {
+    background: #36a2eb;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+#form-comentario button[type="submit"]:hover {
+    background: #258ad6;
+}
+
+#errores-comentario {
+    color: #e74c3c;
+    font-size: 0.97em;
+    margin-top: 2px;
+    min-height: 18px;
+}
+
+/* Lista de comentarios */
+#lista-comentarios {
+    margin-bottom: 18px;
+    padding-left: 0;
+    list-style: none;
+}
+
+#lista-comentarios li {
+    background: #f4f8fb;
+    border-left: 4px solid #36a2eb;
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 0.98em;
+    word-break: break-word;
+}
+
+/* Botones de navegación */
+.botones-navegacion {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+    justify-content: flex-end;
+}
+
+.botones-navegacion a button {
+    background: #4a6fa5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 18px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.botones-navegacion a button:hover {
+    background: #2d4e7c;
+}
+
+/* Overlay de foto ampliada */
+#overlay-foto {
+    /* El JS ya define el estilo, pero puedes agregar aquí si quieres refinar */
+    z-index: 9999;
+}
