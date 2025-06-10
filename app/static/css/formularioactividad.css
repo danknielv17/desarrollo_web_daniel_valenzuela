@@ -1,0 +1,149 @@
+/* formularioactividad.css */
+
+/* Contenedor principal del formulario */
+#agregar-actividad {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
+    max-width: 700px;
+    margin: 32px auto 32px auto;
+    padding: 32px 36px 28px 36px;
+    color: #222;
+}
+
+#agregar-actividad h2 {
+    color: #4a6fa5;
+    margin-top: 0;
+    margin-bottom: 18px;
+}
+
+#form-actividad fieldset {
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 22px;
+    padding: 18px 20px 12px 20px;
+    background: #f8fafc;
+}
+
+#form-actividad legend {
+    font-weight: 600;
+    color: #4a6fa5;
+    padding: 0 6px;
+}
+
+#form-actividad label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #222;
+}
+
+#form-actividad input[type="text"],
+#form-actividad input[type="email"],
+#form-actividad input[type="tel"],
+#form-actividad input[type="datetime-local"],
+#form-actividad input[type="file"],
+#form-actividad select,
+#form-actividad textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: #fafbfc;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+#form-actividad input[type="file"] {
+    background: #f4f8fb;
+    padding: 6px 0;
+}
+
+#form-actividad input:focus,
+#form-actividad select:focus,
+#form-actividad textarea:focus {
+    border-color: #2d4e7c;
+    outline: none;
+}
+
+#form-actividad textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+#form-actividad button[type="submit"],
+#form-actividad button[type="button"] {
+    background: #4a6fa5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+#form-actividad button[type="submit"]:hover,
+#form-actividad button[type="button"]:hover {
+    background: #2d4e7c;
+}
+
+#mensaje-confirmacion .confirmacion,
+#mensaje-confirmacion .exito {
+    background: #eaf6ff;
+    border: 1px solid #4a6fa5;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 18px;
+    text-align: center;
+}
+
+#mensaje-confirmacion .exito {
+    background: #e6fbe8;
+    border-color: #2ecc71;
+    color: #218c4a;
+}
+
+ul.mensajes {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 18px;
+}
+
+ul.mensajes li {
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+ul.mensajes li.error {
+    background: #ffeaea;
+    color: #c0392b;
+    border-left: 4px solid #e74c3c;
+}
+
+ul.mensajes li.success {
+    background: #e6fbe8;
+    color: #218c4a;
+    border-left: 4px solid #2ecc71;
+}
+
+#contenedor-fotos input[type="file"] {
+    margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+    #agregar-actividad {
+        padding: 16px 6px 16px 6px;
+    }
+    #form-actividad fieldset {
+        padding: 10px 4px 8px 4px;
+    }
+}
