@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Página no encontrada - 404</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Error 404 - Página no encontrada</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('portada') }}">Portada</a></li>
+                <li><a href="{{ url_for('agregar') }}">Agregar Actividad</a></li>
+                <li><a href="{{ url_for('listado') }}">Ver Listado de Actividades</a></li>
+                <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section style="text-align:center; margin-top:50px;">
+            <h2>¡Ups! La página que buscas no existe.</h2>
+            <p>Puedes volver a la portada haciendo click <a href="{{ url_for('portada') }}">aquí</a> o usando el menú superior.</p>
+            <img src="{{ url_for('static', filename='img/no-image.png') }}" alt="404" width="200">
+        </section>
+    </main>
+</body>
+</html>
