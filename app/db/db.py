@@ -70,6 +70,15 @@ class Comuna(db.Model):
     nombre = Column(String(100), nullable=False)
     region_id = Column(Integer, ForeignKey('region.id'), nullable=False)
 
+class Comentario(db.Model):
+    __tablename__ = 'comentario'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(DateTime, nullable=False)
+    actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
+    actividad = relationship('Actividad', backref='comentarios')
+
 # --- Database Functions ---
 
 def get_tema(actividad_id, tema_texto):
@@ -116,3 +125,7 @@ def get_region_by_id(region_id):
 def get_comunas_by_region_id(region_id):
     with SessionLocal() as session:
         return session.query(Comuna).filter_by(region_id=region_id).all()
+
+def get_comentarios_by_actividad_id(actividad_id):
+    with SessionLocal() as session:
+        return session.query(Comentario).filter_by(actividad_id=actividad_id).all()
