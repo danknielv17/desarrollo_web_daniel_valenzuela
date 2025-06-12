@@ -367,7 +367,79 @@ function precargarFechas() {
     }
 }
 
-// ===== INICIALIZACIÓN =====
+// ===== MANEJO DE COMENTARIOS =====
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('form-comentario');
+    if (form) {
+        const actividadId = form.dataset.id;
+        const erroresDiv = document.getElementById('errores-comentario');
+        const lista = document.getElementById('lista-comentarios');
+
+        // Cargar comentarios existentes
+        fetch(`/api/comentarios/${actividadId}`)
+            .then(r => r.json())
+            .then(comentarios => {
+                comentarios.forEach(c => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${c.fecha} - ${c.nombre}:</strong> ${c.texto}`;
+                    lista.appendChild(li);
+                });
+            });
+
+        // Manejo del envío del comentario
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            erroresDiv.textContent = '';
+
+            const nombre = document.getElementById('nombre-comentario').value.trim();
+            const texto = document.getElementById('texto-comentario').value.trim();
+
+            if (nombre.length < 3 || nombre.length > 80) {
+                erroresDiv.textContent = 'El nombre debe tener entre 3 y 80 caracteres.';
+                return;
+            }
+            if (texto.length < 5) {
+                erroresDiv.textContent = 'El comentario debe tener al menos 5 caracteres.';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/comentarios/${actividadId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken // CSRF Token para seguridad
+                    },
+                    body: JSON.stringify({ nombre, texto })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.ok) {
+                    // Opcional: recargar todos los comentarios
+                    fetch(`/api/comentarios/${actividadId}`)
+                        .then(r => r.json())
+                        .then(comentarios => {
+                            lista.innerHTML = '';
+                            comentarios.forEach(c => {
+                                const li = document.createElement('li');
+                                li.innerHTML = `<strong>${c.fecha} - ${c.nombre}:</strong> ${c.texto}`;
+                                lista.appendChild(li);
+                            });
+                        });
+                    form.reset();
+                } else {
+                    erroresDiv.textContent = data.error || 'Error al agregar el comentario.';
+                }
+            } catch (err) {
+                erroresDiv.textContent = 'Error al agregar el comentario.';
+            }
+        });
+    }
+});
+
+
+// ===== INICIALIZACIÓN FORMULARIO =====
 document.addEventListener('DOMContentLoaded', function() {
     // Precarga de datos en formularios
     precargarFechas();
