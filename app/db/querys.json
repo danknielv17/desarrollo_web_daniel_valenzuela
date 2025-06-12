@@ -11,4 +11,5 @@
   "insert_participante": "INSERT INTO participante (nombre, correo) VALUES (%(nombre)s, %(correo)s)",
   "insert_inscripcion": "INSERT INTO inscripcion (actividad_id, participante_id) VALUES (%(actividad_id)s, %(participante_id)s)",
   "get_inscripciones_by_actividad": "SELECT p.* FROM inscripcion i JOIN participante p ON i.participante_id = p.id WHERE i.actividad_id = %(actividad_id)s"
+  "get_comentarios_by_actividad_id": "SELECT c.*, p.nombre AS participante_nombre FROM comentario c JOIN participante p ON c.participante_id = p.id WHERE c.actividad_id = %(actividad_id)s ORDER BY c.fecha DESC",
 }
