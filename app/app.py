@@ -6,7 +6,7 @@ import hashlib
 from sqlalchemy import func, extract
 from datetime import datetime
 from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_imagen
-from app.db.db import db, Actividad, ActividadTema, ContactarPor, Foto, Region, Comuna, DATABASE_URL
+from app.db.db import db, Actividad, ActividadTema, ContactarPor, Comentario, Foto, Region, Comuna, DATABASE_URL
 
 # ========== CONFIGURACION ==========
 app = Flask(__name__)
@@ -223,12 +223,65 @@ def detalle_actividad(id):
                            contactos=contactos,
                            archivos=archivos)
 
+# ========== RUTA API COMENTARIOS ==========
+# API: obtener comentarios de una actividad
+@app.route('/api/comentarios/<int:actividad_id>')
+def obtener_comentarios(actividad_id):
+    comentarios = Comentario.query.filter_by(actividad_id=actividad_id).order_by(Comentario.fecha.desc()).all()
+    return jsonify([{
+        'nombre': c.nombre,
+        'texto': c.texto,
+        'fecha': c.fecha.strftime('%Y-%m-%d %H:%M')
+    } for c in comentarios])
+
+# API: agregar nuevo comentario
+@app.route('/api/comentarios/<int:actividad_id>', methods=['POST'])
+def agregar_comentario(actividad_id):
+    print("Request headers:", request.headers)
+    print("Request content-type:", request.content_type)
+    print("Request data:", request.data)
+    print("Request.get_json():", request.get_json())
+    if not request.is_json:
+        return jsonify({'ok': False, 'error': 'Formato no válido'}), 400
+
+    data = request.get_json()
+
+    if not data:
+        return jsonify({'ok': False, 'error': 'No se recibieron datos'}), 400
+
+    nombre = data.get('nombre', '').strip()
+    texto = data.get('texto', '').strip()
+
+    if len(nombre) < 3 or len(nombre) > 80:
+        return jsonify({'ok': False, 'error': 'Nombre inválido'}), 400
+    if len(texto) < 5:
+        return jsonify({'ok': False, 'error': 'Comentario demasiado corto'}), 400
+
+    nuevo = Comentario(
+        nombre=nombre,
+        texto=texto,
+        fecha=datetime.now(),
+        actividad_id=actividad_id
+    )
+    db.session.add(nuevo)
+    db.session.commit()
+
+    return jsonify({
+        'ok': True,
+        'comentario': {
+            'fecha': nuevo.fecha.strftime('%Y-%m-%d %H:%M'),
+            'nombre': nuevo.nombre,
+            'texto': nuevo.texto
+        }
+    }), 200
+
+
 # ========== RUTA ESTADISTICAS ==========
 @app.route('/estadisticas')
 def estadisticas():
     return render_template('estadisticas.html')
 
-# ========== RUTA API ==========
+# ========== RUTA API ESTADISTICAS ==========
 
 # Cantidad de actividades por día (gráfico de líneas)
 @app.route('/api/estadisticas/por-dia')
@@ -286,6 +339,11 @@ def estadisticas_por_momento_mes():
         'tarde': [conteo[m]['Tarde'] for m in meses]
     }
     return jsonify(data)
+
+# ========== RUTA URLS NO FUNCIONALES ==========
+@app.errorhandler(404)
+def pagina_no_encontrada(e):
+    return render_template('404.html'), 404
 
 # ========== MAIN ==========
 if __name__ == '__main__':
