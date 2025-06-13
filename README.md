@@ -15,7 +15,7 @@ $env:FLASK_APP="app.app:app"
 flask run
 ```
 
-## Estructura general implementada en la tarea 3
+## Estructura implementada en la tarea 3
 
 - `app/static/js/estadisticas.js`: Código JavaScript para generar gráficos interactivos de estadísticas.
 - `app/static/css/detalle.css`: Código CSS para el estilo de la página de detalle de actividades.
