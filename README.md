@@ -2,7 +2,7 @@
 
 ## CC5002 - Tarea 3
 
-# SQL y Flask: Gestión de Actividades Recreativas
+# Gestión de Actividades Recreativas: API Comentarios y Estadísticas
 
 ## Funcionalidades de Estadísticas
 
