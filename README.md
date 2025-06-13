@@ -37,7 +37,7 @@ utilizando gráficos interactivos generados con **Highcharts** y datos obtenidos
 aquí se muestra la cantidad de actividades por día histórico, no por días de la semana)
   - **Gráfico de torta:** Presenta la distribución de actividades por tipo.
   - **Gráfico de barras:** Visualiza la cantidad de actividades por momento del día (mañana, mediodía, tarde) agrupadas por mes. 
-    - Considere que el momento del día se define como:
+    - Considerar que el momento del día se define como:
       - Mañana: 06:00 a 11:59
       - Mediodía: 12:00 a 17:59
       - Tarde: 18:00 a 05:59
