@@ -28,8 +28,11 @@ utilizando gráficos interactivos generados con **Highcharts** y datos obtenidos
   - **Gráfico de líneas:** Muestra la cantidad de actividades por día. (Por temas de eficiencia en la visualización, a diferencia de la tarea 1, 
 aquí se muestra la cantidad de actividades por día histórico, no por días de la semana)
   - **Gráfico de torta:** Presenta la distribución de actividades por tipo.
-  - **Gráfico de barras:** Visualiza la cantidad de actividades por momento del día (mañana, mediodía, tarde) agrupadas por mes.
-
+  - **Gráfico de barras:** Visualiza la cantidad de actividades por momento del día (mañana, mediodía, tarde) agrupadas por mes. 
+    - Considere que el momento del día se define como:
+      - Mañana: 06:00 a 11:59
+      - Mediodía: 12:00 a 17:59
+      - Tarde: 18:00 a 05:59
 - **Obtención dinámica de datos:**
   - Se crearon rutas API en Flask (`/api/estadisticas/por-dia`, `/api/estadisticas/por-tipo`, `/api/estadisticas/por-momento-mes`) 
 que entregan los datos en formato JSON directamente desde la base de datos.
