@@ -58,8 +58,6 @@ Así, las estadísticas se actualizan automáticamente según los datos almacena
 ### Funcionalidad de Comentarios 
 #### Implementación de sistema de comentarios en actividades
 
-La funcionalidad para agregar comentarios a las actividades y listarlos de forma asíncrona ya está correctamente implementada. Vamos a repasar los componentes principales:
-
 ##### 1. Base de datos
 La tabla `comentario` está definida con la estructura adecuada:
 - `id` (clave primaria)
@@ -99,7 +97,7 @@ El JavaScript en `script.js` contiene dentro de la función`document.addEventLis
 
 #### 5. Seguridad:
 
-- Se implementa protección CSRF usando Flask-WTF. El token se expone al frontend y se envía en cada solicitud POST.
+- Se implementa protección CSRF usando Flask-WTF. El token se expone al frontend y se envía en cada solicitud `POST`.
 - Manejo de errores y mensajes claros en caso de validaciones fallidas o problemas de red.
 
 ##### 6. Flujo de funcionamiento
