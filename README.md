@@ -30,7 +30,7 @@ flask run
 Se implementó una sección de **Estadísticas** que permite visualizar información relevante sobre las actividades registradas, 
 utilizando gráficos interactivos generados con **Highcharts** y datos obtenidos dinámicamente desde el servidor mediante AJAX.
 
-#### Características:
+#### 1. Características:
 
 - **Tres gráficos interactivos:**
   - **Gráfico de líneas:** Muestra la cantidad de actividades por día. (Por temas de eficiencia en la visualización, a diferencia de la tarea 1, 
@@ -68,7 +68,13 @@ La tabla `comentario` está definida con la estructura adecuada:
 - `fecha` (timestamp)
 - `actividad_id` (clave foránea vinculada a actividad)
 
-##### 2. Backend (Flask)
+#### 2. Archivos relacionados
+- `app/templates/detalle.html`: Contiene el formulario y la sección de comentarios en la vista de detalle de actividad.
+- `app/static/js/script.js`: Gestiona la carga, validación y envío de comentarios mediante JavaScript.
+- `app/app.py`: Define las rutas API para obtener y agregar comentarios (/api/comentarios/<actividad_id>).
+- `app/db/db.py`: Modelo de datos para los comentarios (Comentario).
+
+##### 3. Backend (Flask)
 Los endpoints para gestionar comentarios están implementados:
 
 - `GET /api/comentarios/<int:actividad_id>`: Devuelve comentarios de una actividad
@@ -78,20 +84,29 @@ Incluyen validaciones del lado del servidor para:
 - Nombre entre 3 y 80 caracteres
 - Texto entre 5 y 300 caracteres
 
-##### 3. Frontend (HTML y JavaScript)
+##### 4. Frontend (HTML y JavaScript)
 En el archivo `detalle.html`, está la estructura para:
 - Formulario para agregar comentarios con validaciones
+  - Campo de nombre (3-80 caracteres, obligatorio)
+  - Campo de texto (mínimo 5 caracteres, máximo 300)
+  - Botón para enviar
 - Contenedor para mostrar comentarios existentes
 
-El JavaScript en `script.js` contiene las funciones:
+El JavaScript en `script.js` contiene dentro de la función`document.addEventListener('DOMContentLoaded', ()` en donde:
+  - Verifica longitud del nombre (3-80 caracteres)
+  - Verifica longitud del texto (mínimo 5 caracteres)
+  - Muestra errores sin recargar la página
 
-- `cargarComentarios(actividadId)`: Obtiene la lista de comentarios
-- `inicializarFormularioComentario(actividadId)`: Gestiona el envío con validaciones
+#### 5. Seguridad:
 
-##### 4. Flujo de la funcionalidad
-1. Al cargar la página, se obtienen los comentarios existentes
-2. El usuario completa el formulario y envía
-3. Se validan los datos en JavaScript
-4. Se envían al servidor mediante Fetch API
-5. El servidor valida y guarda el comentario
-6. La lista de comentarios se actualiza dinámicamente
+- Se implementa protección CSRF usando Flask-WTF. El token se expone al frontend y se envía en cada solicitud POST.
+- Manejo de errores y mensajes claros en caso de validaciones fallidas o problemas de red.
+
+##### 6. Flujo de funcionamiento
+1. Al cargar la página de detalle de una actividad, se solicitan los comentarios existentes mediante una petición GET a /api/comentarios/<actividad_id>.
+2. El usuario puede agregar un nuevo comentario completando el formulario. Al enviarlo:
+   - Se valida en el frontend la longitud del nombre y el comentario.
+   - Se envía la información al backend por POST, incluyendo el token CSRF.
+   - El backend valida nuevamente los datos y, si son correctos, guarda el comentario en la base de datos.
+   - Si la operación es exitosa, el frontend recarga el listado de comentarios automáticamente.
+   - Si ocurre un error, se muestra un mensaje descriptivo al usuario.
