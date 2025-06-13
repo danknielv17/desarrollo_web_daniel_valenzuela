@@ -103,7 +103,7 @@ El JavaScript en `script.js` contiene dentro de la función`document.addEventLis
 - Manejo de errores y mensajes claros en caso de validaciones fallidas o problemas de red.
 
 ##### 6. Flujo de funcionamiento
-1. Al cargar la página de detalle de una actividad, se solicitan los comentarios existentes mediante una petición GET a /api/comentarios/<actividad_id>.
+1. Al cargar la página de detalle de una actividad, se solicitan los comentarios existentes mediante una petición `GET` a `/api/comentarios/<int:actividad_id>`.
 2. El usuario puede agregar un nuevo comentario completando el formulario. Al enviarlo:
    - Se valida en el frontend la longitud del nombre y el comentario.
    - Se envía la información al backend por POST, incluyendo el token CSRF.
