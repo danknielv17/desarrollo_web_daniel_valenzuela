@@ -55,6 +55,8 @@ usando Highcharts.
 
 Así, las estadísticas se actualizan automáticamente según los datos almacenados.
 
+---
+
 ### Funcionalidad de Comentarios 
 #### Implementación de sistema de comentarios en actividades
 
