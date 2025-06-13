@@ -33,8 +33,8 @@ utilizando gráficos interactivos generados con **Highcharts** y datos obtenidos
 #### 1. Características:
 
 - **Tres gráficos interactivos:**
-  - **Gráfico de líneas:** Muestra la cantidad de actividades por día. (Para facilidad y eficiencia en la visualización, a diferencia de la tarea 1, 
-aquí se muestra la cantidad de actividades por día histórico, no por días de la semana)
+  - **Gráfico de líneas:** Muestra la cantidad de actividades por día. (Para mayor completitud en la visualización, a diferencia de la tarea 1, 
+en el gráfico se muestra la cantidad de actividades por día histórico, no por días de la semana)
   - **Gráfico de torta:** Presenta la distribución de actividades por tipo.
   - **Gráfico de barras:** Visualiza la cantidad de actividades por momento del día (mañana, mediodía, tarde) agrupadas por mes. 
     - Considerar que el momento del día se define como:
