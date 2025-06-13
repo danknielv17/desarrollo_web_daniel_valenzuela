@@ -60,7 +60,7 @@ Así, las estadísticas se actualizan automáticamente según los datos almacena
 
 La funcionalidad para agregar comentarios a las actividades y listarlos de forma asíncrona ya está correctamente implementada. Vamos a repasar los componentes principales:
 
-###### 1. Base de datos
+##### 1. Base de datos
 La tabla `comentario` está definida con la estructura adecuada:
 - `id` (clave primaria)
 - `nombre` (varchar 80, obligatorio)
