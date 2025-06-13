@@ -15,6 +15,14 @@ $env:FLASK_APP="app.app:app"
 flask run
 ```
 
+## Estructura general implementada en la tarea 3
+
+- `app/static/js/estadisticas.js`: Código JavaScript para generar gráficos interactivos de estadísticas.
+- `app/static/css/detalle.css`: Código CSS para el estilo de la página de detalle de actividades.
+- `app/static/css/formularioactividad.css`: Código CSS para separar estilo del formulario de los comentarios.
+- `app/templates/404.html`: Página de error 404 personalizada para manejar rutas no encontradas.
+
+
 ## Características principales
 
 ### Funcionalidad de Estadísticas Interactivas
