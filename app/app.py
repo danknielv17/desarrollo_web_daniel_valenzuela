@@ -5,8 +5,8 @@ import os
 import hashlib
 from sqlalchemy import func, extract
 from datetime import datetime, date
-from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_imagen
-from app.db.db import db, Actividad, ActividadTema, ContactarPor, Comentario, Foto, Region, Comuna, Nota, DATABASE_URL
+from utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_imagen
+from db.db import db, Actividad, ActividadTema, ContactarPor, Comentario, Foto, Region, Comuna, Nota, DATABASE_URL
 
 # ========== CONFIGURACION ==========
 app = Flask(__name__)
@@ -374,10 +374,9 @@ def evaluaciones():
 
             actividades_con_notas.append({
                 'id': actividad.id,
+                'fecha_inicio': actividad.dia_hora_inicio.strftime('%Y-%m-%d') if actividad.dia_hora_inicio else '-',
+                'sector': actividad.sector if actividad.sector else '-',
                 'nombre': actividad.nombre,
-                'descripcion': actividad.descripcion,
-                'fecha_termino': actividad.dia_hora_termino.strftime('%Y-%m-%d') if actividad.dia_hora_termino else '-',
-                'lugar': f"{actividad.sector}, {comuna.nombre if comuna else ''}" if actividad.sector else (comuna.nombre if comuna else '-'),
                 'tema': tema_display,
                 'nota_promedio': nota_promedio
             })
