@@ -4,9 +4,9 @@ from werkzeug.utils import secure_filename
 import os
 import hashlib
 from sqlalchemy import func, extract
-from datetime import datetime
+from datetime import datetime, date
 from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_imagen
-from app.db.db import db, Actividad, ActividadTema, ContactarPor, Comentario, Foto, Region, Comuna, DATABASE_URL
+from app.db.db import db, Actividad, ActividadTema, ContactarPor, Comentario, Foto, Region, Comuna, Nota, DATABASE_URL
 
 # ========== CONFIGURACION ==========
 app = Flask(__name__)
@@ -339,6 +339,183 @@ def estadisticas_por_momento_mes():
         'tarde': [conteo[m]['Tarde'] for m in meses]
     }
     return jsonify(data)
+
+# ========== RUTAS DE EVALUACIÓN DE ACTIVIDADES ==========
+
+# Página principal de evaluaciones - muestra actividades terminadas
+@app.route('/evaluaciones')
+def evaluaciones():
+    try:
+        # Obtener actividades terminadas (fecha de término anterior a hoy)
+        fecha_actual = date.today()
+        actividades_terminadas = db.session.query(Actividad).filter(
+            func.date(Actividad.dia_hora_termino) < fecha_actual
+        ).all()
+
+        actividades_con_notas = []
+
+        for actividad in actividades_terminadas:
+            # Obtener comuna
+            comuna = Comuna.query.get(actividad.comuna_id)
+
+            # Obtener tema
+            tema_obj = ActividadTema.query.filter_by(actividad_id=actividad.id).first()
+            tema_display = tema_obj.tema if tema_obj else '-'
+            if tema_obj and tema_obj.tema == 'otro' and tema_obj.glosa_otro:
+                tema_display = tema_obj.glosa_otro
+
+            # Calcular promedio de notas
+            notas = Nota.query.filter_by(actividad_id=actividad.id).all()
+            if notas:
+                promedio = sum(nota.nota for nota in notas) / len(notas)
+                nota_promedio = f"{promedio:.2f}"
+            else:
+                nota_promedio = "-"
+
+            actividades_con_notas.append({
+                'id': actividad.id,
+                'nombre': actividad.nombre,
+                'descripcion': actividad.descripcion,
+                'fecha_termino': actividad.dia_hora_termino.strftime('%Y-%m-%d') if actividad.dia_hora_termino else '-',
+                'lugar': f"{actividad.sector}, {comuna.nombre if comuna else ''}" if actividad.sector else (comuna.nombre if comuna else '-'),
+                'tema': tema_display,
+                'nota_promedio': nota_promedio
+            })
+
+        return render_template('evaluaciones.html', actividades=actividades_con_notas)
+
+    except Exception as e:
+        flash(f'Error al cargar evaluaciones: {str(e)}', 'error')
+        return render_template('evaluaciones.html', actividades=[])
+
+# API: obtener actividades terminadas con notas (para llamadas asíncronas)
+@app.route('/api/actividades/terminadas')
+def api_actividades_terminadas():
+    try:
+        fecha_actual = date.today()
+        actividades_terminadas = db.session.query(Actividad).filter(
+            func.date(Actividad.dia_hora_termino) < fecha_actual
+        ).all()
+
+        resultado = []
+
+        for actividad in actividades_terminadas:
+            comuna = Comuna.query.get(actividad.comuna_id)
+            tema_obj = ActividadTema.query.filter_by(actividad_id=actividad.id).first()
+            tema_display = tema_obj.tema if tema_obj else '-'
+            if tema_obj and tema_obj.tema == 'otro' and tema_obj.glosa_otro:
+                tema_display = tema_obj.glosa_otro
+
+            # Calcular promedio de notas
+            notas = Nota.query.filter_by(actividad_id=actividad.id).all()
+            if notas:
+                promedio = sum(nota.nota for nota in notas) / len(notas)
+                nota_promedio = f"{promedio:.2f}"
+            else:
+                nota_promedio = "-"
+
+            resultado.append({
+                'id': actividad.id,
+                'nombre': actividad.nombre,
+                'descripcion': actividad.descripcion,
+                'fecha_termino': actividad.dia_hora_termino.strftime('%Y-%m-%d') if actividad.dia_hora_termino else '-',
+                'lugar': f"{actividad.sector}, {comuna.nombre if comuna else ''}" if actividad.sector else (comuna.nombre if comuna else '-'),
+                'tema': tema_display,
+                'nota_promedio': nota_promedio
+            })
+
+        return jsonify(resultado)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# API: agregar nueva nota a una actividad
+@app.route('/api/actividades/<int:actividad_id>/notas', methods=['POST'])
+def agregar_nota_actividad(actividad_id):
+    try:
+        if not request.is_json:
+            return jsonify({'error': 'Formato no válido, se esperaba JSON'}), 400
+
+        data = request.get_json()
+
+        if not data:
+            return jsonify({'error': 'No se recibieron datos'}), 400
+
+        # Validar que se envió la nota
+        if 'nota' not in data:
+            return jsonify({'error': 'Falta el campo nota'}), 400
+
+        try:
+            valor_nota = int(data['nota'])
+        except (ValueError, TypeError):
+            return jsonify({'error': 'La nota debe ser un número entero'}), 400
+
+        # Validar rango de nota (1-7)
+        if valor_nota < 1 or valor_nota > 7:
+            return jsonify({'error': 'La nota debe estar entre 1 y 7'}), 400
+
+        # Verificar que la actividad existe
+        actividad = Actividad.query.get(actividad_id)
+        if not actividad:
+            return jsonify({'error': 'Actividad no encontrada'}), 404
+
+        # Verificar que la actividad haya terminado
+        fecha_actual = date.today()
+        if not actividad.dia_hora_termino or actividad.dia_hora_termino.date() >= fecha_actual:
+            return jsonify({'error': 'Solo se pueden evaluar actividades terminadas'}), 400
+
+        # Crear y guardar la nueva nota
+        nueva_nota = Nota(
+            actividad_id=actividad_id,
+            nota=valor_nota
+        )
+
+        db.session.add(nueva_nota)
+        db.session.commit()
+
+        # Calcular el nuevo promedio
+        todas_las_notas = Nota.query.filter_by(actividad_id=actividad_id).all()
+        if todas_las_notas:
+            promedio = sum(nota.nota for nota in todas_las_notas) / len(todas_las_notas)
+            promedio_str = f"{promedio:.2f}"
+        else:
+            promedio_str = "-"
+
+        return jsonify({
+            'success': True,
+            'mensaje': 'Nota agregada exitosamente',
+            'promedio': promedio_str,
+            'cantidad_notas': len(todas_las_notas)
+        })
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Error interno del servidor: {str(e)}'}), 500
+
+# API: obtener promedio actualizado de una actividad
+@app.route('/api/actividades/<int:actividad_id>/promedio')
+def obtener_promedio_actividad(actividad_id):
+    try:
+        # Verificar que la actividad existe
+        actividad = Actividad.query.get(actividad_id)
+        if not actividad:
+            return jsonify({'error': 'Actividad no encontrada'}), 404
+
+        # Calcular promedio
+        notas = Nota.query.filter_by(actividad_id=actividad_id).all()
+        if notas:
+            promedio = sum(nota.nota for nota in notas) / len(notas)
+            promedio_str = f"{promedio:.2f}"
+        else:
+            promedio_str = "-"
+
+        return jsonify({
+            'promedio': promedio_str,
+            'cantidad_notas': len(notas)
+        })
+
+    except Exception as e:
+        return jsonify({'error': f'Error al obtener promedio: {str(e)}'}), 500
 
 # ========== RUTA URLS NO FUNCIONALES ==========
 @app.errorhandler(404)
