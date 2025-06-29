@@ -87,42 +87,45 @@
                 </div>
             {% endif %}
         </div>
+    </main>
 
-        <!-- Modal para seleccionar nota -->
-        <div class="modal" id="modalEvaluacion">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Evaluar Actividad</h5>
-                        <button type="button" class="btn-close" onclick="cerrarModal()">&times;</button>
+    <!-- Overlay del modal (FONDO OSCURO) -->
+    <div id="modalOverlay" class="modal-overlay" onclick="cerrarModal()"></div>
+
+    <!-- Modal para seleccionar nota -->
+    <div class="modal" id="modalEvaluacion">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Evaluar Actividad</h5>
+                    <button type="button" class="btn-close" onclick="cerrarModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="nombreActividad"></p>
+                    <div class="mb-3">
+                        <label for="selectNota" class="form-label">Selecciona una nota (1-7):</label>
+                        <select class="form-select" id="selectNota">
+                            <option value="">Selecciona una nota...</option>
+                            <option value="1">1 - Muy malo</option>
+                            <option value="2">2 - Malo</option>
+                            <option value="3">3 - Regular</option>
+                            <option value="4">4 - Bueno</option>
+                            <option value="5">5 - Muy bueno</option>
+                            <option value="6">6 - Excelente</option>
+                            <option value="7">7 - Excepcional</option>
+                        </select>
                     </div>
-                    <div class="modal-body">
-                        <p id="nombreActividad"></p>
-                        <div class="mb-3">
-                            <label for="selectNota" class="form-label">Selecciona una nota (1-7):</label>
-                            <select class="form-select" id="selectNota">
-                                <option value="">Selecciona una nota...</option>
-                                <option value="1">1 - Muy malo</option>
-                                <option value="2">2 - Malo</option>
-                                <option value="3">3 - Regular</option>
-                                <option value="4">4 - Bueno</option>
-                                <option value="5">5 - Muy bueno</option>
-                                <option value="6">6 - Excelente</option>
-                                <option value="7">7 - Excepcional</option>
-                            </select>
-                        </div>
-                        <div id="mensajeError" class="alert alert-danger d-none"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                        <button type="button" class="btn-primary" id="btnConfirmarNota">Confirmar Nota</button>
-                    </div>
+                    <div id="mensajeError" class="alert alert-danger d-none"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                    <button type="button" class="btn-primary" id="btnConfirmarNota">Confirmar Nota</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Scripts -->
-        <script src="{{ url_for('static', filename='js/evaluaciones.js') }}"></script>
-    </main>
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/evaluaciones.js') }}"></script>
 </body>
 </html>
