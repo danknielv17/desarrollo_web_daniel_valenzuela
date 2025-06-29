@@ -4,9 +4,9 @@ from werkzeug.utils import secure_filename
 import os
 import hashlib
 from sqlalchemy import func, extract
-from datetime import datetime, date
-from utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_imagen
-from db.db import db, Actividad, ActividadTema, ContactarPor, Comentario, Foto, Region, Comuna, Nota, DATABASE_URL
+from datetime import datetime
+from app.utils.validations import validar_nombre, validar_email, validar_telefono, validar_rango_fechas, validar_formato_fecha, validar_contactar_por, validar_imagen
+from app.db.db import db, Actividad, ActividadTema, ContactarPor, Comentario, Foto, Region, Comuna, DATABASE_URL
 
 # ========== CONFIGURACION ==========
 app = Flask(__name__)
