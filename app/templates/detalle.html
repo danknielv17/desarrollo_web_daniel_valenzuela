@@ -28,13 +28,13 @@
         <h3>Temas asociados</h3>
         <ul>
             {% for tema_obj in temas_obj %}
-                <li>
-                    {% if tema_obj.tema == 'otro' and tema_obj.glosa_otro %}
-                        {{ tema_obj.glosa_otro }}
-                    {% else %}
-                        {{ tema_obj.tema }}
-                    {% endif %}
-                </li>
+            <li>
+                {% if tema_obj.tema == 'otro' and tema_obj.glosa_otro %}
+                {{ tema_obj.glosa_otro }}
+                {% else %}
+                {{ tema_obj.tema }}
+                {% endif %}
+            </li>
             {% endfor %}
         </ul>
         {% endif %}
@@ -43,7 +43,7 @@
         <h3>Contacto</h3>
         <ul>
             {% for c in contactos %}
-                <li><strong>{{ c.nombre }}:</strong> {{ c.identificador }}</li>
+            <li><strong>{{ c.nombre }}:</strong> {{ c.identificador }}</li>
             {% endfor %}
         </ul>
         {% endif %}
