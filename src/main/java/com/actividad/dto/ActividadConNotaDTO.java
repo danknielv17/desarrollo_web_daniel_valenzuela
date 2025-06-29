@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ActividadConNotaDTO {
-    private Long id;
+    private Integer id;  // Cambiado de Long a Integer
     private String nombre;
     private String descripcion;
     private LocalDate fechaInicio;
@@ -18,7 +18,7 @@ public class ActividadConNotaDTO {
     private String notaPromedio;
     private Long cantidadNotas;
 
-    public ActividadConNotaDTO(Long id, String nombre, String descripcion,
+    public ActividadConNotaDTO(Integer id, String nombre, String descripcion,  // Cambiado de Long a Integer
                               LocalDate fechaInicio, LocalDate fechaTermino,
                               LocalTime horaInicio, LocalTime horaTermino,
                               String tipo, String lugar, String direccion,
@@ -39,8 +39,8 @@ public class ActividadConNotaDTO {
     }
 
     // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }  // Cambiado de Long a Integer
+    public void setId(Integer id) { this.id = id; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
