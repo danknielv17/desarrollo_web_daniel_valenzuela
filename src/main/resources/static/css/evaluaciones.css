@@ -1,59 +1,82 @@
 /* Estilos específicos para la página de evaluaciones - Spring Boot */
+/* Adaptado del diseño original de Flask manteniendo la misma apariencia */
 
-/* Estilos generales */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+/* Contenedor principal */
+.evaluaciones-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* Header personalizado */
+.descripcion {
+    color: #666;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* Header personalizado - mantener el estilo original */
 .bg-primary {
     background-color: #0d6efd !important;
 }
 
-/* Estilos para la tabla de evaluaciones */
+/* Estilos para la tabla de evaluaciones - usando el diseño original */
+.tabla-container,
 .table-responsive {
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    overflow-x: auto;
     margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
 }
 
+.tabla-evaluaciones,
 .table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 14px;
     margin-bottom: 0;
-    background-color: white;
 }
 
-.table thead th {
-    background-color: #343a40;
-    color: white;
-    font-weight: 600;
-    text-align: center;
+.tabla-evaluaciones thead,
+.table thead {
+    background: #f8f9fa;
+}
+
+.tabla-evaluaciones th,
+.tabla-evaluaciones td,
+.table th,
+.table td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
     vertical-align: middle;
-    padding: 15px 8px;
+}
+
+.tabla-evaluaciones th,
+.table thead th {
+    font-weight: 600;
+    color: #495057;
+    background: #e9ecef !important;
     border: none;
 }
 
-.table tbody td {
-    padding: 12px 8px;
-    vertical-align: middle;
-    border-bottom: 1px solid #dee2e6;
-}
-
+.tabla-evaluaciones tbody tr:hover,
 .table tbody tr:hover {
-    background-color: #f8f9fa;
+    background-color: #f8f9fa !important;
     transition: background-color 0.2s ease;
 }
 
+.tabla-evaluaciones tbody tr:nth-child(even),
 .table tbody tr:nth-child(even) {
     background-color: #fafafa;
 }
 
+.tabla-evaluaciones tbody tr:nth-child(even):hover,
 .table tbody tr:nth-child(even):hover {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0 !important;
 }
 
-/* Estilos para la celda de nota */
+/* Estilos para la celda de nota - manteniendo el diseño original */
 .nota-promedio {
     font-weight: bold;
     color: #28a745;
@@ -68,24 +91,25 @@ body {
     padding: 8px;
 }
 
-/* Estilos para el botón evaluar */
+/* Estilos para el botón evaluar - manteniendo el diseño original */
 .btn-evaluar {
-    background: linear-gradient(45deg, #007bff, #0056b3);
-    border: none;
+    background: #007bff;
     color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 13px;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s ease;
     font-weight: 500;
-    transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0,123,255,0.3);
 }
 
 .btn-evaluar:hover {
-    background: linear-gradient(45deg, #0056b3, #004085);
+    background: #0056b3;
+    color: white;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0,123,255,0.4);
-    color: white;
 }
 
 .btn-evaluar:active {
@@ -100,165 +124,229 @@ body {
     box-shadow: none;
 }
 
-/* Estilos para el modal */
-.modal-content {
-    border-radius: 12px;
+/* Estilos para el mensaje cuando no hay actividades - diseño original */
+.no-actividades,
+.alert-warning {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+/* Estilos para el modal - adaptando el diseño original a Bootstrap */
+.modal .modal-content {
+    border-radius: 8px;
     border: none;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
-.modal-header {
-    background: linear-gradient(45deg, #007bff, #0056b3);
-    color: white;
-    border-radius: 12px 12px 0 0;
-    padding: 20px;
+.modal .modal-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 8px 8px 0 0;
 }
 
-.modal-header .modal-title {
+.modal .modal-header .modal-title,
+.modal .modal-header h3,
+.modal .modal-header h5 {
+    margin: 0;
+    color: #495057;
     font-weight: 600;
-    font-size: 1.3em;
 }
 
-.modal-header .btn-close {
-    filter: invert(1);
+.modal .modal-header .btn-close,
+.modal .modal-header .close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #adb5bd;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: none;
 }
 
-.modal-body {
-    padding: 25px;
-}
-
-.modal-body p {
-    margin-bottom: 20px;
-    font-size: 1.1em;
+.modal .modal-header .btn-close:hover,
+.modal .modal-header .close:hover {
     color: #495057;
 }
 
+.modal .modal-body {
+    padding: 20px;
+}
+
+.modal .modal-body p {
+    margin: 0 0 15px 0;
+    font-weight: bold;
+    color: #495057;
+}
+
+.campo-evaluacion,
+.mb-3 {
+    margin: 15px 0;
+}
+
+.campo-evaluacion label,
 .form-label {
-    font-weight: 600;
-    color: #495057;
-    margin-bottom: 8px;
-}
-
-.form-select {
-    border: 2px solid #e9ecef;
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-.form-select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
-    outline: none;
-}
-
-.modal-footer {
-    padding: 20px;
-    border-top: 1px solid #e9ecef;
-}
-
-.modal-footer .btn {
-    padding: 10px 20px;
+    display: block;
+    margin-bottom: 5px;
     font-weight: 500;
-    border-radius: 6px;
-    transition: all 0.3s ease;
+    color: #495057;
 }
 
-/* Estilos para mensajes de error */
+.form-control,
+.form-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    background-color: white;
+}
+
+.form-control:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.modal .modal-footer {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-top: 1px solid #dee2e6;
+    text-align: right;
+}
+
+.btn-cancelar,
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-cancelar:hover,
+.btn-secondary:hover {
+    background: #545b62;
+}
+
+.btn-confirmar,
+.btn-success {
+    background: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-confirmar:hover,
+.btn-success:hover {
+    background: #218838;
+}
+
+.btn-cancelar:disabled,
+.btn-confirmar:disabled,
+.btn-secondary:disabled,
+.btn-success:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Estilos para mensajes de error - diseño original */
+.mensaje-error,
 .alert-danger {
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
+    background: #f8d7da;
     color: #721c24;
-    border-radius: 6px;
-    padding: 12px 16px;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    border: 1px solid #f5c6cb;
 }
 
-/* Estilos para alertas informativas */
+.d-none {
+    display: none !important;
+}
+
+/* Estilos para alertas informativas - diseño original */
 .alert-info {
     background-color: #d1ecf1;
-    border: 1px solid #bee5eb;
     color: #0c5460;
+    border: 1px solid #bee5eb;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 25px;
 }
 
-.alert-warning {
-    background-color: #fff3cd;
-    border: 1px solid #ffeaa7;
-    color: #856404;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
+/* Estilos para mensaje de éxito flotante - diseño original */
+.mensaje-exito {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #d4edda;
+    color: #155724;
+    padding: 15px 20px;
+    border-radius: 4px;
+    border: 1px solid #c3e6cb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1001;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
 }
 
-/* Estilos para toasts */
+.mensaje-exito.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Estilos para toasts de Bootstrap - adaptando al diseño original */
 .toast {
     min-width: 300px;
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.toast-header.bg-success {
+    background-color: #28a745 !important;
 }
 
 .toast-body {
     padding: 15px;
     font-size: 14px;
+    color: #155724;
 }
 
-/* Clases utilitarias */
-.d-none {
-    display: none !important;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.table tbody tr {
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.nota-promedio.actualizada {
-    animation: pulse 0.6s ease-in-out;
-}
-
-/* Estilos responsivos */
-@media (max-width: 992px) {
-    .table {
-        font-size: 14px;
-    }
-
-    .table thead th,
-    .table tbody td {
-        padding: 8px 6px;
-    }
-
-    .btn-evaluar {
-        padding: 6px 12px;
-        font-size: 12px;
-    }
-}
-
+/* Estilos responsivos - manteniendo el diseño original */
 @media (max-width: 768px) {
+    .tabla-evaluaciones,
     .table {
         font-size: 12px;
     }
 
-    .table thead th,
-    .table tbody td {
-        padding: 6px 4px;
+    .tabla-evaluaciones th,
+    .tabla-evaluaciones td,
+    .table th,
+    .table td {
+        padding: 8px 4px;
     }
 
     .btn-evaluar {
@@ -266,25 +354,26 @@ body {
         font-size: 11px;
     }
 
-    .modal-dialog {
+    .modal .modal-dialog {
+        width: 95%;
         margin: 10px;
     }
 
-    .modal-body {
-        padding: 20px;
+    .modal .modal-footer {
+        text-align: center;
     }
 
-    .modal-footer {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .modal-footer .btn {
-        width: 100%;
+    .btn-cancelar,
+    .btn-confirmar,
+    .btn-secondary,
+    .btn-success {
+        margin: 5px;
+        width: 100px;
     }
 }
 
 @media (max-width: 576px) {
+    .evaluaciones-container,
     .container {
         padding: 0 10px;
     }
@@ -300,11 +389,13 @@ body {
     }
 
     /* Hacer la tabla más compacta en móviles */
+    .tabla-evaluaciones th,
     .table thead th {
         font-size: 11px;
         padding: 8px 2px;
     }
 
+    .tabla-evaluaciones td,
     .table tbody td {
         font-size: 10px;
         padding: 6px 2px;
@@ -316,37 +407,34 @@ body {
     }
 }
 
-/* Efectos adicionales */
-.btn-evaluar {
-    position: relative;
-    overflow: hidden;
+/* Estilos para navegación activa - diseño original */
+nav ul li a.active {
+    background: #007bff;
+    color: white;
 }
 
-.btn-evaluar::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 50%;
-    transition: width 0.6s, height 0.6s, top 0.6s, left 0.6s;
-    transform: translate(-50%, -50%);
-    z-index: 0;
+/* Animaciones adicionales - diseño original */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.btn-evaluar:hover::before {
-    width: 300px;
-    height: 300px;
+.tabla-evaluaciones tbody tr,
+.table tbody tr {
+    animation: fadeIn 0.3s ease;
 }
 
-.btn-evaluar span {
-    position: relative;
-    z-index: 1;
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
-/* Estilo para el loading en el botón */
+.nota-promedio.actualizada {
+    animation: pulse 0.6s ease-in-out;
+}
+
+/* Estilo para el loading en el botón - diseño original */
 .btn-evaluar.loading {
     position: relative;
     color: transparent;
@@ -370,4 +458,22 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Sobreescribir estilos de Bootstrap que puedan interferir */
+.table-striped > tbody > tr:nth-of-type(odd) > td,
+.table-striped > tbody > tr:nth-of-type(odd) > th {
+    background-color: transparent;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+    background-color: #f8f9fa;
+}
+
+/* Mantener consistencia con el diseño original */
+.table-dark th {
+    background-color: #e9ecef !important;
+    color: #495057 !important;
+    border-color: #dee2e6 !important;
 }
