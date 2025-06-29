@@ -6,26 +6,6 @@
 
 Esta tarea contiene **dos implementaciones** del sistema de gestión de actividades recreativas:
 
-## Implementación Flask (Tareas 1-3)
-
-**Ubicación:** `/app/`
-**Puerto:** `http://localhost:5000`
-
-```bash
-# Ejecutar Flask
-cd app
-python app.py
-```
-
-### Funcionalidades Flask:
-- Agregar actividades recreativas
-- Listado de actividades con filtros
-- Visualización de estadísticas
-- Sistema de comentarios
-- Sistema de evaluaciones (1-7)
-
----
-
 ## Implementación Spring Boot (Tarea 4)
 
 **Ubicación:** `/src/`
