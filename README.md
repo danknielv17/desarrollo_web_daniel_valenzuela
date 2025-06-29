@@ -16,6 +16,11 @@ Esta tarea contiene **dos implementaciones** del sistema de gestión de activida
 mvn spring-boot:run
 ```
 
+Link para acceder a la aplicación Spring Boot:
+```link
+http://localhost:8080/actividades/evaluaciones
+```
+
 ### Funcionalidades Spring Boot:
 - **Sistema de evaluación de actividades** (Tarea 4)
 - Evaluación asíncrona con JavaScript
