@@ -1,316 +1,367 @@
-// Sistema de evaluación de actividades - Spring Boot
-// Funcionalidad asíncrona con JavaScript
+// JavaScript para manejar las evaluaciones de actividades de forma asíncrona - SIN Bootstrap
 
-// Variables globales
 let actividadActual = null;
-let nombreActividadActual = '';
-let modalEvaluacion = null;
 
-/**
- * Función para evaluar una actividad
- */
-function evaluarActividad(actividadId, nombreActividad) {
-    console.log(`Evaluando actividad ${actividadId}: ${nombreActividad}`);
+// Inicializar cuando se carga el DOM
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM cargado, inicializando evaluaciones...');
 
-    actividadActual = actividadId;
-    nombreActividadActual = nombreActividad;
-
-    // Actualizar el contenido del modal
-    const nombreActividadElement = document.getElementById('nombreActividad');
-    if (nombreActividadElement) {
-        nombreActividadElement.innerHTML = `<strong>Evaluando:</strong> ${nombreActividad}`;
+    // Event listener para el botón de confirmar nota
+    const btnConfirmar = document.getElementById('btnConfirmarNota');
+    if (btnConfirmar) {
+        btnConfirmar.addEventListener('click', enviarEvaluacion);
+        console.log('Event listener agregado al botón confirmar');
+    } else {
+        console.error('No se encontró el botón btnConfirmarNota');
     }
 
-    // Limpiar selección de nota
+    // Event listeners para cerrar modal con tecla Escape
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            cerrarModal();
+        }
+    });
+});
+
+// Función para abrir el modal de evaluación
+function abrirModalEvaluacion(boton) {
+    console.log('Abriendo modal de evaluación...');
+
+    const actividadId = boton.getAttribute('data-actividad-id');
+    const nombreActividad = boton.getAttribute('data-nombre');
+
+    console.log('Actividad ID:', actividadId, 'Nombre:', nombreActividad);
+
+    actividadActual = actividadId;
+
+    // Actualizar el contenido del modal
+    const nombreElement = document.getElementById('nombreActividad');
+    if (nombreElement) {
+        nombreElement.innerHTML = `Actividad: <span style="color: #3169bc;">${nombreActividad}</span>`;
+    }
+
+    // Limpiar formulario y errores
+    limpiarModal();
+
+    // Mostrar modal manualmente
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modal = document.getElementById('modalEvaluacion');
+
+    if (modalOverlay && modal) {
+        modalOverlay.style.display = 'block';
+        modal.style.display = 'block';
+
+        // Agregar clases para animación después de un pequeño delay
+        setTimeout(() => {
+            modalOverlay.classList.add('show');
+            modal.classList.add('show');
+        }, 10);
+
+        console.log('Modal mostrado');
+    } else {
+        console.error('No se encontraron elementos del modal');
+    }
+}
+
+// Función para cerrar el modal
+function cerrarModal() {
+    console.log('Cerrando modal...');
+
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modal = document.getElementById('modalEvaluacion');
+
+    if (modalOverlay && modal) {
+        modalOverlay.classList.remove('show');
+        modal.classList.remove('show');
+
+        setTimeout(() => {
+            modalOverlay.style.display = 'none';
+            modal.style.display = 'none';
+            actividadActual = null;
+        }, 300);
+
+        console.log('Modal cerrado');
+    }
+}
+
+// Función para limpiar el modal
+function limpiarModal() {
     const selectNota = document.getElementById('selectNota');
     if (selectNota) {
         selectNota.value = '';
     }
 
-    // Ocultar mensaje de error
-    const mensajeError = document.getElementById('mensajeError');
-    if (mensajeError) {
-        mensajeError.classList.add('d-none');
-    }
-
-    // Mostrar modal usando Bootstrap
-    if (modalEvaluacion) {
-        modalEvaluacion.show();
-    }
+    ocultarError();
+    habilitarBoton();
 }
 
-/**
- * Confirmar y enviar la evaluación
- */
-function confirmarEvaluacion() {
-    console.log('Confirmando evaluación...');
+// Función para enviar la evaluación de forma asíncrona
+function enviarEvaluacion() {
+    console.log('Enviando evaluación...');
 
     const selectNota = document.getElementById('selectNota');
-
     if (!selectNota) {
-        console.error('Elemento selectNota no encontrado');
+        console.error('No se encontró el select de nota');
         return;
     }
 
-    // Validar que se haya seleccionado una nota
-    if (!selectNota.value) {
-        mostrarError('Por favor selecciona una nota del 1 al 7');
+    const nota = selectNota.value;
+
+    // Limpiar mensajes de error previos
+    ocultarError();
+
+    // Validaciones del lado del cliente
+    if (!nota) {
+        mostrarError('Debe seleccionar una nota');
         return;
     }
 
-    const nota = parseInt(selectNota.value);
-
-    // Validar rango de nota
-    if (nota < 1 || nota > 7) {
-        mostrarError('La nota debe estar entre 1 y 7');
+    const notaInt = parseInt(nota);
+    if (isNaN(notaInt) || notaInt < 1 || notaInt > 7) {
+        mostrarError('La nota debe ser un número entre 1 y 7');
         return;
     }
 
-    // Deshabilitar botón durante el envío
-    const btnConfirmar = document.getElementById('btnConfirmarNota');
-    if (btnConfirmar) {
-        const estadoOriginal = btnConfirmar.textContent;
-        btnConfirmar.disabled = true;
-        btnConfirmar.textContent = 'Enviando...';
-
-        // Enviar la evaluación
-        enviarEvaluacion(actividadActual, nota)
-            .finally(() => {
-                // Restaurar botón siempre
-                btnConfirmar.disabled = false;
-                btnConfirmar.textContent = estadoOriginal;
-            });
+    if (!actividadActual) {
+        mostrarError('Error: No se ha seleccionado una actividad');
+        return;
     }
-}
 
-/**
- * Enviar evaluación al servidor usando fetch API
- */
-async function enviarEvaluacion(actividadId, nota) {
-    try {
-        console.log(`Enviando nota ${nota} para actividad ${actividadId}`);
+    console.log('Enviando nota:', notaInt, 'para actividad:', actividadActual);
 
-        const url = '/actividades/api/notas';
+    // Deshabilitar botón para evitar envíos múltiples
+    deshabilitarBoton();
 
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                actividadId: actividadId,
-                nota: nota
-            })
-        });
+    // Preparar datos para enviar
+    const datos = {
+        actividadId: parseInt(actividadActual),
+        nota: notaInt
+    };
 
-        const data = await response.json();
-
+    // Realizar petición asíncrona con fetch
+    fetch('/actividades/api/notas', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => {
+        console.log('Respuesta recibida:', response.status);
         if (!response.ok) {
-            throw new Error(data.error || `Error ${response.status}: ${response.statusText}`);
+            return response.json().then(errorData => {
+                throw new Error(errorData.error || 'Error en el servidor');
+            });
         }
-
+        return response.json();
+    })
+    .then(data => {
+        console.log('Datos recibidos:', data);
         if (data.success) {
-            console.log('Evaluación enviada exitosamente');
-
             // Actualizar la nota en la tabla
-            actualizarNotaEnTabla(actividadId, data.promedio);
+            actualizarNotaEnTabla(actividadActual, data.promedio);
 
             // Mostrar mensaje de éxito
-            mostrarMensajeExito('¡Evaluación enviada exitosamente!');
+            mostrarMensajeExito('Evaluación agregada correctamente');
 
             // Cerrar modal
-            if (modalEvaluacion) {
-                modalEvaluacion.hide();
-            }
+            cerrarModal();
         } else {
             throw new Error(data.error || 'Error desconocido');
         }
-
-    } catch (error) {
+    })
+    .catch(error => {
         console.error('Error al enviar evaluación:', error);
-        mostrarError(`Error: ${error.message}`);
-    }
+        mostrarError('Error al enviar la evaluación: ' + error.message);
+    })
+    .finally(() => {
+        // Rehabilitar botón
+        habilitarBoton();
+    });
 }
 
-/**
- * Actualizar la nota en la tabla
- */
-function actualizarNotaEnTabla(actividadId, nuevoPromedio) {
-    const celdaNota = document.querySelector(`td.nota-promedio[data-actividad-id="${actividadId}"]`);
-    if (celdaNota) {
-        const valorAnterior = celdaNota.textContent;
-        celdaNota.textContent = nuevoPromedio;
-
-        // Efecto visual de actualización
-        celdaNota.style.backgroundColor = '#d4edda';
-        celdaNota.style.color = '#155724';
-        celdaNota.style.fontWeight = 'bold';
-
-        setTimeout(() => {
-            celdaNota.style.backgroundColor = '';
-            celdaNota.style.color = '';
-            celdaNota.style.fontWeight = '';
-        }, 2000);
-
-        console.log(`Nota actualizada para actividad ${actividadId}: ${valorAnterior} → ${nuevoPromedio}`);
-    } else {
-        console.error(`No se encontró la celda de nota para actividad ${actividadId}`);
-    }
-}
-
-/**
- * Mostrar mensaje de error en el modal
- */
+// Función para mostrar errores en el modal
 function mostrarError(mensaje) {
+    console.log('Mostrando error:', mensaje);
+
     const mensajeError = document.getElementById('mensajeError');
+    const textoError = document.getElementById('textoError');
+
     if (mensajeError) {
-        mensajeError.textContent = mensaje;
+        if (textoError) {
+            textoError.textContent = mensaje;
+        } else {
+            mensajeError.innerHTML = mensaje;
+        }
         mensajeError.classList.remove('d-none');
     } else {
-        console.error('Elemento mensajeError no encontrado');
+        console.error('No se encontró el elemento de mensaje de error');
         alert(mensaje); // Fallback
     }
 }
 
-/**
- * Mostrar mensaje de éxito temporal usando Toast de Bootstrap
- */
+// Función para ocultar errores
+function ocultarError() {
+    const mensajeError = document.getElementById('mensajeError');
+    if (mensajeError) {
+        mensajeError.classList.add('d-none');
+    }
+}
+
+// Función para deshabilitar el botón de confirmar
+function deshabilitarBoton() {
+    const btn = document.getElementById('btnConfirmarNota');
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+    }
+}
+
+// Función para habilitar el botón de confirmar
+function habilitarBoton() {
+    const btn = document.getElementById('btnConfirmarNota');
+    if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Confirmar Nota';
+    }
+}
+
+// Función para actualizar la nota en la tabla
+function actualizarNotaEnTabla(actividadId, nuevoPromedio) {
+    console.log('Actualizando nota en tabla:', actividadId, nuevoPromedio);
+
+    const celdaNota = document.querySelector(`td.nota-promedio[data-actividad-id="${actividadId}"]`);
+    if (celdaNota) {
+        celdaNota.textContent = nuevoPromedio;
+
+        // Agregar efecto visual de actualización
+        celdaNota.classList.add('actualizada');
+        setTimeout(() => {
+            celdaNota.classList.remove('actualizada');
+        }, 2000);
+
+        console.log('Nota actualizada en la tabla');
+    } else {
+        console.error('No se encontró la celda de nota para actualizar');
+    }
+}
+
+// Función para mostrar mensaje de éxito flotante
 function mostrarMensajeExito(mensaje) {
-    // Crear toast dinámicamente
-    const toastContainer = getOrCreateToastContainer();
+    console.log('Mostrando mensaje de éxito:', mensaje);
 
-    const toastId = 'toast-' + Date.now();
-    const toastHTML = `
-        <div id="${toastId}" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <strong>¡Éxito!</strong> ${mensaje}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    `;
+    // Crear elemento de mensaje si no existe
+    let mensajeExito = document.getElementById('mensajeExito');
+    if (!mensajeExito) {
+        mensajeExito = document.createElement('div');
+        mensajeExito.id = 'mensajeExito';
+        mensajeExito.className = 'mensaje-exito';
+        mensajeExito.innerHTML = '<p></p>';
+        document.body.appendChild(mensajeExito);
+    }
 
-    toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+    const p = mensajeExito.querySelector('p');
+    if (p) {
+        p.textContent = mensaje;
+    }
 
-    // Mostrar el toast
-    const toastElement = document.getElementById(toastId);
-    const toast = new bootstrap.Toast(toastElement, {
-        autohide: true,
-        delay: 3000
-    });
+    mensajeExito.style.display = 'block';
 
-    toast.show();
+    setTimeout(() => {
+        mensajeExito.classList.add('show');
+    }, 10);
 
-    // Remover el elemento después de que se oculte
-    toastElement.addEventListener('hidden.bs.toast', () => {
-        toastElement.remove();
-    });
+    // Ocultar después de 3 segundos
+    setTimeout(() => {
+        mensajeExito.classList.remove('show');
+        setTimeout(() => {
+            mensajeExito.style.display = 'none';
+        }, 300);
+    }, 3000);
 }
 
-/**
- * Obtener o crear el contenedor de toasts
- */
-function getOrCreateToastContainer() {
-    let container = document.querySelector('.toast-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.className = 'toast-container position-fixed top-0 end-0 p-3';
-        container.style.zIndex = '1055';
-        document.body.appendChild(container);
-    }
-    return container;
-}
-
-/**
- * Configurar eventos cuando se carga la página
- */
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Sistema de evaluaciones Spring Boot cargado');
-
-    // Inicializar modal de Bootstrap
-    const modalElement = document.getElementById('modalEvaluacion');
-    if (modalElement) {
-        modalEvaluacion = new bootstrap.Modal(modalElement);
-        console.log('Modal de evaluación inicializado');
-    } else {
-        console.error('Modal de evaluación no encontrado');
-    }
-
-    // Configurar el botón de confirmar nota
-    const btnConfirmar = document.getElementById('btnConfirmarNota');
-    if (btnConfirmar) {
-        btnConfirmar.addEventListener('click', confirmarEvaluacion);
-        console.log('Evento click agregado al botón confirmar');
-    } else {
-        console.error('Botón btnConfirmarNota no encontrado');
-    }
-
-    // Configurar el select de nota para ocultar errores
+// Función alternativa usando XMLHttpRequest
+function enviarEvaluacionXHR() {
     const selectNota = document.getElementById('selectNota');
-    if (selectNota) {
-        selectNota.addEventListener('change', function() {
-            const mensajeError = document.getElementById('mensajeError');
-            if (mensajeError) {
-                mensajeError.classList.add('d-none');
-            }
-        });
-        console.log('Evento change agregado al select de notas');
-    } else {
-        console.error('Select de notas no encontrado');
+    if (!selectNota) return;
+
+    const nota = selectNota.value;
+
+    // Validaciones (mismas que en la función fetch)
+    ocultarError();
+
+    if (!nota) {
+        mostrarError('Debe seleccionar una nota');
+        return;
     }
 
-    // Verificar si hay actividades para evaluar
-    const tabla = document.getElementById('tablaActividades');
-    if (tabla) {
-        const filas = tabla.querySelectorAll('tbody tr');
-        console.log(`Actividades disponibles para evaluar: ${filas.length}`);
-
-        // Verificar que los botones evaluar existen
-        const botonesEvaluar = document.querySelectorAll('.btn-evaluar');
-        console.log(`Botones evaluar encontrados: ${botonesEvaluar.length}`);
-    } else {
-        console.log('Tabla de actividades no encontrada - posiblemente no hay actividades para evaluar');
+    const notaInt = parseInt(nota);
+    if (isNaN(notaInt) || notaInt < 1 || notaInt > 7) {
+        mostrarError('La nota debe ser un número entre 1 y 7');
+        return;
     }
 
-    // Limpiar variables cuando se cierra el modal
-    if (modalElement) {
-        modalElement.addEventListener('hidden.bs.modal', function() {
-            actividadActual = null;
-            nombreActividadActual = '';
-
-            // Limpiar formulario
-            const selectNota = document.getElementById('selectNota');
-            if (selectNota) {
-                selectNota.value = '';
-            }
-
-            // Ocultar mensajes de error
-            const mensajeError = document.getElementById('mensajeError');
-            if (mensajeError) {
-                mensajeError.classList.add('d-none');
-            }
-        });
+    if (!actividadActual) {
+        mostrarError('Error: No se ha seleccionado una actividad');
+        return;
     }
-});
 
-/**
- * Función auxiliar para actualizar todas las notas (por si se necesita)
- */
-async function actualizarTodasLasNotas() {
-    try {
-        const response = await fetch('/actividades/api/terminadas');
-        const actividades = await response.json();
+    deshabilitarBoton();
 
-        actividades.forEach(actividad => {
-            const celdaNota = document.querySelector(`td.nota-promedio[data-actividad-id="${actividad.id}"]`);
-            if (celdaNota) {
-                celdaNota.textContent = actividad.notaPromedio;
+    // Crear petición XMLHttpRequest
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/actividades/api/notas', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Accept', 'application/json');
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            habilitarBoton();
+
+            if (xhr.status === 200) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    if (data.success) {
+                        actualizarNotaEnTabla(actividadActual, data.promedio);
+                        mostrarMensajeExito('Evaluación agregada correctamente');
+                        cerrarModal();
+                    } else {
+                        mostrarError(data.error || 'Error desconocido');
+                    }
+                } catch (e) {
+                    mostrarError('Error al procesar la respuesta del servidor');
+                }
+            } else {
+                try {
+                    const errorData = JSON.parse(xhr.responseText);
+                    mostrarError(errorData.error || 'Error en el servidor');
+                } catch (e) {
+                    mostrarError('Error de comunicación con el servidor');
+                }
             }
-        });
+        }
+    };
 
-        console.log('Todas las notas actualizadas');
-    } catch (error) {
-        console.error('Error al actualizar notas:', error);
-    }
+    const datos = {
+        actividadId: parseInt(actividadActual),
+        nota: notaInt
+    };
+
+    xhr.send(JSON.stringify(datos));
+}
+
+// Funciones de utilidad para debugging
+function logEstadoModal() {
+    console.log('Estado del modal:', {
+        actividad: actividadActual,
+        modalVisible: document.getElementById('modalEvaluacion').style.display,
+        notaSeleccionada: document.getElementById('selectNota')?.value
+    });
+}
+
+function reiniciarComponentes() {
+    actividadActual = null;
+    limpiarModal();
+    cerrarModal();
 }
