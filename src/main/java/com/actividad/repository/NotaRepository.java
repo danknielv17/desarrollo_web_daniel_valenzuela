@@ -7,11 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NotaRepository extends JpaRepository<Nota, Long> {
+public interface NotaRepository extends JpaRepository<Nota, Integer> {  // Cambiado de Long a Integer
 
     @Query("SELECT AVG(CAST(n.nota AS double)) FROM Nota n WHERE n.actividad.id = :actividadId")
-    Double findPromedioNotasByActividadId(@Param("actividadId") Long actividadId);
+    Double findPromedioNotasByActividadId(@Param("actividadId") Integer actividadId);  // Cambiado de Long a Integer
 
     @Query("SELECT COUNT(n) FROM Nota n WHERE n.actividad.id = :actividadId")
-    Long countNotasByActividadId(@Param("actividadId") Long actividadId);
+    Long countNotasByActividadId(@Param("actividadId") Integer actividadId);  // Cambiado de Long a Integer
 }
