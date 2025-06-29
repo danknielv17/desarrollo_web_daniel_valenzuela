@@ -1,210 +1,338 @@
 /* Estilos específicos para la página de evaluaciones */
 
-/* Contenedor principal */
-.container {
+.evaluaciones-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Botón de evaluar */
-.btn-evaluar {
-    background-color: #28a745;
-    border: none;
-    color: white;
-    padding: 6px 12px;
+.descripcion {
+    color: #666;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* Estilos para la tabla de evaluaciones */
+.tabla-container {
+    overflow-x: auto;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.tabla-evaluaciones {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
     font-size: 14px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    font-weight: 500;
 }
 
-.btn-evaluar:hover {
-    background-color: #218838;
+.tabla-evaluaciones thead {
+    background: #f8f9fa;
 }
 
-.btn-evaluar:active {
-    transform: scale(0.95);
+.tabla-evaluaciones th,
+.tabla-evaluaciones td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
 }
 
-/* Nota promedio */
-.nota-promedio {
-    font-weight: bold;
-    color: #4a6fa5;
-    font-size: 1.1em;
-    text-align: center;
-    padding: 8px 12px;
-    border-radius: 4px;
+.tabla-evaluaciones th {
+    font-weight: 600;
+    color: #495057;
+    background: #e9ecef;
+}
+
+.tabla-evaluaciones tbody tr:hover {
     background-color: #f8f9fa;
 }
 
-/* Alertas */
-.alert {
-    padding: 15px;
-    margin: 20px 0;
-    border: 1px solid transparent;
+.tabla-evaluaciones tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.tabla-evaluaciones tbody tr:nth-child(even):hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilos para la celda de nota */
+.nota-promedio {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.nota-promedio.actualizada {
+    background-color: #d4edda !important;
+    color: #155724 !important;
+    transition: all 0.5s ease;
+}
+
+/* Estilos para el botón evaluar */
+.btn-evaluar {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
     border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s ease;
 }
 
-.alert-info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
+.btn-evaluar:hover {
+    background: #0056b3;
 }
 
-.alert-warning {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
+.btn-evaluar:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
 }
 
-.alert-danger {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
+/* Estilos para el mensaje cuando no hay actividades */
+.no-actividades {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
 }
 
-.alert-success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-
-/* Modal */
+/* Estilos para el modal */
 .modal {
     display: none;
     position: fixed;
     z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    max-width: 500px;
+    width: 90%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.modal.show {
-    display: block;
-}
-
-.modal-dialog {
-    position: relative;
-    width: auto;
-    max-width: 500px;
-    margin: 50px auto;
+.modal-overlay.show {
+    opacity: 1;
 }
 
 .modal-content {
-    background-color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .modal-header {
-    background: linear-gradient(90deg, #7791ac, #4a6fa5);
-    color: white;
-    padding: 15px;
-    border-radius: 6px 6px 0 0;
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #dee2e6;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.modal-title {
+.modal-header h3 {
     margin: 0;
-    font-size: 1.25rem;
+    color: #495057;
 }
 
-.btn-close {
+.close {
     background: none;
     border: none;
-    color: white;
     font-size: 24px;
     cursor: pointer;
+    color: #adb5bd;
     padding: 0;
     width: 30px;
     height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close:hover {
+    color: #495057;
 }
 
 .modal-body {
     padding: 20px;
 }
 
+.modal-body p {
+    margin: 0 0 15px 0;
+    font-weight: bold;
+    color: #495057;
+}
+
+.campo-evaluacion {
+    margin: 15px 0;
+}
+
+.campo-evaluacion label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
 .modal-footer {
-    padding: 15px;
-    border-top: 1px solid #ddd;
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-top: 1px solid #dee2e6;
     text-align: right;
 }
 
-/* Formularios */
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
+.btn-cancelar,
+.btn-confirmar {
+    padding: 8px 16px;
+    border: none;
     border-radius: 4px;
+    cursor: pointer;
     font-size: 14px;
+    margin-left: 10px;
+    transition: background 0.3s ease;
 }
 
-/* Botones del modal */
-.btn-secondary {
-    background-color: #6c757d;
-    border: none;
+.btn-cancelar {
+    background: #6c757d;
     color: white;
-    padding: 8px 16px;
-    margin-right: 10px;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
-.btn-primary {
-    background-color: #4a6fa5;
-    border: none;
+.btn-cancelar:hover {
+    background: #545b62;
+}
+
+.btn-confirmar {
+    background: #28a745;
     color: white;
-    padding: 8px 16px;
+}
+
+.btn-confirmar:hover {
+    background: #218838;
+}
+
+.btn-cancelar:disabled,
+.btn-confirmar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Estilos para mensajes de error */
+.mensaje-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 10px;
     border-radius: 4px;
-    cursor: pointer;
+    margin-top: 10px;
+    border: 1px solid #f5c6cb;
 }
 
-.btn-primary:hover {
-    background-color: #7791ac;
-}
-
-/* Utilidades */
 .d-none {
     display: none !important;
 }
 
-.position-fixed {
-    position: fixed !important;
+/* Estilos para mensaje de éxito flotante */
+.mensaje-exito {
+    position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 9999;
-    width: 300px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background: #d4edda;
+    color: #155724;
+    padding: 15px 20px;
+    border-radius: 4px;
+    border: 1px solid #c3e6cb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1001;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
 }
 
-.mb-3 {
-    margin-bottom: 1rem;
+.mensaje-exito.show {
+    opacity: 1;
+    transform: translateX(0);
 }
 
-/* Responsivo */
+/* Estilos responsivos */
 @media (max-width: 768px) {
-    .container {
-        padding: 10px;
+    .tabla-evaluaciones {
+        font-size: 12px;
     }
 
-    table {
-        font-size: 0.9em;
+    .tabla-evaluaciones th,
+    .tabla-evaluaciones td {
+        padding: 8px 4px;
     }
 
     .btn-evaluar {
-        font-size: 0.8em;
         padding: 4px 8px;
+        font-size: 11px;
     }
+
+    .modal {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .modal-footer {
+        text-align: center;
+    }
+
+    .btn-cancelar,
+    .btn-confirmar {
+        margin: 5px;
+        width: 100px;
+    }
+}
+
+/* Estilos para navegación activa */
+nav ul li a.active {
+    background: #007bff;
+    color: white;
+}
+
+/* Animaciones adicionales */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.tabla-evaluaciones tbody tr {
+    animation: fadeIn 0.3s ease;
 }
