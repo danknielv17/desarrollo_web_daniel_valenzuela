@@ -18,9 +18,6 @@ public class ActividadConNotaDTO {
     private String notaPromedio;
     private Long cantidadNotas;
 
-    // Constructores
-    public ActividadConNotaDTO() {}
-
     public ActividadConNotaDTO(Long id, String nombre, String descripcion,
                               LocalDate fechaInicio, LocalDate fechaTermino,
                               LocalTime horaInicio, LocalTime horaTermino,
