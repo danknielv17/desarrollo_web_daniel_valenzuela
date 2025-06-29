@@ -1,8 +1,7 @@
 package com.actividad.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -10,37 +9,31 @@ import java.util.List;
 public class Actividad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "nombre", nullable = false, length = 100)
+    @Column(name = "nombre", nullable = false, length = 200)
     private String nombre;
 
     @Column(name = "descripcion", nullable = false, length = 500)
     private String descripcion;
 
-    @Column(name = "fecha_inicio", nullable = false)
-    private LocalDate fechaInicio;
+    @Column(name = "dia_hora_inicio", nullable = false)
+    private LocalDateTime diaHoraInicio;
 
-    @Column(name = "fecha_termino", nullable = false)
-    private LocalDate fechaTermino;
-
-    @Column(name = "hora_inicio", nullable = false)
-    private LocalTime horaInicio;
-
-    @Column(name = "hora_termino", nullable = false)
-    private LocalTime horaTermino;
-
-    @Column(name = "tipo", nullable = false, length = 50)
-    private String tipo;
-
-    @Column(name = "lugar", nullable = false, length = 100)
-    private String lugar;
-
-    @Column(name = "direccion", nullable = false, length = 200)
-    private String direccion;
+    @Column(name = "dia_hora_termino")
+    private LocalDateTime diaHoraTermino;
 
     @Column(name = "comuna_id")
     private Integer comunaId;
+
+    @Column(name = "sector", length = 100)
+    private String sector;
+
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
+
+    @Column(name = "celular", length = 15)
+    private String celular;
 
     @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Nota> notas;
@@ -48,24 +41,22 @@ public class Actividad {
     // Constructores
     public Actividad() {}
 
-    public Actividad(String nombre, String descripcion, LocalDate fechaInicio,
-                    LocalDate fechaTermino, LocalTime horaInicio, LocalTime horaTermino,
-                    String tipo, String lugar, String direccion, Integer comunaId) {
+    public Actividad(String nombre, String descripcion, LocalDateTime diaHoraInicio,
+                    LocalDateTime diaHoraTermino, Integer comunaId, String sector,
+                    String email, String celular) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.fechaInicio = fechaInicio;
-        this.fechaTermino = fechaTermino;
-        this.horaInicio = horaInicio;
-        this.horaTermino = horaTermino;
-        this.tipo = tipo;
-        this.lugar = lugar;
-        this.direccion = direccion;
+        this.diaHoraInicio = diaHoraInicio;
+        this.diaHoraTermino = diaHoraTermino;
         this.comunaId = comunaId;
+        this.sector = sector;
+        this.email = email;
+        this.celular = celular;
     }
 
     // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -73,30 +64,31 @@ public class Actividad {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public LocalDate getFechaInicio() { return fechaInicio; }
-    public void setFechaInicio(LocalDate fechaInicio) { this.fechaInicio = fechaInicio; }
+    public LocalDateTime getDiaHoraInicio() { return diaHoraInicio; }
+    public void setDiaHoraInicio(LocalDateTime diaHoraInicio) { this.diaHoraInicio = diaHoraInicio; }
 
-    public LocalDate getFechaTermino() { return fechaTermino; }
-    public void setFechaTermino(LocalDate fechaTermino) { this.fechaTermino = fechaTermino; }
-
-    public LocalTime getHoraInicio() { return horaInicio; }
-    public void setHoraInicio(LocalTime horaInicio) { this.horaInicio = horaInicio; }
-
-    public LocalTime getHoraTermino() { return horaTermino; }
-    public void setHoraTermino(LocalTime horaTermino) { this.horaTermino = horaTermino; }
-
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
-
-    public String getLugar() { return lugar; }
-    public void setLugar(String lugar) { this.lugar = lugar; }
-
-    public String getDireccion() { return direccion; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public LocalDateTime getDiaHoraTermino() { return diaHoraTermino; }
+    public void setDiaHoraTermino(LocalDateTime diaHoraTermino) { this.diaHoraTermino = diaHoraTermino; }
 
     public Integer getComunaId() { return comunaId; }
     public void setComunaId(Integer comunaId) { this.comunaId = comunaId; }
 
+    public String getSector() { return sector; }
+    public void setSector(String sector) { this.sector = sector; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getCelular() { return celular; }
+    public void setCelular(String celular) { this.celular = celular; }
+
     public List<Nota> getNotas() { return notas; }
     public void setNotas(List<Nota> notas) { this.notas = notas; }
+
+    // Métodos helper para compatibilidad con Thymeleaf
+    public LocalDateTime getFechaInicio() { return diaHoraInicio; }
+    public LocalDateTime getFechaTermino() { return diaHoraTermino; }
+    public String getTipo() { return "actividad"; } // Valor por defecto
+    public String getLugar() { return sector != null ? sector : ""; }
+    public String getDireccion() { return ""; } // Valor por defecto
 }
