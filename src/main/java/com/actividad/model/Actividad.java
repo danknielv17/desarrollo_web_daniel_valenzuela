@@ -39,7 +39,7 @@ public class Actividad {
     @Column(name = "direccion", nullable = false, length = 200)
     private String direccion;
 
-    @Column(name = "comuna_id", nullable = false)
+    @Column(name = "comuna_id")
     private Integer comunaId;
 
     @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
