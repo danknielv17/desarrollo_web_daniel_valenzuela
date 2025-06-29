@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Min;
 public class Nota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;  // Cambiado de Long a Integer
 
     @Column(name = "nota", nullable = false)
     @Min(value = 1, message = "La nota debe ser entre 1 y 7")
@@ -29,8 +29,8 @@ public class Nota {
     }
 
     // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }  // Cambiado de Long a Integer
+    public void setId(Integer id) { this.id = id; }
 
     public Integer getNota() { return nota; }
     public void setNota(Integer nota) { this.nota = nota; }
