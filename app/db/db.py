@@ -36,7 +36,6 @@ class Actividad(db.Model):
     temas = relationship('ActividadTema', backref='actividad', cascade="all, delete-orphan")
     contactos = relationship('ContactarPor', backref='actividad', cascade="all, delete-orphan")
     fotos = relationship('Foto', backref='actividad', cascade="all, delete-orphan")
-    notas = relationship('Nota', backref='actividad', cascade="all, delete-orphan")
 
 class ActividadTema(db.Model):
     __tablename__ = 'actividad_tema'
@@ -79,12 +78,6 @@ class Comentario(db.Model):
     fecha = Column(DateTime, nullable=False)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
     actividad = relationship('Actividad', backref='comentarios')
-
-class Nota(db.Model):
-    __tablename__ = 'nota'
-    id = Column(Integer, primary_key=True)
-    actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
-    nota = Column(Integer, nullable=False)
 
 # --- Database Functions ---
 
