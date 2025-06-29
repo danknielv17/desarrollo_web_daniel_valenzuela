@@ -10,13 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import jakarta.validation.Valid;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 @Controller
 @RequestMapping("/actividades")
@@ -39,7 +38,7 @@ public class ActividadController {
     // API REST para obtener actividades terminadas (para llamadas asíncronas)
     @GetMapping("/api/terminadas")
     @ResponseBody
-    public ResponseEntity<List<ActividadConNotaDTO>> getActividadesTerminadas() {
+    public ResponseEntity<List<ActividadConNotaDTO>> obtenerActividadesTerminadas() {
         List<ActividadConNotaDTO> actividades = actividadRepository.findActividadesTerminadasConNotas(LocalDate.now());
         return ResponseEntity.ok(actividades);
     }
@@ -48,6 +47,8 @@ public class ActividadController {
     @PostMapping("/api/notas")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> agregarNota(@RequestBody @Valid Map<String, Object> request) {
+        Map<String, Object> response = new HashMap<>();
+
         try {
             Long actividadId = Long.valueOf(request.get("actividadId").toString());
             Integer valorNota = Integer.valueOf(request.get("nota").toString());
@@ -69,9 +70,8 @@ public class ActividadController {
 
             Actividad actividad = actividadOpt.get();
 
-            // Verificar que la actividad haya terminado
-            if (actividad.getFechaTermino().isAfter(LocalDate.now()) ||
-                actividad.getFechaTermino().isEqual(LocalDate.now())) {
+            // Verificar que la actividad esté terminada
+            if (!actividad.getFechaTermino().isBefore(LocalDate.now())) {
                 Map<String, Object> error = new HashMap<>();
                 error.put("error", "Solo se pueden evaluar actividades terminadas");
                 return ResponseEntity.badRequest().body(error);
@@ -81,26 +81,19 @@ public class ActividadController {
             Nota nuevaNota = new Nota(valorNota, actividad);
             notaRepository.save(nuevaNota);
 
-            // Calcular el nuevo promedio y cantidad de notas
+            // Calcular el nuevo promedio
             Double promedio = notaRepository.findPromedioNotasByActividadId(actividadId);
             Long cantidadNotas = notaRepository.countNotasByActividadId(actividadId);
 
-            // Preparar respuesta
-            Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("mensaje", "Nota agregada exitosamente");
             response.put("promedio", promedio != null ? String.format("%.2f", promedio) : "-");
             response.put("cantidadNotas", cantidadNotas);
 
             return ResponseEntity.ok(response);
 
-        } catch (NumberFormatException e) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("error", "Datos inválidos");
-            return ResponseEntity.badRequest().body(error);
         } catch (Exception e) {
             Map<String, Object> error = new HashMap<>();
-            error.put("error", "Error interno del servidor");
+            error.put("error", "Error interno del servidor: " + e.getMessage());
             return ResponseEntity.internalServerError().body(error);
         }
     }
@@ -108,19 +101,21 @@ public class ActividadController {
     // API REST para obtener el promedio actualizado de una actividad
     @GetMapping("/api/{id}/promedio")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> getPromedioActividad(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> obtenerPromedio(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+
         try {
             Double promedio = notaRepository.findPromedioNotasByActividadId(id);
             Long cantidadNotas = notaRepository.countNotasByActividadId(id);
 
-            Map<String, Object> response = new HashMap<>();
             response.put("promedio", promedio != null ? String.format("%.2f", promedio) : "-");
             response.put("cantidadNotas", cantidadNotas);
 
             return ResponseEntity.ok(response);
+
         } catch (Exception e) {
             Map<String, Object> error = new HashMap<>();
-            error.put("error", "Error al obtener promedio");
+            error.put("error", "Error al obtener el promedio");
             return ResponseEntity.internalServerError().body(error);
         }
     }
