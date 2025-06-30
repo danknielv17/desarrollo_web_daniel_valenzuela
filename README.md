@@ -133,3 +133,8 @@ Alternativamente
 $env:FLASK_APP="app.app:app"
 flask run
 ```
+
+O también ejectuando directamente el archivo `app.py`:
+```bash
+python app.py
+```
