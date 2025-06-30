@@ -14,3 +14,5 @@ public interface ActividadRepository extends JpaRepository<Actividad, Integer> {
     @Query("SELECT a FROM Actividad a WHERE a.diaHoraTermino < :fechaActual")
     List<Actividad> findActividadesTerminadas(@Param("fechaActual") LocalDateTime fechaActual);
 }
+
+
