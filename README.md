@@ -4,7 +4,10 @@
 
 # Gestión de Actividades Recreativas
 
-Esta tarea contiene **dos implementaciones** del sistema de gestión de actividades recreativas:
+Esta tarea contiene **dos implementaciones independientes** del sistema de gestión de actividades recreativas:
+1. **Flask**: Implementación de las tareas 1, 2 y 3.
+2. **Spring Boot**: Implementación de la tarea 4.
+ - Solo contiene el sistema de evaluaciones, solo se conecta a la base de datos MySQL revisando las actividades terminadas.
 
 ## Estructura general del proyecto Flask y Spring Boot:
 ```
