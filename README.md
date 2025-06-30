@@ -78,6 +78,39 @@ http://localhost:8080/actividades/evaluaciones
 ```
 | ID | Fecha Inicio | Sector | Nombre (organizador) | Tema | Nota | Acción |
 ```
+
+## Tests
+### Estructura de Tests
+1. Tests de Modelos
+   Actividad: Creación completa, validación de fechas terminadas
+   Nota: Creación válida, validación de rango (1-7)
+2. Tests de Repositorios
+   ActividadRepository: Búsqueda de actividades terminadas
+   NotaRepository: Cálculo de promedios y conteo de notas
+3. Tests de Controladores Web
+   GET /actividades/evaluaciones: Renderizado de página de evaluaciones
+4. Tests de API REST
+   GET /actividades/api/terminadas: Obtener actividades terminadas
+   POST /actividades/api/notas: Agregar notas con validaciones
+   GET /actividades/api/{id}/promedio: Calcular promedios
+5. Tests de Integración
+   Flujo completo: Obtener actividades → Agregar notas → Calcular promedio
+   Validación de datos: Manejo de errores y casos edge
+   Casos de Test Cubiertos
+   Validaciones de Notas
+   - Notas válidas (1-7)
+   - Notas inválidas (fuera del rango)
+   - Actividad no encontrada
+   - Actividad no terminada
+   Cálculo de Promedios
+   - Promedio con múltiples notas
+   - Sin notas (promedio = "-")
+   - Conteo correcto de notas
+   API REST
+   - Respuestas JSON correctas
+   - Códigos de estado HTTP apropiados
+   - Manejo de errores 400/500
+
 ### En paralelo a la implementación de Spring Boot
 
 Tenedremos la app en Flask igualmente en el repositorio
