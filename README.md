@@ -11,6 +11,8 @@ Esta tarea contiene **dos implementaciones** del sistema de gestión de activida
 desarrollo_web_daniel_valenzuela/
 ├── README.md            # Documentación del proyecto
 ├── .mvn/wrapper/         # Wrapper de Maven
+├── mvnw                  # Script para ejecutar Maven
+├── mvnw.cmd              # Script para ejecutar Maven en Windows
 ├── pom.xml               # Archivo de configuración de Maven
 ├── app/                  # Implementación Flask (Tareas 1-3)
 │   ├── app.py            # Archivo principal de Flask
@@ -20,7 +22,6 @@ desarrollo_web_daniel_valenzuela/
     ├── templates/        # Plantillas HTML
 │   └── utils/            # Utilidades y funciones auxiliares
 ├── src/                  # Implementación Spring Boot (Tarea 4)
-│   ├── src/              # Código fuente de Spring Boot
 │   ├── main/             # Directorio principal de la aplicación
 │   │   ├── java/         # Código Java
 │   │   ├── resources/    # Recursos de la aplicación (templates, static)
@@ -35,7 +36,7 @@ desarrollo_web_daniel_valenzuela/
 ```bash
 # Ejecutar Spring Boot
 cd app # Cambiar al directorio de la aplicación Spring Boot
-mvn spring-boot:run
+.\mvnw.cmd spring-boot:run
 ```
 
 Link para acceder a la aplicación Spring Boot:
@@ -51,7 +52,7 @@ http://localhost:8080/actividades/evaluaciones
 
 ## Características Principales de la Tarea 4 (Spring Boot)
 
-### Tecnologías Utilizadas
+### Herramientas Utilizadas
 - **Backend**: Spring Boot 3.2 + Java 17 + JPA
 - **Frontend**: Bootstrap 5 + JavaScript (Fetch API)
 - **Base de datos**: MySQL 8.0
@@ -65,7 +66,7 @@ http://localhost:8080/actividades/evaluaciones
 
 ### Funcionalidad Principal
 1. **Visualizar actividades terminadas**: Solo actividades con fecha_termino < fecha_actual
-2. **Evaluar asíncronamente**: Modal para seleccionar nota 1-7
+2. **Evaluar asíncronamente**: Modal para seleccionar nota 1-7. Se muestra al final de la página al hacer clic en "Evaluar"
 3. **Actualización automática**: Promedio se actualiza sin recargar página
 4. **Validación completa**: Frontend (JavaScript) y Backend (Spring Boot)
 
@@ -73,9 +74,11 @@ http://localhost:8080/actividades/evaluaciones
 ```
 | ID | Fecha Inicio | Sector | Nombre | Tema | Nota | Acciones |
 ```
-### En paralelo a la implementación de Spring Boot, tenedremos la app en Flask (Tarea 1-3) corriendo.
+### En paralelo a la implementación de Spring Boot
 
-## Implementación Flask (Tareas 1-3)
+Tenedremos la app en Flask igualmente en el repositorio
+
+## Implementación Flask 
 
 **Ubicación:** `desarrollo_web_daniel_valenzuela/app/`
 **Puerto:** `http://127.0.0.1:5000/`
@@ -83,5 +86,12 @@ http://localhost:8080/actividades/evaluaciones
 ```bash
 # Ejecutar Flask en consola 
 export FLASK_APP=app.py
+flask run
+```
+
+Alternativamente
+```bash
+# Ejecutar Flask
+$env:FLASK_APP="app.app:app"
 flask run
 ```
