@@ -31,7 +31,12 @@ desarrollo_web_daniel_valenzuela/
 ## Implementación Spring Boot (Tarea 4)
 
 **Ubicación:** `desarrollo_web_daniel_valenzuela/src/`
+
 **Puerto:** `http://localhost:8080`
+
+Importante asegurarse de tener instalado las herramientas necesarias para ejecutar Spring Boot:
+- **Java 17**
+- **Maven**: Maven para compilar y ejecutar la aplicación. Está el wrapper de Maven incluido en el proyecto.
 
 ```bash
 # Ejecutar Spring Boot
@@ -81,6 +86,7 @@ Tenedremos la app en Flask igualmente en el repositorio
 ## Implementación Flask 
 
 **Ubicación:** `desarrollo_web_daniel_valenzuela/app/`
+
 **Puerto:** `http://127.0.0.1:5000/`
 
 ```bash
