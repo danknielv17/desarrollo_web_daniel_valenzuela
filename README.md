@@ -40,7 +40,6 @@ Importante asegurarse de tener instalado las herramientas necesarias para ejecut
 
 ```bash
 # Ejecutar Spring Boot
-cd app # Cambiar al directorio de la aplicación Spring Boot
 .\mvnw.cmd spring-boot:run
 ```
 
