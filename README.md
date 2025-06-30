@@ -77,7 +77,7 @@ http://localhost:8080/actividades/evaluaciones
 
 ### Estructura de la Tabla de Evaluaciones
 ```
-| ID | Fecha Inicio | Sector | Nombre | Tema | Nota | Acciones |
+| ID | Fecha Inicio | Sector | Nombre (organizador) | Tema | Nota | Acción |
 ```
 ### En paralelo a la implementación de Spring Boot
 
