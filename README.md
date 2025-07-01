@@ -37,7 +37,7 @@ desarrollo_web_daniel_valenzuela/
 **Ubicación:** 
 - `desarrollo_web_daniel_valenzuela/`
   - `src/` 
-  - `mvn/wrapper/` 
+  - `.mvn/wrapper/` 
   - `mvnw` 
   - `mvnw.cmd` 
   - `pom.xml`
