@@ -53,9 +53,11 @@ Lógica ubicada en el archivo `application.properties` dentro de `src/main/resou
 En caso de falla con las credenciales, correr el archivo `user.sql` en la base de datos MySQL para crear el usuario y contraseña originales 
 (Tarea 2).
 
-Importante asegurarse de tener instalado las herramientas necesarias para ejecutar Spring Boot:
-- **Java 17**
-- **Maven**: Para compilar y ejecutar la aplicación. Está el wrapper de Maven incluido en el proyecto.
+#### Importante 
+- Tener creada la base de datos en MySQL con todas las tablas necesarias para la aplicación.
+- Asegurarse de tener instalado las herramientas necesarias para ejecutar Spring Boot:
+  - **Java 17**
+  - **Maven**: Para compilar y ejecutar la aplicación. Está el wrapper de Maven incluido en el proyecto.
 
 ```bash
 # Ejecutar Spring Boot
