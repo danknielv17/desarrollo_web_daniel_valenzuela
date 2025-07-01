@@ -68,7 +68,7 @@ http://localhost:8080/actividades/evaluaciones
 ```
 
 ### Funcionalidades Spring Boot:
-- **Sistema de evaluación de actividades** (Tarea 4)
+- **Sistema de evaluación de actividades**
 - Evaluación asíncrona con JavaScript
 - Cálculo automático de promedios
 - Interfaz responsiva con Bootstrap 5
@@ -89,7 +89,8 @@ http://localhost:8080/actividades/evaluaciones
 
 ### Funcionalidad Principal
 1. **Visualizar actividades terminadas**: Solo actividades con fecha_termino < fecha_actual
-2. **Evaluar asíncronamente**: Modal para seleccionar nota 1-7. Se muestra al final de la página al hacer clic en "Evaluar"
+2. **Evaluar asíncronamente**: Modal, nos aseguramos el seleccionar una nota entera 1-7. 
+   - Se muestra al final de la página al hacer clic en "Evaluar"
 3. **Actualización automática**: Promedio se actualiza sin recargar página
 4. **Validación completa**: Frontend (JavaScript) y Backend (Spring Boot)
 
