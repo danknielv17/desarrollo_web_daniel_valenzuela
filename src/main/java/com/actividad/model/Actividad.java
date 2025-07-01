@@ -38,6 +38,9 @@ public class Actividad {
     @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Nota> notas;
 
+    @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ActividadTema> temas;
+
     // Constructores
     public Actividad() {}
 
@@ -85,10 +88,21 @@ public class Actividad {
     public List<Nota> getNotas() { return notas; }
     public void setNotas(List<Nota> notas) { this.notas = notas; }
 
+    public List<ActividadTema> getTemas() { return temas; }
+    public void setTemas(List<ActividadTema> temas) { this.temas = temas; }
+
     // Métodos helper para compatibilidad con Thymeleaf
     public LocalDateTime getFechaInicio() { return diaHoraInicio; }
     public LocalDateTime getFechaTermino() { return diaHoraTermino; }
-    public String getTipo() { return "actividad"; } // Valor por defecto
+
+    public String getTipo() {
+        if (temas != null && !temas.isEmpty()) {
+            ActividadTema primerTema = temas.get(0);
+            return primerTema.getTemaCompleto();
+        }
+        return "Sin tema";
+    }
+
     public String getLugar() { return sector != null ? sector : ""; }
     public String getDireccion() { return ""; } // Valor por defecto
 }
