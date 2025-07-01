@@ -47,8 +47,8 @@ desarrollo_web_daniel_valenzuela/
 Credenciales de acceso para la base de datos MySQL desde Spring Boot:
 Lógica ubicada en el archivo `application.properties` dentro de `src/main/resources/`:
 ```properties
-- **Usuario:** `cc5002`
-- **Contraseña:** `programacionweb`
+- Usuario: `cc5002`
+- Contraseña: `programacionweb`
 ```
 En caso de falla con las credenciales, correr el archivo `user.sql` en la base de datos MySQL para crear el usuario y contraseña originales 
 (Tarea 2).
