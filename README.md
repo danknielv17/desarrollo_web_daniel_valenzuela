@@ -95,7 +95,7 @@ http://localhost:8080/actividades/evaluaciones
 
 ### Estructura de la Tabla de Evaluaciones
 ```
-| ID | Fecha Inicio | Sector | Nombre (organizador) | Tema | Nota | Acción |
+| ID | Fecha Inicio | Sector | Nombre | Tema | Nota |  |
 ```
 
 ## Tests
