@@ -155,5 +155,6 @@ flask run
 
 O también ejectuando directamente el archivo `app.py`:
 ```bash
+cd app
 python app.py
 ```
