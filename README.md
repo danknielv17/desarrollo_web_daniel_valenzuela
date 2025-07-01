@@ -23,7 +23,7 @@ desarrollo_web_daniel_valenzuela/
 │   ├── requirements.txt  # Dependencias de Flask
 │   ├── db/               # Base de datos
 │   ├── static/           # Archivos estáticos (CSS, JS)
-    ├── templates/        # Plantillas HTML
+│   ├── templates/        # Plantillas HTML
 │   └── utils/            # Utilidades y funciones auxiliares
 ├── src/                  # Implementación Spring Boot (Tarea 4)
 │   ├── main/             # Directorio principal de la aplicación
