@@ -89,7 +89,7 @@ http://localhost:8080/actividades/evaluaciones
 
 ### Funcionalidad Principal
 1. **Visualizar actividades terminadas**: Solo actividades con fecha_termino < fecha_actual
-2. **Evaluar asíncronamente**: Modal, nos aseguramos el seleccionar una nota entera 1-7. 
+2. **Evaluar asíncronamente**: Modal, así nos aseguramos el seleccionar una nota entera entre 1-7 (ambos inclusive). 
    - Se muestra al final de la página al hacer clic en "Evaluar"
 3. **Actualización automática**: Promedio se actualiza sin recargar página
 4. **Validación completa**: Frontend (JavaScript) y Backend (Spring Boot)
