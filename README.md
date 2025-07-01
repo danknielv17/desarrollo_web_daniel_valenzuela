@@ -34,7 +34,13 @@ desarrollo_web_daniel_valenzuela/
 
 ## Implementación Spring Boot (Tarea 4)
 
-**Ubicación:** `desarrollo_web_daniel_valenzuela/src/`
+**Ubicación:** 
+- `desarrollo_web_daniel_valenzuela/`
+  - `src/` 
+  - `mvn/wrapper/` 
+  - `mvnw` 
+  - `mvnw.cmd` 
+  - `pom.xml`
 
 **Puerto:** `http://localhost:8080`
 
