@@ -2,8 +2,10 @@ package com.actividad.controller;
 
 import com.actividad.dto.ActividadConNotaDTO;
 import com.actividad.model.Actividad;
+import com.actividad.model.ActividadTema;
 import com.actividad.model.Nota;
 import com.actividad.repository.ActividadRepository;
+import com.actividad.repository.ActividadTemaRepository;
 import com.actividad.repository.NotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,9 @@ public class ActividadController {
     @Autowired
     private NotaRepository notaRepository;
 
+    @Autowired
+    private ActividadTemaRepository actividadTemaRepository;
+
     // Página principal de evaluaciones - muestra actividades terminadas
     @GetMapping("/evaluaciones")
     public String mostrarEvaluaciones(Model model) {
@@ -50,6 +55,14 @@ public class ActividadController {
                     Double promedio = notaRepository.findPromedioNotasByActividadId(actividad.getId());
                     Long cantidadNotas = notaRepository.countNotasByActividadId(actividad.getId());
 
+                    // Obtener el tema de la actividad
+                    String temaActividad = "Sin tema";
+                    Optional<ActividadTema> temaOpt = actividadTemaRepository.findFirstByActividadId(actividad.getId());
+                    if (temaOpt.isPresent()) {
+                        ActividadTema tema = temaOpt.get();
+                        temaActividad = tema.getTemaCompleto();
+                    }
+
                     // Crear DTO con datos seguros
                     LocalDate fechaInicio = actividad.getDiaHoraInicio() != null ?
                         actividad.getDiaHoraInicio().toLocalDate() : LocalDate.now().minusDays(1);
@@ -68,7 +81,7 @@ public class ActividadController {
                         fechaTermino,
                         horaInicio,
                         horaTermino,
-                        "actividad", // tipo
+                        temaActividad, // Usar el tema real obtenido de la base de datos
                         actividad.getSector() != null ? actividad.getSector() : "Sin especificar",
                         "Sin especificar", // dirección
                         actividad.getComunaId(),
@@ -77,7 +90,8 @@ public class ActividadController {
                     );
 
                     actividades.add(dto);
-                    System.out.println("DTO creado para actividad " + actividad.getId() + " - Promedio: " +
+                    System.out.println("DTO creado para actividad " + actividad.getId() +
+                        " - Tema: " + temaActividad + " - Promedio: " +
                         (promedio != null ? String.format("%.2f", promedio) : "-"));
 
                 } catch (Exception e) {
@@ -239,4 +253,3 @@ public class ActividadController {
         }
     }
 }
-
