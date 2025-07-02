@@ -1,10 +1,10 @@
 # desarrollo_web_daniel_valenzuela
 
-## CC5002 - Tareas 1-4
+# CC5002 - Tarea 4: Sistema de evaluación de Actividades Recreativas Spring Boot
 
-# Gestión de Actividades Recreativas
+## Gestión de Actividades Recreativas
 
-Esta tarea contiene **dos implementaciones independientes** del sistema de gestión de actividades recreativas:
+El repositorio de esta tarea contiene **dos implementaciones independientes** del sistema de gestión de actividades recreativas:
 1. **Flask**: Implementación de las tareas 1, 2 y 3.
 2. **Spring Boot**: Implementación de la tarea 4.
    - Solo contiene el sistema de evaluaciones, se conecta a la base de datos MySQL revisando las actividades terminadas.
@@ -136,11 +136,9 @@ seleccionado de un listado o ingresado manualmente.
    - Códigos de estado HTTP apropiados
    - Manejo de errores 400/500
 
-### En paralelo a la implementación de Spring Boot
+## Implementación Flask
 
-Tenedremos la app en Flask igualmente en el repositorio
-
-## Implementación Flask 
+En paralelo a la implementación de Spring Boot, tenedremos la app en Flask igualmente en el repositorio
 
 **Ubicación:** `desarrollo_web_daniel_valenzuela/app/`
 
