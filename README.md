@@ -101,6 +101,9 @@ http://localhost:8080/actividades/evaluaciones
 | ID | Fecha Inicio | Sector | Nombre | Tema | Nota |     |
 ```
 
+Como detalle a mencionar, en la columna de "Tema" se muestra el tema de la actividad ingresado por el usuario, sea
+seleccionado de un listado o ingresado manualmente.
+
 ## Tests
 ### Estructura de Tests
 1. Tests de Modelos
