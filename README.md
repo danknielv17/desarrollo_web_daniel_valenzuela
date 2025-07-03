@@ -60,7 +60,12 @@ En caso de falla con las credenciales, correr el archivo `user.sql` en la base d
   - **Maven**: Para compilar y ejecutar la aplicación. Está el wrapper de Maven incluido en el proyecto.
 
 ```bash
-# Ejecutar Spring Boot
+# Compilar y ejecutar (Linux/Mac)
+./mvnw clean compile
+./mvnw spring-boot:run
+### Spring Boot (Consola de Windows)
+# Compilar y ejecutar
+.\mvnw.cmd clean compile
 .\mvnw.cmd spring-boot:run
 ```
 
